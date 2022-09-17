@@ -1,0 +1,573 @@
+body{
+  background: #424242 !important;
+}
+
+.navbar {
+  background: #424242 !important;
+  box-shadow: 0 0 0  currentColor, 0 2px 15px 1px rgba(21, 21, 21, 0.51);
+  border-bottom: none !important;
+  position: fixed;
+  top: 0 !important;
+  width: 100%;
+  z-index: 1;
+}
+
+.web-footer {
+  background: #424242 !important;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: darkgray !important;
+  opacity: 1; /* Firefox */
+}
+
+.breadcrumb {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  margin-top: 0;
+}
+
+.breadcrumb-item.active {
+  color: mintcream !important;
+  
+}
+
+.breadcrumb-item a span{
+   color: goldenrod;
+}
+
+
+a {
+  color: goldenrod;
+}
+
+a:hover {
+  color: darkgoldenrod !important;;
+}
+
+.mb-6 {
+  color: mintcream;
+  font-size: 2em;
+  text-shadow: 1px 2px 15px #212121;
+}
+
+.mb-4:not(a){
+  color: mintcream;
+}
+
+#product-filters {
+  background-color: #212121;
+  box-shadow: 0 0 0  currentColor, 0 2px 15px 1px rgba(21, 21, 21, 0.51);
+  padding: 10px 16px 2px 16px;
+  border-radius: 8px;
+  border-bottom: 1px solid darkgoldenrod !important; 
+}
+.filters-section .title-section {
+  border-bottom: 1px solid darkgoldenrod !important;  
+}
+
+#dropdownMenuSearch {
+  color: mintcream !important;
+}
+
+#search-box {
+  color: mintcream !important;
+  background-color: #212121 !important;
+  border: none !important;
+  box-shadow: 0 0 0  currentColor, 0 2px 15px 1px rgba(21, 21, 21, 0.51);
+  border-bottom: solid 1px darkgoldenrod !important;
+  margin-right: 8px;
+}
+
+#search-results-container {
+  color: mintcream !important;
+  background-color: #212121 !important;
+  border: none !important;
+  box-shadow: 0 0 0  currentColor, 0 2px 15px 1px rgba(21, 21, 21, 0.51) !important;
+  border-bottom: solid 1px darkgoldenrod !important;
+  margin-top: 8px;
+}
+
+#search-results-container a {
+  color: mintcream !important;
+}
+#search-results-container a:hover {
+  color: gold !important;
+}
+
+.dropdown-item:hover {
+  background-color: #848484 !important;
+}
+
+.recent-search:hover {
+  background-color: #848484 !important;
+}
+
+svg path{
+  stroke: mintcream !important;
+}
+
+svg {
+  stroke: mintcream !important;
+}
+
+symbol#icon-list path{
+  fill: mintcream !important;
+}
+
+#toggle-view .btn{
+  background-color: #212121 !important;
+  box-shadow: 0 0 0  currentColor, 0 2px 15px 1px rgba(21, 21, 21, 0.51);
+  border-bottom: solid 1px darkgoldenrod !important;
+}
+
+#toggle-view .btn-primary {
+  background-color: goldenrod !important;
+  box-shadow: 0 0 0  currentColor, 0 2px 15px 0px rgba(21, 21, 21, 0.51) !important;;
+}
+
+.card{
+  background-color: #212121;
+  box-shadow: 0 0 0  currentColor, 0 2px 15px 1px rgba(21, 21, 21, 0.51);
+  border-bottom: solid 1px darkgoldenrod !important;
+}
+
+.card:hover {
+  box-shadow: 0 0 0  currentColor, 0 2px 15px 1px rgba(21, 21, 21, 0.51) !important;
+}
+
+.card-img-top {
+  background-color: #212121 !important;
+}
+
+.product-title {
+  color: mintcream !important;
+}
+
+a.product-title:hover{
+  color: gold !important;
+}
+
+.product-category {
+  color: darkgray !important;
+}
+.product-price {
+  color: goldenrod !important;
+}
+.product-code {
+  color: darkgray !important;
+}
+
+.product-paging-area .btn {
+  background-color: #212121 !important;
+  color: mintcream !important;
+  box-shadow: 0 0 0  currentColor, 0 2px 15px 1px rgba(21, 21, 21, 0.51);
+  border-bottom: solid 1px darkgoldenrod !important;
+  
+}
+
+.list-row {
+  background-color: #212121 !important;
+  border-bottom-color: darkgoldenrod !important;
+  box-shadow: 0 0 0  currentColor, 0 2px 15px 1px rgba(21, 21, 21, 0.51);
+}
+
+.list-row:hover {
+  box-shadow: 0 0 0  currentColor, 0 6px 20px 1px rgba(10, 10, 10, 0.51) !important;
+}
+
+.list-image {
+  background-color: #212121 !important;
+}
+
+.list-row .col-10.text-left a{
+  color: mintcream !important;
+}
+.list-row .col-10.text-left a:hover{
+  color: darkgoldenrod !important;
+}
+
+.page-content-wrapper {
+  padding: 64px;
+}
+
+.mt-2 {
+  color: mintcream !important;
+}
+
+.web-footer {
+  border: none;
+}
+
+.chat-bubble {
+  background-color: goldenrod !important;
+  box-shadow: 0 0 0  currentColor, 0 2px 15px 1px rgba(21, 21, 21, 0.51);
+}
+
+.chat-header {
+  border-bottom-color: darkgoldenrod !important;
+}
+
+.chat-welcome-footer {
+  background-color: #424242 !important;
+}
+
+.hero-icon {
+  background-color: goldenrod !important;
+}
+.chat-element {
+  background-color: #424242 !important;
+  border: none !important;
+  border-bottom: solid 1px darkgoldenrod !important;
+  color: mintcream;
+  box-shadow: 0 0 0  currentColor, 0 2px 15px 1px rgba(21, 21, 21, 0.51) !important;
+}
+
+.chat-footer {
+  visibility: hidden !important;
+}
+
+.chat-profile-name {
+  color: mintcream !important;
+}
+.chat-profile-status {
+  color: mintcream !important;
+}
+
+.chat-query-heading {
+  color: darkgray !important;
+}
+
+.form-control {
+  background-color: #212121;
+  border-bottom: 1px solid darkgoldenrod !important;
+  text-decoration: 
+}
+
+.date-line {
+  color: mintcream;
+  border-color: goldenrod !important; 
+}
+
+.date-line span {
+  background-color: goldenrod !important;
+  border-radius: 8px;
+}
+
+.recipient-message .message-bubble {
+  background-color: goldenrod !important;
+  color: mintcream !important;
+}
+
+.sender-message .message-bubble {
+  background-color: #212121 !important;
+  color: mintcream !important;
+}
+
+
+.message-time {
+  color: darkgray !important;
+}
+
+.message-send-button {
+  background-color: goldenrod !important;
+}
+
+#icon-attachment path{
+  stroke: darkgray;
+}
+
+p {
+  color: mintcream;
+}
+
+.product-container.product-container {
+  background-color: #212121 !important;
+  border-bottom: solid 1px darkgoldenrod;
+  box-shadow: 0 0 0  currentColor, 0 2px 15px 1px rgba(21, 21, 21, 0.51)
+}
+
+.border.text-center.rounded {
+  border-color: #424242 !important;
+}
+
+.item-slideshow-image:not(.active){
+  border-color: #424242 !important;
+}
+
+small.formatted-price {
+  color: #212121 !important;
+}
+
+.like-action {
+  background-color: #212121 !important;
+}
+
+#icon-heart path{
+  stroke: darkgoldenrod !important;
+}
+
+#icon-heart path:hover{
+  fill: goldenrod;
+}
+
+.spec-label {
+  color: darkgray !important;
+}
+
+.spec-content {
+  color: mintcream !important;
+}
+
+.mt-4.ratings-reviews-section {
+  border-top-color: darkgoldenrod !important;
+}
+
+.reviews-header {
+  color: mintcream !important;
+}
+
+.rating-summary-numbers {
+  border-right-color: darkgoldenrod !important;
+}
+
+.rating-summary-numbers h2 {
+  color: goldenrod;
+}
+
+.rating-summary-numbers .mb-2 {
+  color: darkgrey;
+}
+
+.rating-summary-numbers .mt-2 {
+  color: mintcream !important;
+}
+
+.rating-bar-title {
+  color: darkgray
+}
+
+.progress-bar-cosmetic {
+  background-color: goldenrod !important;
+}
+
+.col-sm-1 {
+  color: darkgrey !important;
+}
+h6.text-muted {
+  color: mintcream !important;
+}
+
+.recommendation-header {
+  color: mintcream;
+  text-shadow: 1px 2px 15px #212121;
+}
+
+.r-item-info a {
+  color: mintcream !important;
+}
+
+.r-item-info a:hover{
+  color: goldenrod !important;
+}
+
+.item-price {
+  color: goldenrod !important;
+}
+
+.page-card {
+  background-color: #212121 !important;
+  box-shadow: 0 0 0  currentColor, 0 2px 15px 1px rgba(21, 21, 21, 0.51) !important;
+}
+
+.page-card-head {
+  border-bottom-color: darkgoldenrod !important;
+}
+
+h5 span{
+  color: mintcream !important;
+}
+
+.indicator.green::before {
+  background-color: goldenrod !important;
+}
+
+.sign-up-message {
+  color: mintcream !important;
+}
+
+input.form-control, textarea {
+  background-color: #212121 !important;
+
+  border-bottom: 1px solid darkgoldenrod !important;
+  color: mintcream !important;
+}
+
+input.form-control:focus{
+  border-bottom: 1px solid mintcream !important;
+}
+
+textarea:focus {
+  background-color: #212121 !important;
+  color: mintcream !important;
+}
+
+h4, h3, h1 {
+  color: darkgoldenrod !important;
+  text-shadow: 1px 2px 15px #212121;
+}
+
+p.forgot-password-message a {
+  color: darkgrey !important;
+}
+
+p.forgot-password-message a:hover {
+  color: goldenrod !important;
+}
+
+.page-card {
+  background-color: #212121 !important;
+}
+
+.modal-content {
+  background-color: #212121;
+  border-color: #212121 !important;
+  box-shadow: 0 0 0  currentColor, 0 6px 15px 1px rgba(21, 21, 21, 0.51) !important;
+}
+
+.modal-header, .modal-footer {
+  border-color: darkgoldenrod !important;
+}
+
+div, div span {
+  color: mintcream;
+}
+
+.modal-title {
+  color: goldenrod;
+}
+
+.file-upload-area {
+  border-color: goldenrod !important;
+}
+
+.msgprint {
+  color: mintcream;
+}
+
+.msgprint hr {
+  background-color: darkgoldenrod !important;
+}
+
+#icon-close-alt path {
+  stroke: mintcream !important;
+  fill: mintcream;
+} 
+
+.avatar-frame {
+  background-color: #212121 !important;
+  box-shadow: none !important;
+  border-top: 1px solid #424242 !important;
+  border-bottom: 1px solid darkgoldenrod !important;
+  color: mintcream !important;
+}
+
+.dropdown-menu {
+  background-color: #212121;
+  border: none !important;
+  border-bottom: 1px solid darkgoldenrod !important;
+}
+
+.dropdown-item {
+  color: mintcream;
+}
+
+.dropdown-item:hover {
+  background-color: #424242 !important;
+}
+
+.account-info {
+  background-color: #212121;
+  box-shadow: 0 0 0  currentColor, 0 2px 15px 1px rgba(21, 21, 21, 0.51) !important;
+}
+
+.col.d-flex.justify-content-between.align-items-center {
+  border-color: darkgoldenrod;
+}
+
+.my-account-name {
+  color: mintcream !important;
+}
+
+#icon-edit path {
+  stroke: darkgrey;
+}
+
+.my-account-item {
+  color: mintcream !important;
+}
+
+.my-account-item-desc {
+  color: darkgrey !important;
+}
+
+.web-form-header, .web-form {
+  background-color: #212121 !important;
+  border: none !important;
+  box-shadow: 0 0 0  currentColor, 0 2px 15px 1px rgba(21, 21, 21, 0.51) !important;
+}
+
+.web-form-head {
+  border-color: darkgoldenrod !important;
+}
+
+.indicator-pill {
+  background-color: #424242 !important;
+}
+
+.control-label {
+  color: darkgrey;
+}
+
+.control-label.reqd:after {
+  color: goldenrod !important;
+}
+
+.btn-attach {
+  background-color: #212121 !important;
+  color: mintcream !important;
+  border-top: 1px solid #424242;
+  border-bottom: 1px solid darkgoldenrod !important;
+}
+
+.section-head {
+  color: mintcream;
+}
+
+.discard-btn.btn, .btn-secondary, a.btn{
+  background-color: #212121 !important;
+  color: mintcream !important;
+  border-top: 1px solid #424242;
+  border-bottom: 1px solid darkgoldenrod !important;
+}
+
+.btn-file-upload svg {
+  stroke: darkgoldenrod !important;
+}
+
+.btn-file-upload svg circle{
+  fill: none !important;
+}
+
+label, .file-size {
+  color: darkgrey !important;
+}
+
+.file-name {
+  color: mintcream !important;
+}
+
+.attached-file {
+  background-color: #424242 !important;
+}

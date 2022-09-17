@@ -6,6 +6,9 @@ app_publisher = "Sebastian Beck"
 app_description = "Aetesis Customisations"
 app_email = "sebastian@aetesis.ch"
 app_license = "MIT"
+app_logo_url= "/assests/aetesis/images/app_logo.png"
+
+#template_apps = ['aetesis', 'erpnext']
 
 # Includes in <head>
 # ------------------
@@ -15,11 +18,11 @@ app_license = "MIT"
 # app_include_js = "/assets/aetesis/js/aetesis.js"
 
 # include js, css files in header of web template
-# web_include_css = "/assets/aetesis/css/aetesis.css"
-# web_include_js = "/assets/aetesis/js/aetesis.js"
+web_include_css = "/assets/aetesis/css/aetesis.css"
+#web_include_js = "/assets/aetesis/js/aetesis-web.bundle.js"
 
 # include custom scss in every website theme (without file extension ".scss")
-# website_theme_scss = "aetesis/public/scss/website"
+#website_theme_scss = "aetesis/public/scss/website"
 
 # include js, css files in header of web form
 # webform_include_js = {"doctype": "public/js/doctype.js"}
@@ -29,7 +32,7 @@ app_license = "MIT"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-# doctype_js = {"doctype" : "public/js/doctype.js"}
+#doctype_js = {"Purchase Order" : "public/js/purchase_order.js"}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -98,6 +101,13 @@ app_license = "MIT"
 #	"ToDo": "custom_app.overrides.CustomToDo"
 # }
 
+override_doctype_class = {
+	"Task": "aetesis.overrides.task.CustomTask",
+	"Sales Order": "aetesis.overrides.sales_order.CustomSalesOrder",
+	"Purchase Order": "aetesis.overrides.purchase_order.CustomPurchaseOrder",
+#	"Material Request": "aetesis.overrides.material_request.CustomMaterialRequest",
+}
+
 # Document Events
 # ---------------
 # Hook on document methods and events
@@ -113,7 +123,7 @@ app_license = "MIT"
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
+scheduler_events = {
 #	"all": [
 #		"aetesis.tasks.all"
 #	],
@@ -129,7 +139,12 @@ app_license = "MIT"
 #	"monthly": [
 #		"aetesis.tasks.monthly"
 #	],
-# }
+	"cron": {
+		'30 20 * * *': [
+			'aetesis.scripts.create_purchase_order.create_po'
+		],
+	}
+}
 
 # Testing
 # -------
@@ -139,9 +154,10 @@ app_license = "MIT"
 # Overriding Methods
 # ------------------------------
 #
-# override_whitelisted_methods = {
+ #override_whitelisted_methods = {
 #	"frappe.desk.doctype.event.event.get_events": "aetesis.event.get_events"
-# }
+#	"erpnext.selling.doctype.sales_order.make_raw_material_request" : "aetesis.whitelisted.custom_make_raw_material_request"
+ #}
 #
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
