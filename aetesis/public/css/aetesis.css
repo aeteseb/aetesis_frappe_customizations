@@ -20,7 +20,7 @@ body, .web-footer, .attached-file, .indicator-pill, .dropdown-item:hover,  .chat
   background: var(--bg-light) !important;
 }
 
-.like-action, .page-card {
+.like-action, .like-action-list, .page-card {
   background: var(--bg-dark) !important;
 }
 
@@ -42,7 +42,7 @@ body, .web-footer, .attached-file, .indicator-pill, .dropdown-item:hover,  .chat
   border-right-color: var(--secondary) !important;
 }
 
-.page-card-head {
+.page-card-head, .title-section {
   border-bottom-color: var(--secondary) !important;
 }
 
@@ -70,6 +70,16 @@ body, .web-footer, .attached-file, .indicator-pill, .dropdown-item:hover,  .chat
   z-index: 1;
 }
 
+a.nav-link {
+  color: var(--text-primary) !important;
+  font-size: 1em !important;
+}
+
+a.nav-link.active {
+  color: var(--text-highlight) !important;
+  font-weight: bolder !important;
+  
+}
 /* Forms */
 
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -79,7 +89,7 @@ body, .web-footer, .attached-file, .indicator-pill, .dropdown-item:hover,  .chat
 
 .form-control, input.form-control, textarea {
   color: var(--text-primary) !important;
-  background: var(--bg-dark);
+  background: var(--bg-dark) !important;
   border-bottom: 1px solid var(--secondary) !important;
 }
 
@@ -103,7 +113,7 @@ textarea:focus {
 
 
 .recommendation-header, h4, h3, h1 {
-  color: var(--text-primary);
+  color: var(--text-primary) !important;
   text-shadow: 1px 2px 15px var(--bg-dark);
 }
 
@@ -122,7 +132,7 @@ p, div, div span, .msgprint, .dropdown-item, .section-head, .mb-4:not(a)
   color: var(--text-secondary) !important;
 }
 
-.breadcrumb-item a span, a, .rating-summary-numbers h2, modal-title, .product-price, .item-price, .control-label.reqd:after 
+.breadcrumb-item a span, a .rating-summary-numbers h2, modal-title, .product-price, .item-price, .control-label.reqd:after 
 {
   color: var(--text-highlight) !important;
 }
@@ -161,7 +171,7 @@ a:hover, #search-results-container a:hover, a.product-title:hover, .r-item-info 
 }
 
 .card, .list-row, .product-container.product-container {
-  background: var(--bg-dark);
+  background: var(--bg-dark) !important;
   box-shadow: 0 0 0  currentColor, 0 2px 15px 1px rgba(21, 21, 21, 0.51);
   border-bottom: solid 1px var(--secondary) !important;
 }
@@ -218,8 +228,8 @@ symbol#icon-list path{
   stroke: var(--secondary) !important;
 }
 
-#icon-heart path:hover{
-  fill: var(--primary);
+#icon-heart path:hover, .wish-icon.wished{
+  fill: var(--primary) !important;
 }
 
 #icon-close-alt path {
@@ -250,6 +260,10 @@ symbol#icon-list path{
 #toggle-view .btn-primary {
   background-color: var(--primary) !important;
   box-shadow: 0 0 0  currentColor, 0 2px 15px 0px rgba(21, 21, 21, 0.51) !important;
+}
+
+.btn-primary {
+  background-color: var(--primary) !important;
 }
 
 .btn-file-upload svg {
@@ -306,3 +320,4 @@ symbol#icon-list path{
 .chat-footer, small.formatted-price {
   visibility: hidden !important;
 }
+
