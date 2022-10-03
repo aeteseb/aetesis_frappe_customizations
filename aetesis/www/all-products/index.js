@@ -5,10 +5,10 @@ $(() => {
 			let is_item_group_page = $(".item-group-content").data("item-group");
 			this.item_group = is_item_group_page || null;
 
-			let view_type = localStorage.getItem("product_view") || "List View";
+			let view_type = localStorage.getItem("product_view") || "Grid View";
 
 			// Render Product Views, Filters & Search
-			new erpnext.ProductView({
+			new aetesis.ProductView({
 				view_type: view_type,
 				products_section: $('#product-listing'),
 				item_group: me.item_group

@@ -145,6 +145,12 @@ a:hover, #search-results-container a:hover, a.product-title:hover, .r-item-info 
   color: var(--text-darklight) !important;
 }
 
+/* Text sizes */
+
+.variant-material {
+  font-size: 12px;
+  margin-bottom: 0px !important;
+}
 
 /* Boxes */
 
@@ -177,6 +183,14 @@ a:hover, #search-results-container a:hover, a.product-title:hover, .r-item-info 
   background: var(--bg-dark) !important;
   box-shadow: 0 0 0  currentColor, 0 2px 15px 1px rgba(21, 21, 21, 0.51);
   border-bottom: solid 1px var(--secondary) !important;
+}
+
+.variant, .variant-selector {
+  background-color: var(--bg-light);
+  margin: 5px;
+  padding: 2px !important;
+  border-radius: 8px;
+  box-shadow: 0 0 0  currentColor, 0 2px 15px 1px rgba(55, 55, 55, 0.51);
 }
 
 .web-form-header, .web-form {
@@ -277,6 +291,29 @@ symbol#icon-list path{
   fill: none !important;
 }
 
+/* Variant Selection */
+
+.radio_item{
+  display: none !important;
+}
+.radio_item + label {
+  font-size: .75rem
+}
+.radio_item:checked + label .variant-selector  {
+  color: var(--text-highlight);
+}
+
+.radio_item:checked + label  > .variant-selector {
+  border: 1px solid var(--primary);
+  cursor: default;
+}
+
+.variant-selector {
+  width: 5rem;
+  height: 5rem;
+  text-align: center;
+  cursor: pointer;
+}
 
 /* Chat */
 
@@ -324,3 +361,6 @@ symbol#icon-list path{
   visibility: hidden !important;
 }
 
+.my-hidden {
+  display: none !important;
+}

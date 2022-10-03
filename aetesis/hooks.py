@@ -8,7 +8,7 @@ app_email = "sebastian@aetesis.ch"
 app_license = "MIT"
 app_logo_url= "/assests/aetesis/images/app_logo.png"
 
-#template_apps = ['aetesis', 'erpnext']
+template_apps = ['aetesis', 'erpnext']
 
 # Includes in <head>
 # ------------------
@@ -19,7 +19,7 @@ app_logo_url= "/assests/aetesis/images/app_logo.png"
 
 # include js, css files in header of web template
 web_include_css = "/assets/aetesis/css/aetesis.css"
-#web_include_js = "/assets/aetesis/js/aetesis-web.bundle.js"
+web_include_js = "aetesis-web.bundle.js"
 
 # include custom scss in every website theme (without file extension ".scss")
 #website_theme_scss = "aetesis/public/scss/website"
@@ -105,6 +105,7 @@ override_doctype_class = {
 	"Task": "aetesis.overrides.task.CustomTask",
 	"Sales Order": "aetesis.overrides.sales_order.CustomSalesOrder",
 	"Purchase Order": "aetesis.overrides.purchase_order.CustomPurchaseOrder",
+	"Website Item": "aetesis.e_commerce.doctype.website_item.website_item.CustomWebsiteItem",
 #	"Material Request": "aetesis.overrides.material_request.CustomMaterialRequest",
 }
 
