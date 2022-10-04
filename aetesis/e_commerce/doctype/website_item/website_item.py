@@ -15,6 +15,7 @@ from frappe import _
 #from aetesis.e_commerce.variant_selector.item_variants_cache import ItemVariantsCacheManager
 from erpnext.e_commerce.redisearch_utils import insert_item_to_index
 from erpnext.e_commerce.doctype.website_item.website_item import WebsiteItem
+from aetesis.e_commerce.shopping_cart.product_info import get_product_info_for_website
 #from aetesis.e_commerce.shopping_cart.cart import _set_price_list
 
 #from erpnext.utilities.product import get_price
@@ -34,7 +35,7 @@ class CustomWebsiteItem(WebsiteItem):
 				if v.slideshow:
 					doc = frappe.get_doc("Website Slideshow", v.slideshow)
 					v.slides = doc.slideshow_items
-					print(v.slides)
+					v.product_info = get_product_info_for_website(v.item_code, skip_quotation_creation=True)
 			new_context.variant_details = vd
 			print(new_context.variant_details)
 		return new_context
@@ -232,9 +233,7 @@ def attr_order(key):
 				
 @frappe.whitelist(allow_guest = True)
 def get_variant_tree(name):
-	print(name)
 	tree = frappe.db.get_value("Website Item", name, "variant_tree")
-	print(tree)
 	return tree
 	
 

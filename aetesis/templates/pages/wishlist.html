@@ -2,14 +2,14 @@
 
 {% block title %} {{ _("Wishlist") }} {% endblock %}
 
-{% block header %}<h3 class="shopping-cart-header mt-2 mb-6">{{ _("Wishlist") }}</h1>{% endblock %}
+{% block header %}<h3 class="shopping-cart-header mt-2 mb-6">{{ _("Wishlist") }}</h3>{% endblock %}
 
 {% block page_content %}
 {% if items %}
 	<div class="row">
 		<div class="col-md-12 item-card-group-section">
 			<div class="row products-list">
-					{% from "erpnext/templates/includes/macros.html" import wishlist_card %}
+					{% from "aetesis/templates/includes/macros.html" import wishlist_card %}
 					{% for item in items %}
 						{{ wishlist_card(item, settings) }}
 					{% endfor %}

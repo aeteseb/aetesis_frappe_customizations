@@ -1,4 +1,5 @@
 import "./website_utils";
+import "./wishlist";
 import "../../e_commerce/product_ui/list";
 import "../../e_commerce/product_ui/views";
 import "../../e_commerce/product_ui/grid";

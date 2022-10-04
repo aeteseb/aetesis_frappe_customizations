@@ -1,6 +1,10 @@
 {% if shopping_cart and shopping_cart.cart_settings.enabled %}
 {% set cart_settings = shopping_cart.cart_settings %}
-{% from "aetesis/templates/includes/macros.html" import variant_item_col %}
+{% from "aetesis/templates/includes/add_buttons.html" import add_buttons %}
+
+{% if shopping_cart and shopping_cart.cart_settings.enabled %}
+	{{ add_buttons(variant_details, shopping_cart) }}
+{% endif %}
 
 <div class="mt-5 mb-6">
 	{% if cart_settings.enable_variants | int %}

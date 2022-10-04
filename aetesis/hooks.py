@@ -155,10 +155,11 @@ scheduler_events = {
 # Overriding Methods
 # ------------------------------
 #
- #override_whitelisted_methods = {
+override_whitelisted_methods = {
 #	"frappe.desk.doctype.event.event.get_events": "aetesis.event.get_events"
 #	"erpnext.selling.doctype.sales_order.make_raw_material_request" : "aetesis.whitelisted.custom_make_raw_material_request"
- #}
+	"erpnext.e_commerce.doctype.wishlist.wishlist.add_to_wishlist" : "aetesis.whitelisted.wishlist.add_to_wishlist"
+ }
 #
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,

@@ -12,12 +12,18 @@
 
 		<!-- Wishlist -->
 		{% if cart_settings.enable_wishlist %}
-			<div class="like-action-item-fp like-action {{ 'like-action-wished' if wished else ''}} ml-2"
-				data-item-code="{{ doc.item_code }}">
-				<svg class="icon sm">
-					<use class="{{ 'wished' if wished else 'not-wished' }} wish-icon" href="#icon-heart"></use>
-				</svg>
-			</div>
+			{% if has_variants %}
+				<div class="like-action-item-fp like-action {{ 'like-action-wished' if wished else ''}} ml-2"
+					data-item-code="{{ variant_details[0].item_code }}" data-parent="{{ doc.item_code }}">
+				
+			{% else %}
+				<div class="like-action-item-fp like-action {{ 'like-action-wished' if wished else ''}} ml-2"
+					data-item-code="{{ doc.item_code }}">
+			{% endif %}
+					<svg class="icon sm">
+						<use class="{{ 'wished' if wished else 'not-wished' }} wish-icon" href="#icon-heart"></use>
+					</svg>
+				</div>
 		{% endif %}
 	</div>
 
@@ -25,16 +31,12 @@
 		<span class="product-item-group">
 			{{ _(doc.item_group) }}
 		</span>
-		<span class="product-item-code">
-			{{ _("Item Code") }}:
-		</span>
-		<span itemprop="productID">{{ doc.item_code }}</span>
 	</p>
+
 	{% if has_variants %}
 		<!-- configure template -->
 		{% include "templates/generators/item/item_configure.html" %}
 	{% else %}
-		<!-- add variant to cart -->
 		{% include "templates/generators/item/item_add_to_cart.html" %}
 	{% endif %}
 	<!-- description -->
@@ -58,6 +60,6 @@
 	$('.page_content').on('click', '.like-action-item-fp', (e) => {
 			// Bind action on wishlist button
 			const $btn = $(e.currentTarget);
-			erpnext.e_commerce.wishlist.wishlist_action($btn);
+			aetesis.e_commerce.wishlist.wishlist_action($btn);
 		});
 </script>

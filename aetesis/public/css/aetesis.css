@@ -23,7 +23,7 @@ body, .web-footer, .attached-file, .indicator-pill, .dropdown-item:hover,  .chat
   background: var(--bg-light) !important;
 }
 
-.like-action, .like-action-list, .page-card {
+.like-action, .like-action-list, .page-card, .remove-wish,.cart-empty{
   background: var(--bg-dark) !important;
 }
 
@@ -53,8 +53,8 @@ body, .web-footer, .attached-file, .indicator-pill, .dropdown-item:hover,  .chat
   border-color: var(--secondary) !important;
 }
 
-.web-footer {
-  border: none;
+.web-footer, .remove-wish, .product-item-group:last-of-type {
+  border: none !important;
 }
 
 .border.text-center.rounded, .item-slideshow-image:not(.active) {
@@ -120,9 +120,9 @@ textarea:focus {
   text-shadow: 1px 2px 15px var(--bg-dark);
 }
 
-p, div, div span, .msgprint, .dropdown-item, .section-head, .mb-4:not(a)
+p, div, div span, .msgprint, .dropdown-item, .section-head, .mb-4:not(a), .cart-empty-message
 {
-  color: var(--text-primary);
+  color: var(--text-primary) !important;
 }
 
 .breadcrumb-item.active, #dropdownMenuSearch, #search-results-container a, .product-tile, .chat-profile-name, .chat-profile-status, .spec-content, .reviews-header, .rating-summary-numbers, .text-muted, r-item-info a, h5 span, .sign-up-message, .my-account-name, .my-account-item, .file-name, .product-title, .rating-summary-numbers .mt-2, .list-row .col-10.text-left a, .mt-2, h6.text-muted
@@ -252,6 +252,13 @@ symbol#icon-list path{
 #icon-close-alt path {
   stroke: var(--text-primary) !important;
   fill: var(--text-primary);
+}
+
+.remove-wish-icon {
+  stroke: var(--text-primary) !important;
+}
+.remove-wish-icon:hover {
+  stroke: var(--text-highlight) !important;
 }
 
 /* Avatar */

@@ -1,0 +1,155 @@
+{%- macro add_buttons(variants, shopping_cart)-%}
+	{% set cart_settings = shopping_cart.cart_settings %}
+	{% for v in variants %}
+		{% set product_info = v.product_info.product_info %}
+		{% set item_code = v.item_code %}
+		<div class="buying {{item_code}} my-hidden">
+			<div class="item-cart row mt-2" data-variant-item-code="{{ item_code }}">
+				<div class="col-md-12">
+					<!-- Price and Availability -->					
+					{% if cart_settings.show_price and product_info.price %}
+						
+						{% set price_info = product_info.price %}
+
+						<div class="product-price">
+							<!-- Final Price -->
+							{{ price_info.formatted_price_sales_uom }}
+
+							<!-- Striked Price and Discount  -->
+							{% if price_info.formatted_mrp %}
+								<small class="formatted-price">
+									<s>MRP {{ price_info.formatted_mrp }}</s>
+								</small>
+								<small class="ml-1 formatted-price in-green">
+									-{{ price_info.get("formatted_discount_percent") or price_info.get("formatted_discount_rate")}}
+								</small>
+							{% endif %}
+
+							<!-- Price per UOM -->
+							<small class="formatted-price ml-2">
+								{{ price_info.formatted_price }} 
+							</small>
+						</div>
+					{% endif %}
+
+					{% if cart_settings.show_stock_availability %}
+					<div class="mt-2">
+						{% if product_info.get("on_backorder") %}
+							<span class="no-stock out-of-stock" style="color: var(--primary-color);">
+								{{ _('Available on backorder') }}
+							</span>
+						{% elif product_info.in_stock == 0 %}
+							<span class="no-stock out-of-stock">
+								{{ _('Out of stock') }}
+							</span>
+						{% elif product_info.in_stock == 1 %}
+							<span class="in-green has-stock">
+								{{ _('In stock') }}
+								{% if product_info.show_stock_qty and product_info.stock_qty %}
+									({{ product_info.stock_qty[0][0] }})
+								{% endif %}
+							</span>
+						{% endif %}
+					</div>
+					{% endif %}
+				</div>
+			</div>
+			<div class="mt-6 mb-5">
+				<div class="mb-4 d-flex">
+					<!-- Add to Cart -->
+					{% if product_info.price and (cart_settings.allow_items_not_in_stock or product_info.in_stock) %}
+						<a href="/cart" class="btn btn-light btn-in-cart hidden mr-2 font-md"
+							role="button">
+							{{  _("Added to Cart") if cart_settings.enable_checkout else _("Added to Quote") }}
+						</a>
+						<button
+							data-item-code="{{item_code}}"
+							class="btn btn-primary btn-add-to-cart mr-2 w-30-40"
+						>
+							<span class="mr-2">
+								<svg class="icon icon-md">
+									<use href="#icon-assets"></use>
+								</svg>
+							</span>
+							{{ _("Add to Cart") if cart_settings.enable_checkout else  _("Add to Quote") }}
+						</button>
+					{% endif %}
+
+					<!-- Contact Us -->
+					{% if cart_settings.show_contact_us_button %}
+						{% include "templates/generators/item/item_inquiry.html" %}
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+		<script>
+	frappe.ready(() => {
+		$('.page_content').on('click', '.btn-add-to-cart', (e) => {
+			// Bind action on add to cart button
+			const $btn = $(e.currentTarget);
+			$btn.prop('disabled', true);
+			const item_code = $btn.data('item-code');
+			erpnext.e_commerce.shopping_cart.update_cart({
+				item_code,
+				qty: 1,
+				callback(r) {
+					$btn.prop('disabled', false);
+					if (r.message) {
+						$('.btn-add-to-cart, .btn-in-cart').toggleClass('hidden');
+						setTimeout(function() {$('.btn-add-to-cart, .btn-in-cart').toggleClass('hidden');}, 5000);
+					}
+				}
+			});
+		});
+
+		$('.page_content').on('click', '.offer-details', (e) => {
+			// Bind action on More link in Offers
+			const $btn = $(e.currentTarget);
+			$btn.prop('disabled', true);
+
+			var d = new frappe.ui.Dialog({
+				title: __($btn.data('offer-title')),
+				fields: [
+					{
+						fieldname: 'offer_details',
+						fieldtype: 'HTML'
+					},
+					{
+						fieldname: 'section_break',
+						fieldtype: 'Section Break'
+					}
+				]
+			});
+
+			frappe.call({
+				method: 'erpnext.e_commerce.doctype.website_offer.website_offer.get_offer_details',
+				args: {
+					offer_id: $btn.data('offer-id')
+				},
+				callback: (value) => {
+					d.set_value("offer_details", value.message);
+					d.show();
+					$btn.prop('disabled', false);
+				}
+			})
+
+		});
+	});
+
+
+	</script>
+		
+{%- endmacro -%}
+
+{%- macro add_hearts(variants) -%}
+	{% for v in variants %}
+		<div class="like-action-item-fp like-action {{ 'like-action-wished' if wished else ''}} ml-2 {{v.item_code}} my-hidden"
+			data-item-code="{{ v.item_code }}">
+			<svg class="icon sm">
+				<use class="{{ 'wished' if wished else 'not-wished' }} wish-icon" href="#icon-heart"></use>
+			</svg>
+		</div>
+	{% endfor %}
+{%- endmacro -%}
+

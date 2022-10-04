@@ -359,20 +359,6 @@
 {% endfor %}
 {%- endmacro -%}
 
-{%- macro variant_item_col(item) -%}
-	<div class="col variant"> 
-		<div class="v-item-image">
-		{% if item.website_image %}
-			{{ product_image(item.website_image, css_class="v-product-image", alt="item.web_item_name", no_border=True) }}
-		{% else %}
-			<div class="no-image-v-item">
-				{{ frappe.utils.get_abbr(item.web_item_name) or "NA" }}
-			</div>
-		{% endif %}
-		</div>
-		<p class="text-center variant-material">{{ item.attributes[0].attribute_value }}</p>
-	</div>
-{%- endmacro -%}
 
 
 {%- macro recommended_item_row(item)-%}
@@ -447,3 +433,8 @@
 		</div>
 	{% endfor %}
 {%- endmacro -%}
+
+
+
+
+
