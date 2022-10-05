@@ -2,6 +2,7 @@
 {% set cart_settings = shopping_cart.cart_settings %}
 {% set product_info = shopping_cart.product_info %}
 {% set price_info = product_info.get('price') or {} %}
+{% from "aetesis/templates/includes/macros.html" import build_csas %}
 
 <div class="col-md-7 product-details {{ width_class }}">
 	<div class="d-flex">
@@ -32,13 +33,17 @@
 			{{ _(doc.item_group) }}
 		</span>
 	</p>
-
+	{% if has_custom_sales_attribute %}
+		{{ build_csas(custom_attributes) }}
+	{% endif %}
 	{% if has_variants %}
 		<!-- configure template -->
 		{% include "templates/generators/item/item_configure.html" %}
 	{% else %}
 		{% include "templates/generators/item/item_add_to_cart.html" %}
 	{% endif %}
+	
+
 	<!-- description -->
 	<div class="product-description" itemprop="description">
 	{% if frappe.utils.strip_html(doc.web_long_description or '') %}

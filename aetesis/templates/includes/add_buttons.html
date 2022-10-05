@@ -90,9 +90,11 @@
 			const $btn = $(e.currentTarget);
 			$btn.prop('disabled', true);
 			const item_code = $btn.data('item-code');
+			const additional_notes = $btn.data('csas') || undefined;
 			erpnext.e_commerce.shopping_cart.update_cart({
 				item_code,
 				qty: 1,
+				additional_notes,
 				callback(r) {
 					$btn.prop('disabled', false);
 					if (r.message) {

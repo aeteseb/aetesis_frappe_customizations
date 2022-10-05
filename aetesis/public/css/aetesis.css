@@ -23,7 +23,7 @@ body, .web-footer, .attached-file, .indicator-pill, .dropdown-item:hover,  .chat
   background: var(--bg-light) !important;
 }
 
-.like-action, .like-action-list, .page-card, .remove-wish,.cart-empty{
+.like-action, .like-action-list, .page-card, .remove-wish,.cart-empty, .frappe-card{
   background: var(--bg-dark) !important;
 }
 
@@ -120,7 +120,7 @@ textarea:focus {
   text-shadow: 1px 2px 15px var(--bg-dark);
 }
 
-p, div, div span, .msgprint, .dropdown-item, .section-head, .mb-4:not(a), .cart-empty-message
+p, div, div span, .msgprint, .dropdown-item, .section-head, .mb-4:not(a), .cart-empty-message, th
 {
   color: var(--text-primary) !important;
 }
@@ -363,6 +363,9 @@ symbol#icon-list path{
 
 
 /* Hidden */
+.btn-add-to-cart-list {
+  visibility: visible !important;
+}
 
 .chat-footer, small.formatted-price {
   visibility: hidden !important;

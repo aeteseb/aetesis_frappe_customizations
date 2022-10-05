@@ -37,7 +37,12 @@ class CustomWebsiteItem(WebsiteItem):
 					v.slides = doc.slideshow_items
 					v.product_info = get_product_info_for_website(v.item_code, skip_quotation_creation=True)
 			new_context.variant_details = vd
-			print(new_context.variant_details)
+		if self.has_custom_sales_attribute:
+			csas = self.custom_sales_attributes
+			
+			for csa in csas:
+				csa.options = json.loads(csa.options)
+			new_context.custom_attributes = csas
 		return new_context
 	
 

@@ -1,7 +1,7 @@
 import frappe
 from frappe.model.document import Document
 
-@frappe.whitelist()
+@frappe.whitelist(allow_guest=True)
 def is_wished(item_code):
 	res = bool(frappe.db.exists("Wishlist Item", {"item_code": item_code, "parent": frappe.session.user}))
 	return res

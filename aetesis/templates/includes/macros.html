@@ -174,9 +174,7 @@
 <div class="card-body card-body-flex text-left" style="width: 100%;">
 	<div class="mt-4">
 		<div class="product-title">{{ title or ''}}</div>
-		<div class="product-category">{{ item.item_group or '' }}</div>
-	</div>
-	<div class="product-price">
+		<div class="text-center product-price">
 		{{ item.get("formatted_price") or '' }}
 
 		{% if item.get("formatted_mrp") %}
@@ -187,7 +185,10 @@
 				{{ item.discount }} OFF
 			</small>
 		{% endif %}
+		</div>
+		<div class="product-category">{{ item.item_group or '' }}</div>
 	</div>
+	
 
 	{% if (item.available and settings.show_stock_availability) or (not settings.show_stock_availability) %}
 		<!-- Show move to cart button if in stock or if showing stock availability is disabled -->
@@ -433,6 +434,38 @@
 		</div>
 	{% endfor %}
 {%- endmacro -%}
+
+
+{%- macro build_csas(csas) -%}
+	{% for csa in csas %}
+	<div class="csa">
+		<form class="csa-form">
+			<label for="{{ csa.name1 }}-select"> {{ csa.name1 }}:</label>
+			
+			<select class="csa-select" name="csa-{{ csa.name1 }}" id="{{ csa.name1 }}-select">
+				<option value="">Please choose an option</option>
+				{% for option in csa.options %}
+					<option value="{{ option }}">{{ option }}</option>
+				{% endfor %}
+			</select>
+		</form>
+	</div>
+	{% endfor %}
+	<script>
+frappe.ready(() => {
+		$('.csa-select').change(function() {
+			var selectedOption = $(this).children("option:selected").val();
+			console.log('the value changed to:', selectedOption);
+			$('.btn-add-to-cart').each(function() {
+			
+			$(this).data('csas', selectedOption);
+			console.log($(this).data('csas'));
+			});
+		});
+	});
+	</script>
+{%- endmacro -%}
+
 
 
 
