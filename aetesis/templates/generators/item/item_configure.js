@@ -15,8 +15,7 @@ frappe.ready(() => {
 	selected = queryString.replace('?', '').replace('_', ' ');
 	no_default = true
 	}
-	
-	console.log(queryString, selected)
+
 	
 	$(`.${item_name.split(' ')[0]}`).each(function() {$(this).hide()});
 	frappe.call('aetesis.e_commerce.doctype.website_item.website_item.get_variant_tree', {name: item_name}).then(r => {
@@ -27,7 +26,28 @@ frappe.ready(() => {
       		update_view(null, selected);
 	});
 	
+	const region = getCookie('region');
+	var items = [];
+	var prices;
+	$('.price').each(function(){ items.push( $(this).data('item-code'))});
+	console.log(items);
+	frappe.call('aetesis.whitelisted.product_info.get_prices', {item_codes: items, region : region}).then( r => {
+			prices = r.message;
+			console.log(prices);
+		$('.price').each(function() {set_price($(this), prices)});
+		});
+	
 })
+
+function set_price($span, prices) {
+console.log($span)
+	prices.forEach( item => {
+		if (item.item_code == $span.data('item-code') && item.price) {
+		console.log('pirce', item.price.formatted_price)
+			$span.html( item.price.formatted_price)
+		}
+	});
+}
 
 function update_view(e=null, sel=null) {
 	checked = []
@@ -35,9 +55,7 @@ function update_view(e=null, sel=null) {
 		checked.push($(this).attr('id').split('/')[1]);
 		});
 	update_variant_selector(checked);
-	console.log('SEL', sel);
 	selected = sel || $('.attribute:visible').find('.radio_item:checked').slice(-1).attr('value');
-	console.log('selected',selected)
 	
 	update_visibility(selected);
 	$('.like-action-item-fp').data('item-code', selected);
@@ -51,12 +69,11 @@ function update_view(e=null, sel=null) {
 
 
 function update_visibility(selected){
-	console.log($(`.${selected.split(' ')[0]}`));
 	$('.item-slideshow-image').removeClass('active');
 	const $img = $(`.${selected.split(' ').slice(-1)[0]}`).find('img');
-	console.log('img',$img);
+
 	const link = $img.prop('src');
-	console.log(link);
+
 	const $product_image = $('.product-image');
 	$product_image.find('img').prop('src', link);
 	
@@ -117,4 +134,18 @@ function build_attribute(attribute, $container, no_default=false) {
 	$container.append(html);
 }
 
-
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}

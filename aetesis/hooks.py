@@ -9,7 +9,7 @@ app_license = "MIT"
 app_logo_url= "/assests/aetesis/images/app_logo.png"
 
 template_apps = ['aetesis', 'erpnext', 'frappe']
-
+#update_website_context = ["aetesis.whitelisted.product_info.add_region_to_context"]
 # Includes in <head>
 # ------------------
 
@@ -159,6 +159,7 @@ override_whitelisted_methods = {
 #	"frappe.desk.doctype.event.event.get_events": "aetesis.event.get_events"
 #	"erpnext.selling.doctype.sales_order.make_raw_material_request" : "aetesis.whitelisted.custom_make_raw_material_request"
 	"erpnext.e_commerce.doctype.wishlist.wishlist.add_to_wishlist" : "aetesis.whitelisted.wishlist.add_to_wishlist",
+	"erpnext.e_commerce.shopping_cart.product_info.get_product_info_for_website" : "aetesis.whitelisted.product_info.get_product_info_for_website",
 #	"frappe.core.doctype.user.user.sign_up" : "aetesis.whitelisted.user.sign_up",
  }
 #

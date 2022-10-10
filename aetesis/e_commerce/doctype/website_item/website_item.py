@@ -43,6 +43,8 @@ class CustomWebsiteItem(WebsiteItem):
 			for csa in csas:
 				csa.options = json.loads(csa.options)
 			new_context.custom_attributes = csas
+			
+		print(new_context)
 		return new_context
 	
 

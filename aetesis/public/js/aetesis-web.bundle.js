@@ -1,4 +1,5 @@
 import "./website_utils";
+import "./regions";
 import "./shopping_cart";
 import "./wishlist";
 import "../../e_commerce/product_ui/list";
