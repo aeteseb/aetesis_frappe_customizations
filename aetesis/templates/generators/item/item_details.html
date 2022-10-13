@@ -33,9 +33,6 @@
 			{{ _(doc.item_group) }}
 		</span>
 	</p>
-	{% if has_custom_sales_attribute %}
-		{{ build_csas(custom_attributes) }}
-	{% endif %}
 	{% if has_variants %}
 		<!-- configure template -->
 		{% include "templates/generators/item/item_configure.html" %}

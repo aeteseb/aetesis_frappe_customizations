@@ -35,7 +35,7 @@ class CustomWebsiteItem(WebsiteItem):
 				if v.slideshow:
 					doc = frappe.get_doc("Website Slideshow", v.slideshow)
 					v.slides = doc.slideshow_items
-					v.product_info = get_product_info_for_website(v.item_code, skip_quotation_creation=True)
+				v.product_info = get_product_info_for_website(v.item_code, skip_quotation_creation=True)
 			new_context.variant_details = vd
 		if self.has_custom_sales_attribute:
 			csas = self.custom_sales_attributes
