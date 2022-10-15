@@ -3,6 +3,15 @@ import json
 from erpnext.e_commerce.doctype.e_commerce_settings.e_commerce_settings import get_shopping_cart_settings
 from erpnext.utilities.product import get_price as frappe_price
 from aetesis.utilities.price_list import get_price_list
+
+@frappe.whitelist(allow_guest=True)
+def get_item_attrs_and_values(item_code):
+	doc = frappe.get_doc('Item', item_code)
+	attrs = {}
+	for attr in doc.attributes:
+		attrs[attr.attribute] = attr.attribute_value
+	return attrs
+
 @frappe.whitelist(allow_guest=True)
 def get_product_info_for_website(item_code, skip_quotation_creation=False):
 	"""get product price / stock info for website"""
