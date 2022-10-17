@@ -1,0 +1,10 @@
+<div class="mb-3" data-section="billing-address">
+    <div class="row no-gutters" data-fieldname="customer_address">
+        {% for address in billing_addresses %}
+            <div class="mr-3 mb-3 w-100" data-address-name="{{address.name}}" data-address-type="billing"
+                {% if doc.shipping_address_name == address.name %} data-active {% endif %}>
+                {% include "templates/includes/cart/address_picker_card.html" %}
+            </div>
+        {% endfor %}
+    </div>
+</div>

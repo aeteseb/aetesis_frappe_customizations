@@ -69,6 +69,7 @@ $.extend(shopping_cart, {
 	},
 
 	get_address_template(type) {
+		
 		return {
 			shipping: `<div class="mb-3" data-section="shipping-address">
 				<div class="row no-gutters" data-fieldname="shipping_address_name">
