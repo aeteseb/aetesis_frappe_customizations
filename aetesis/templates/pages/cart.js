@@ -28,6 +28,21 @@ $.extend(shopping_cart, {
 			$(d.get_field('address_picker').wrapper).html(
 				this.get_address_template(type)
 			);
+			frappe.call("aetesis.whitelisted.addresses.get_addresses", {user: frappe.session.user, type: type})
+			.then( r => {
+				console.log(r);
+				const addresses = r.message;
+				var $container = $('.address_container');
+				for (let address in addresses) {
+					var html = `<div class="mr-3 mb-3 w-100" data-address-name="${address.name}" data-address-type="${type}"`;
+					if (doc.shipping_address_name == address.name) html += 'data-active';
+					html += '>'
+					html += ADDRESSPICKERCARD;
+					html += '</div>'
+					$container.append(html);
+				}
+			}
+			)
 			d.show();
 		});
 	},
