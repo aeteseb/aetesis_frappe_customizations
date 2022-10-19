@@ -6,7 +6,7 @@ app_publisher = "Sebastian Beck"
 app_description = "Aetesis Customisations"
 app_email = "sebastian@aetesis.ch"
 app_license = "MIT"
-app_logo_url= "/assests/aetesis/images/app_logo.png"
+app_logo_url= "/assets/aetesis/images/app_logo.svg"
 
 template_apps = ['aetesis', 'erpnext', 'frappe']
 #update_website_context = ["aetesis.whitelisted.product_info.add_region_to_context"]
