@@ -7,7 +7,7 @@ def get_addresses(user, address_type):
     query = (
         frappe.qb.from_(i)
         .select(i.title, i.display)
-        .where(i.user? === user & i.type? === address_type)
+        .where(i.user == user & i.type == address_type)
     )
     items = query.run(as_dict=True)
 

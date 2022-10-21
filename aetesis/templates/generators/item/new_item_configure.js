@@ -91,7 +91,9 @@ class ItemConfigure {
 				var index = 0
 				for (let attribute in valid_options_for_attributes) {
 					const valid_options = valid_options_for_attributes[attribute];
+					console.log('attr', attribute, 'valid:', valid_options)
 					const options = this.get_options(attribute);
+					console.log(options)
 					const new_options = options.map(o => {
 						if (index < 2)  o.disabled = false;
 						else {o.disabled = !valid_options.includes(o.value)
@@ -193,6 +195,7 @@ class ItemConfigure {
 			})
 		} else if ($attr.is('form')) {
 			$attr.find('.radio_item').each(function() {
+				console.log('found', $(this).val())
 				options.push({'value':$(this).val()})
 				})
 		}
@@ -210,7 +213,7 @@ class ItemConfigure {
 				var val = $(this).find('.radio_item:checked').val();
 			}
 			if (for_item) res[attr_name] = val;
-			else if (attr_name != 'Finition') res[attr_name] = val;
+			else if (attr_name != 'Finish') res[attr_name] = val;
 		})
 		return res
 	}
@@ -315,6 +318,7 @@ frappe.ready(() => {
 	$('.price').each(function(){ items.push( $(this).data('item-code'))});
 	frappe.call('aetesis.whitelisted.product_info.get_prices', {item_codes: items, region : region}).then( r => {
 			prices = r.message;
+			console.log(r.message)
 			$('.price').each(function() {set_price($(this), prices)});
 		});
 });

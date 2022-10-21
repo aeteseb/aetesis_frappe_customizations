@@ -101,7 +101,7 @@ aetesis.ProductView =  class {
 		let me = this;
 		this.prepare_product_area_wrapper("grid");
 
-		new erpnext.ProductGrid({
+		new aetesis.ProductGrid({
 			items: items,
 			products_section: $("#products-grid-area"),
 			settings: settings,
@@ -113,7 +113,7 @@ aetesis.ProductView =  class {
 		let me = this;
 		this.prepare_product_area_wrapper("list");
 
-		new erpnext.ProductList({
+		new aetesis.ProductList({
 			items: items,
 			products_section: $("#products-list-area"),
 			settings: settings,
