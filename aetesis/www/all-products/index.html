@@ -47,35 +47,24 @@
 		});
 	});
 </script>
+
+{% endblock page_content %}
+
+{% block base_scripts %}
+<!-- js should be loaded in body! -->
 <script>
-	$(() => {
-	class ProductListing {
-		constructor() {
-			let me = this;
-			let is_item_group_page = $(".item-group-content").data("item-group");
-			this.item_group = is_item_group_page || null;
-
-			let view_type = localStorage.getItem("product_view") || "Grid View";
-
-			// Render Product Views, Filters & Search
-			new aetesis.ProductView({
-				view_type: view_type,
-				products_section: $('#product-listing'),
-				item_group: me.item_group
-			});
-
-			this.bind_card_actions();
-		}
-
-		bind_card_actions() {
-			aetesis.e_commerce.shopping_cart.bind_add_to_cart_action();
-			erpnext.e_commerce.wishlist.bind_wishlist_action();
-		}
-	}
-
-	new ProductListing();
-});
-
+		
+	frappe.boot = {{ boot }}
+	
+	// for backward compatibility of some libs
+	frappe.sys_defaults = frappe.boot.sysdefaults;
 </script>
+<!-- js should be loaded in body! -->
+{{ include_script("frappe-web.bundle.js") }}
+{{ include_script("controls.bundle.js") }}
+{{ include_script("dialog.bundle.js") }}
+{% endblock base_scripts %}
 
-{% endblock %}
+{% block script %}
+<script> {% include "www/all-products/index.js" %} </script>
+{% endblock script %}

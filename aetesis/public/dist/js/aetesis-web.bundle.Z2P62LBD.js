@@ -94,12 +94,14 @@
           window.location.href = res.message || "/login";
         });
       } else {
+        console.log("here");
         shopping_cart.freeze();
         return frappe.call({
           type: "POST",
-          method: "erpnext.e_commerce.shopping_cart.cart.update_cart",
+          method: "aetesis.e_commerce.shopping_cart.cart.update_cart",
           args: {
             item_code: opts.item_code,
+            region: opts.region,
             qty: opts.qty,
             additional_notes: opts.additional_notes !== void 0 ? opts.additional_notes : void 0,
             with_items: opts.with_items || 0
@@ -203,8 +205,10 @@
         $btn.parent().find(".go-to-cart-grid").removeClass("hidden");
         $btn.parent().find(".cart-indicator").removeClass("hidden");
         const item_code = $btn.data("item-code");
-        erpnext.e_commerce.shopping_cart.update_cart({
+        const region = getCookie2("region");
+        aetesis.e_commerce.shopping_cart.update_cart({
           item_code,
+          region,
           qty: 1
         });
       });
@@ -230,12 +234,27 @@
       }
     }
   });
+  function getCookie2(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(";");
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == " ") {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
 
   // ../aetesis/aetesis/public/js/wishlist.js
   frappe.provide("aetesis.e_commerce.wishlist");
   var wishlist = aetesis.e_commerce.wishlist;
-  frappe.provide("erpnext.e_commerce.shopping_cart");
-  var shopping_cart2 = erpnext.e_commerce.shopping_cart;
+  frappe.provide("aetesis.e_commerce.shopping_cart");
+  var shopping_cart2 = aetesis.e_commerce.shopping_cart;
   $.extend(wishlist, {
     set_wishlist_count: function(animate = false) {
       var wish_count = frappe.get_cookie("wish_count");
@@ -1397,4 +1416,4 @@
     }
   };
 })();
-//# sourceMappingURL=aetesis-web.bundle.GMYEUODA.js.map
+//# sourceMappingURL=aetesis-web.bundle.Z2P62LBD.js.map

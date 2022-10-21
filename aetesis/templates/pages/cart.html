@@ -113,6 +113,7 @@
 			{{ _('See past quotations') }}
 		</a>
 	{% endif %}
+	</div>
 </div>
 {% endif %}
 
@@ -131,4 +132,8 @@
 {{ include_script("frappe-web.bundle.js") }}
 {{ include_script("controls.bundle.js") }}
 {{ include_script("dialog.bundle.js") }}
+{% endblock %}
+
+{% block script %}
+<script> {% include "templates/pages/cart.js" %} </script>
 {% endblock %}

@@ -94,9 +94,9 @@
 					const region = getCookie('region');
 					aetesis.e_commerce.shopping_cart.update_cart({
 						item_code,
-						region,
 						qty: 1,
 						additional_notes,
+						region,
 						callback(r) {
 							$btn.prop('disabled', false);
 							if (r.message) {

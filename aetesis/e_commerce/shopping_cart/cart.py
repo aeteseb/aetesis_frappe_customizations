@@ -79,8 +79,8 @@ def get_billing_addresses(party=None):
 
 
 @frappe.whitelist()
-def place_order():
-	quotation = _get_cart_quotation()
+def place_order(region=None):
+	quotation = _get_cart_quotation(region=region)
 	cart_settings = frappe.db.get_value(
 		"E Commerce Settings", None, ["company", "allow_items_not_in_stock"], as_dict=1
 	)
@@ -138,9 +138,9 @@ def request_for_quotation():
 
 
 @frappe.whitelist()
-def update_cart(item_code, region, qty, additional_notes=None, with_items=False):
-	quotation = _get_cart_quotation()
-	
+def update_cart(item_code, qty, additional_notes=None, with_items=False, region=None):
+	quotation = _get_cart_quotation(region=region)
+
 	empty_card = False
 	qty = flt(qty)
 	if qty == 0:
@@ -166,7 +166,7 @@ def update_cart(item_code, region, qty, additional_notes=None, with_items=False)
 			quotation_items[0].qty = qty
 			quotation_items[0].additional_notes = additional_notes
 
-	apply_cart_settings(quotation=quotation)
+	apply_cart_settings(quotation=quotation, region=region)
 
 	quotation.flags.ignore_permissions = True
 	quotation.payment_schedule = []
@@ -322,7 +322,7 @@ def decorate_quotation_doc(doc):
 	return doc
 
 
-def _get_cart_quotation(party=None):
+def _get_cart_quotation(party=None, region=None):
 	"""Return the open Quotation of type "Shopping Cart" or make a new one"""
 	if not party:
 		party = get_party()
@@ -363,7 +363,7 @@ def _get_cart_quotation(party=None):
 
 		qdoc.flags.ignore_permissions = True
 		qdoc.run_method("set_missing_values")
-		apply_cart_settings(party, qdoc)
+		apply_cart_settings(party, qdoc, region)
 
 	return qdoc
 
@@ -408,7 +408,7 @@ def apply_cart_settings(party=None, quotation=None, region=None):
 
 	quotation.run_method("calculate_taxes_and_totals")
 
-	set_taxes(quotation, cart_settings)
+	set_taxes(quotation, cart_settings, region)
 
 	_apply_shipping_rule(party, quotation, cart_settings)
 
@@ -416,7 +416,7 @@ def apply_cart_settings(party=None, quotation=None, region=None):
 def set_price_list_and_rate(quotation, cart_settings, region=None):
 	"""set price list based on billing territory"""
 
-	_set_price_list(cart_settings, quotation)
+	_set_price_list(cart_settings, quotation, region)
 
 	# reset values
 	quotation.price_list_currency = (
@@ -439,10 +439,8 @@ def _set_price_list(cart_settings, quotation=None, region=None):
 
 	party_name = quotation.get("party_name") if quotation else get_party().get("name")
 	selling_price_list = None
-
 	if region:
 		selling_price_list = get_price_list(region)
-
 
 	# check if default customer price list exists
 	if not selling_price_list:
@@ -452,15 +450,14 @@ def _set_price_list(cart_settings, quotation=None, region=None):
 	# check default price list in shopping cart
 	if not selling_price_list:
 		selling_price_list = cart_settings.price_list
-
 	if quotation:
 		quotation.selling_price_list = selling_price_list
 	return selling_price_list
 
 
-def set_taxes(quotation, cart_settings):
+def set_taxes(quotation, cart_settings, region=None):
 	"""set taxes based on billing territory"""
-	from erpnext.accounts.party import set_taxes
+	from aetesis.whitelisted.party import set_taxes
 
 	customer_group = frappe.db.get_value("Customer", quotation.party_name, "customer_group")
 
@@ -475,8 +472,9 @@ def set_taxes(quotation, cart_settings):
 		billing_address=quotation.customer_address,
 		shipping_address=quotation.shipping_address_name,
 		use_for_shopping_cart=1,
+		region=region
 	)
-	#
+	#	
 	# 	# clear table
 	quotation.set("taxes", [])
 	#
