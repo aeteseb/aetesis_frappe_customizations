@@ -44,7 +44,6 @@ class CustomWebsiteItem(WebsiteItem):
 #				csa.options = json.loads(csa.options)
 #			new_context.custom_attributes = csas
 			
-		
 		return new_context
 	
 
@@ -60,12 +59,10 @@ class CustomWebsiteItem(WebsiteItem):
 		)
 		items = query.run(as_dict=True)
 		
-		print(items)
 		details = []
 		
 		if self.variant_details != []:
 			existing = [v.item_code for v in self.variant_details]
-			print(existing)
 			
 			new_items = []
 			
@@ -95,27 +92,11 @@ class CustomWebsiteItem(WebsiteItem):
 		attributes = []
 		
 		for attr in attrs:
-			print('attr', attr.attribute, 'val', attr.attribute_value)
 			attributes.append({'attribute': attr.attribute, 'attribute_value': attr.attribute_value})
-		print('ATTRS UNORDRD', attributes)
-		attributes.sort(key=attr_order)
 		
-		print('ATTRS', attributes)
 		return json.dumps(attributes)
 		
-	def set_variant_tree(self):
-		vd = self.variant_details
-		
-		variants = []
-		for v in vd:
-			if v.published:
-				attrs = json.loads(v.attributes)
-				item_code = v.item_code
-				variants.append((item_code, attrs))
-		
-		tree = get_tree(variants)
-		self.variant_tree = tree
-		return tree
+
 		
 
 
@@ -257,7 +238,6 @@ def update_variant_details(doc: "Website Item"):
 	
 	website_item = frappe.get_doc("Website Item", doc.get("name"))
 	website_item.set_variant_details()
-	website_item.set_variant_tree()
 	website_item.save()
 
 @frappe.whitelist()
