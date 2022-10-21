@@ -41,7 +41,19 @@ class Attribute():
         if i.name == name:
           return i
       return False
+    
+    def get_parents(self, result=""):
+      print(self)
+      print(type(self), self.parent.name, self.parent.parent)
+      if self.parent.name == 'root': return '/root'
+      result += '/' + self.parent.name
+      result += self.parent.parent.get_parents(result)
+      print('res', result)
+      result = result.split('/').pop(0)
+      print(result)
 
+      return result
+    
     def existing_value(self, value):
       pass
       
@@ -60,9 +72,10 @@ class Tree():
 
     if attrs == []:
       return ""
-
+    print(attrs)
       
     for attr in attrs:
+      print(attr)
       string += '{ "label": "' + str(attr[0]) + '", "parent": "' + str(attr[0].parent) + '", "values": ['
       for val in attr[1]:
         string += ' {"val": "' + str(val[0])
@@ -183,5 +196,5 @@ def get_tree(variants):
 
   for v in variants:
     tree.insert_variant(v[0], v[1])
-
+  print('tree', tree.print_in_brackets())
   return tree.print_in_brackets()

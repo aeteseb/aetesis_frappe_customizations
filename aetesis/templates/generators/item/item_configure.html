@@ -2,13 +2,14 @@
 {% set cart_settings = shopping_cart.cart_settings %}
 {% from "aetesis/templates/includes/add_buttons.html" import add_buttons %}
 
+
 {% if shopping_cart and shopping_cart.cart_settings.enabled %}
 	{{ add_buttons(variant_details, shopping_cart) }}
 {% endif %}
 
 <div class="mt-5 mb-6">
 	{% if cart_settings.enable_variants | int %}
-	<div class="col variant-container" data-name="{{ doc.name }}">
+	<div class="col variant-container" data-name="{{ doc.name }}" data-item-code="{{ doc.item_code }}">
 	</div>
 	{% endif %}
 	{% if cart_settings.show_contact_us_button %}
@@ -16,6 +17,6 @@
 	{% endif %}
 </div>
 <script>
-{% include "templates/generators/item/item_configure.js" %}
+{% include "templates/generators/item/new_item_configure.js" %}
 </script>
 {% endif %}

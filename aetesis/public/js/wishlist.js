@@ -1,8 +1,8 @@
 frappe.provide("aetesis.e_commerce.wishlist");
 var wishlist = aetesis.e_commerce.wishlist;
 
-frappe.provide("erpnext.e_commerce.shopping_cart");
-var shopping_cart = erpnext.e_commerce.shopping_cart;
+frappe.provide("aetesis.e_commerce.shopping_cart");
+var shopping_cart = aetesis.e_commerce.shopping_cart;
 
 $.extend(wishlist, {
 	set_wishlist_count: function(animate=false) {

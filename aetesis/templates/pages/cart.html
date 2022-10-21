@@ -38,29 +38,23 @@
 
 					{% if cart_settings.enable_checkout or cart_settings.show_price_in_quotation %}
 						<tfoot class="cart-tax-items">
-							{% include "templates/includes/cart/cart_items_total.html" %}
+							{% include "templates/includes/cart/cart_items_total.html" %} 
 						</tfoot>
 					{% endif %}
 				</table>
 
 				<div class="row mt-2">
 					<div class="col-3">
-						{% if cart_settings.enable_checkout %}
-							<a class="btn btn-primary-light font-md" href="/orders">
-								{{ _('Past Orders') }}
-							</a>
-						{% else %}
-							<a class="btn btn-primary-light font-md" href="/quotations">
-								{{ _('Past Quotes') }}
-							</a>
-						{% endif %}
+						<a class="btn btn-primary-light mr-2 font-md" href="/all-products">
+							{{ _('Continue Shopping') }}
+						</a>
 					</div>
 					<div class="col-9">
 						{% if doc.items %}
 						<div class="place-order-container">
-							<a class="btn btn-primary-light mr-2 font-md" href="/all-products">
-								{{ _('Continue Shopping') }}
-							</a>
+							<button class="btn btn-primary btn-place-order font-md w-50" type="button">
+								{{ _('Place Order') }}
+							</button>
 						</div>
 						{% endif %}
 					</div>
@@ -125,6 +119,14 @@
 {% endblock %}
 
 {% block base_scripts %}
+<!-- js should be loaded in body! -->
+<script>
+		
+	frappe.boot = {{ boot }}
+	
+	// for backward compatibility of some libs
+	frappe.sys_defaults = frappe.boot.sysdefaults;
+</script>
 <!-- js should be loaded in body! -->
 {{ include_script("frappe-web.bundle.js") }}
 {{ include_script("controls.bundle.js") }}
