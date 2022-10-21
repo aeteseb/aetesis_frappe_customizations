@@ -9,7 +9,6 @@ def is_wished(item_code):
 @frappe.whitelist()
 def add_to_wishlist(item_code, parent=None):
 	"""Insert Item into wishlist."""
-
 	if frappe.db.exists("Wishlist Item", {"item_code": item_code, "parent": frappe.session.user}):
 		return
 

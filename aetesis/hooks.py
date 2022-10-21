@@ -6,16 +6,24 @@ app_publisher = "Sebastian Beck"
 app_description = "Aetesis Customisations"
 app_email = "sebastian@aetesis.ch"
 app_license = "MIT"
-app_logo_url= "/assets/aetesis/images/app_logo.svg"
+app_logo_url= "/assests/aetesis/images/app_logo.svg"
 
-template_apps = ['aetesis', 'erpnext', 'frappe']
+template_apps = ['aetesis', 'erpnext', 'payments', 'frappe']
+update_website_context = [
+	"aetesis.e_commerce.shopping_cart.utils.update_website_context",
+]
+on_session_creation = [
+	"aetesis.e_commerce.shopping_cart.utils.set_cart_count",
+]
+on_logout = "aetesis.e_commerce.shopping_cart.utils.clear_cart_count"
+my_account_context = "aetesis.e_commerce.shopping_cart.utils.update_my_account_context"
 #update_website_context = ["aetesis.whitelisted.product_info.add_region_to_context"]
 # Includes in <head>
 # ------------------
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/aetesis/css/aetesis.css"
-# app_include_js = "/assets/aetesis/js/aetesis.js"
+app_include_js =  "/assets/js/aetesis.min.js"
 
 # include js, css files in header of web template
 web_include_css = "/assets/aetesis/css/aetesis.css"
@@ -29,7 +37,7 @@ web_include_js = "aetesis-web.bundle.js"
 # webform_include_css = {"doctype": "public/css/doctype.css"}
 
 # include js in page
-# page_js = {"page" : "public/js/file.js"}
+page_js = {"cart" : "/templates/pages/cart.js"}
 
 # include js in doctype views
 #doctype_js = {"Purchase Order" : "public/js/purchase_order.js"}

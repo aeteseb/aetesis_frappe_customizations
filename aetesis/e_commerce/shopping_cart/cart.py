@@ -1,6 +1,7 @@
 # Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
 # License: GNU General Public License v3. See license.txt
 
+from aetesis.utilities.price_list import get_price_list
 import frappe
 import frappe.defaults
 from frappe import _, throw
@@ -137,9 +138,9 @@ def request_for_quotation():
 
 
 @frappe.whitelist()
-def update_cart(item_code, qty, additional_notes=None, with_items=False):
+def update_cart(item_code, region, qty, additional_notes=None, with_items=False):
 	quotation = _get_cart_quotation()
-
+	
 	empty_card = False
 	qty = flt(qty)
 	if qty == 0:
@@ -395,7 +396,7 @@ def update_party(fullname, company_name=None, mobile_no=None, phone=None):
 		qdoc.save()
 
 
-def apply_cart_settings(party=None, quotation=None):
+def apply_cart_settings(party=None, quotation=None, region=None):
 	if not party:
 		party = get_party()
 	if not quotation:
@@ -403,7 +404,7 @@ def apply_cart_settings(party=None, quotation=None):
 
 	cart_settings = frappe.get_doc("E Commerce Settings")
 
-	set_price_list_and_rate(quotation, cart_settings)
+	set_price_list_and_rate(quotation, cart_settings, region)
 
 	quotation.run_method("calculate_taxes_and_totals")
 
@@ -412,7 +413,7 @@ def apply_cart_settings(party=None, quotation=None):
 	_apply_shipping_rule(party, quotation, cart_settings)
 
 
-def set_price_list_and_rate(quotation, cart_settings):
+def set_price_list_and_rate(quotation, cart_settings, region=None):
 	"""set price list based on billing territory"""
 
 	_set_price_list(cart_settings, quotation)
@@ -432,16 +433,21 @@ def set_price_list_and_rate(quotation, cart_settings):
 		frappe.local.cookie_manager.set_cookie("selling_price_list", quotation.selling_price_list)
 
 
-def _set_price_list(cart_settings, quotation=None):
+def _set_price_list(cart_settings, quotation=None, region=None):
 	"""Set price list based on customer or shopping cart default"""
 	from erpnext.accounts.party import get_default_price_list
 
 	party_name = quotation.get("party_name") if quotation else get_party().get("name")
 	selling_price_list = None
 
+	if region:
+		selling_price_list = get_price_list(region)
+
+
 	# check if default customer price list exists
-	if party_name and frappe.db.exists("Customer", party_name):
-		selling_price_list = get_default_price_list(frappe.get_doc("Customer", party_name))
+	if not selling_price_list:
+		if party_name and frappe.db.exists("Customer", party_name):
+			selling_price_list = get_default_price_list(frappe.get_doc("Customer", party_name))
 
 	# check default price list in shopping cart
 	if not selling_price_list:
@@ -449,7 +455,6 @@ def _set_price_list(cart_settings, quotation=None):
 
 	if quotation:
 		quotation.selling_price_list = selling_price_list
-
 	return selling_price_list
 
 

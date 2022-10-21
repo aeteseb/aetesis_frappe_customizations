@@ -30,20 +30,16 @@ frappe.ready(() => {
 	var items = [];
 	var prices;
 	$('.price').each(function(){ items.push( $(this).data('item-code'))});
-	console.log(items);
 	frappe.call('aetesis.whitelisted.product_info.get_prices', {item_codes: items, region : region}).then( r => {
 			prices = r.message;
-			console.log(prices);
 		$('.price').each(function() {set_price($(this), prices)});
 		});
 	
 })
 
 function set_price($span, prices) {
-console.log($span)
 	prices.forEach( item => {
 		if (item.item_code == $span.data('item-code') && item.price) {
-		console.log('pirce', item.price.formatted_price)
 			$span.html( item.price.formatted_price)
 		}
 	});
@@ -51,7 +47,7 @@ console.log($span)
 
 function update_view(e=null, sel=null) {
 	checked = []
-	$('.radio_item:checked').each(function() {
+	$('.radio_item:checked').each(function() { 
 		checked.push($(this).attr('id').split('/')[1]);
 		});
 	update_variant_selector(checked);
@@ -86,13 +82,34 @@ function update_visibility(selected){
 function update_variant_selector(checked) {
 	
 	$('.attribute:not(:first)').each( function() {
-		if ( !checked.includes( $(this).data("parent") ) ) {
-			$(this).hide();
-		} else {
+		if ( checked.includes( $(this).data("parent") ) ) {
 			$(this).show();
+		} else {
+			$(this).hide();
 		}
 	});
+	
+	$('.attribute:not(:first):visible').each(function() {
+		var parent_name = $(this).data("parent");
+		console.log('will it work?', checked[0], parent_name);
+		const id = `#${checked[0]}/${parent_name}`;
+		console.log(id);
+		/*$test = $(id).slice(0);
+		console.log($test);
+		if ($test && $test.is(':visible')) {
+			console.log('it works!', checked[0], parent_name);
+		}*/
+	})
+	
 	return
+}
+
+function get_parent($div_attr, first_checked) {
+	var parent_name = $div_attr.data("parent")
+	console.log('will it work?', first_checked, $div_attr)
+	if ($(`${first_checked}/${parent_name}`).is(':visible')) {
+		console.log('it works!', first_checked, parent_name)
+	}
 }
 
 function get_child_attributes(attributes) {
@@ -109,7 +126,7 @@ function get_child_attributes(attributes) {
 function build_selector(children, $container, no_default=false) {
 	var new_children = [];
 		
-	for (let inc = 0; inc < 5; inc++) {
+	for (let inc = 0; inc < children.length; inc++) {
 		children.forEach(attribute => {
 				build_attribute(attribute, $container, no_default);
 		});
@@ -123,7 +140,7 @@ function build_selector(children, $container, no_default=false) {
 
 function build_attribute(attribute, $container, no_default=false) {
 	parent = attribute.parent.replace(' ','_') || 'root';
-	html= `<div class="row attribute" data-parent=${parent}><form class="col"><div class="row attribute-label">${attribute.label}</div><div class="row atrribute-values">`;
+	html= `<div id="${parent}/${attribute.label}" class="row attribute" data-parent=${parent}><form class="col"><div class="row attribute-label">${attribute.label}</div><div class="row atrribute-values">`;
 	html += attribute.values.map((value, index) => {
 			var sub_html = `<div class="col attribute-value"><input type="radio" class="radio_item" name="${attribute.label}" value="${value.item_code ||value.val.replace(' ','_')}" id="${parent}/${value.val.replace(' ','_')}"`;
 			if (!no_default && index === 0) sub_html += 'checked="true"';

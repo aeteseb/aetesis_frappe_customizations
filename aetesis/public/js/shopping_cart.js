@@ -83,12 +83,14 @@ $.extend(shopping_cart, {
 				window.location.href = res.message || "/login";
 			});
 		} else {
+			console.log('here');
 			shopping_cart.freeze();
 			return frappe.call({
 				type: "POST",
-				method: "erpnext.e_commerce.shopping_cart.cart.update_cart",
+				method: "aetesis.e_commerce.shopping_cart.cart.update_cart",
 				args: {
 					item_code: opts.item_code,
+					region: opts.region,
 					qty: opts.qty,
 					additional_notes: opts.additional_notes !== undefined ? opts.additional_notes : undefined,
 					with_items: opts.with_items || 0
@@ -209,8 +211,10 @@ $.extend(shopping_cart, {
 			$btn.parent().find('.cart-indicator').removeClass('hidden');
 
 			const item_code = $btn.data('item-code');
-			erpnext.e_commerce.shopping_cart.update_cart({
+			const region = getCookie('region');
+			aetesis.e_commerce.shopping_cart.update_cart({
 				item_code,
+				region,
 				qty: 1
 			});
 
@@ -241,3 +245,19 @@ $.extend(shopping_cart, {
 		}
 	}
 });
+
+function getCookie(cname) {
+	let name = cname + "=";
+	let decodedCookie = decodeURIComponent(document.cookie);
+	let ca = decodedCookie.split(';');
+	for(let i = 0; i <ca.length; i++) {
+	  let c = ca[i];
+	  while (c.charAt(0) == ' ') {
+		c = c.substring(1);
+	  }
+	  if (c.indexOf(name) == 0) {
+		return c.substring(name.length, c.length);
+	  }
+	}
+	return "";
+  }

@@ -2,8 +2,8 @@
 // License: GNU General Public License v3. See license.txt
 
 // JS exclusive to /cart page
-frappe.provide("erpnext.e_commerce.shopping_cart");
-var shopping_cart = erpnext.e_commerce.shopping_cart;
+frappe.provide("aetesis.e_commerce.shopping_cart");
+var shopping_cart = aetesis.e_commerce.shopping_cart;
 
 $.extend(shopping_cart, {
 	show_error: function(title, text) {
@@ -28,7 +28,44 @@ $.extend(shopping_cart, {
 			$(d.get_field('address_picker').wrapper).html(
 				this.get_address_template(type)
 			);
+			frappe.call("aetesis.whitelisted.addresses.get_addresses", {user: frappe.session.user, type: type})
+			.then( r => {
+				console.log(r);
+				const addresses = r.message;
+				var $container = $('.address_container');
+				for (let address in addresses) {
+					var html = `<div class="mr-3 mb-3 w-100" data-address-name="${address.name}" data-address-type="${type}"`;
+					if (doc.shipping_address_name == address.name) html += 'data-active';
+					html += '>'
+					html += ADDRESSPICKERCARD;
+					html += '</div>'
+					$container.append(html);
+				}
+			}
+			)
 			d.show();
+		});
+	},
+
+	shopping_cart_update: function({item_code, qty, cart_dropdown, additional_notes}) {
+		shopping_cart.update_cart({
+			item_code,
+			qty,
+			additional_notes,
+			with_items: 1,
+			btn: this,
+			callback: function(r) {
+				if(!r.exc) {
+					$(".cart-items").html(r.message.items);
+					$(".cart-tax-items").html(r.message.total);
+					$(".payment-summary").html(r.message.taxes_and_totals);
+					shopping_cart.set_cart_count();
+
+					if (cart_dropdown != true) {
+						$(".cart-icon").hide();
+					}
+				}
+			},
 		});
 	},
 
@@ -69,6 +106,7 @@ $.extend(shopping_cart, {
 	},
 
 	get_address_template(type) {
+		
 		return {
 			shipping: `<div class="mb-3" data-section="shipping-address">
 				<div class="row no-gutters" data-fieldname="shipping_address_name">
@@ -157,7 +195,7 @@ $.extend(shopping_cart, {
 			const $remove_cart_item_btn = $(e.currentTarget);
 			var item_code = $remove_cart_item_btn.data("item-code");
 
-			shopping_cart.shopping_cart_update({
+			aetesis.e_commerce.shopping_cart.shopping_cart_update({
 				item_code: item_code,
 				qty: 0
 			});
