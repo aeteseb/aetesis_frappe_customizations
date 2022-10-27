@@ -28,31 +28,17 @@ $.extend(shopping_cart, {
 			$(d.get_field('address_picker').wrapper).html(
 				this.get_address_template(type)
 			);
-			frappe.call("aetesis.whitelisted.addresses.get_addresses", {user: frappe.session.user, type: type})
-			.then( r => {
-				console.log(r);
-				const addresses = r.message;
-				var $container = $('.address_container');
-				for (let address in addresses) {
-					var html = `<div class="mr-3 mb-3 w-100" data-address-name="${address.name}" data-address-type="${type}"`;
-					if (doc.shipping_address_name == address.name) html += 'data-active';
-					html += '>'
-					html += ADDRESSPICKERCARD;
-					html += '</div>'
-					$container.append(html);
-				}
-			}
-			)
 			d.show();
 		});
 	},
 
-	shopping_cart_update: function({item_code, qty, cart_dropdown, additional_notes}) {
+	shopping_cart_update: function({item_code, qty, cart_dropdown, additional_notes, region}) {
 		shopping_cart.update_cart({
 			item_code,
 			qty,
 			additional_notes,
 			with_items: 1,
+			region,
 			btn: this,
 			callback: function(r) {
 				if(!r.exc) {
@@ -144,11 +130,12 @@ $.extend(shopping_cart, {
 	},
 
 	bind_change_qty: function() {
+		const region = getCookie('country');
 		// bind update button
 		$(".cart-items").on("change", ".cart-qty", function() {
 			var item_code = $(this).attr("data-item-code");
 			var newVal = $(this).val();
-			shopping_cart.shopping_cart_update({item_code, qty: newVal});
+			shopping_cart.shopping_cart_update({item_code, qty: newVal, region: region});
 		});
 
 		$(".cart-items").on('click', '.number-spinner button', function () {
@@ -171,7 +158,8 @@ $.extend(shopping_cart, {
 			shopping_cart.shopping_cart_update({
 				item_code,
 				qty: newVal,
-				additional_notes: notes
+				additional_notes: notes,
+				region: region
 			});
 		});
 	},
@@ -182,10 +170,12 @@ $.extend(shopping_cart, {
 			const item_code = $textarea.attr('data-item-code');
 			const qty = $textarea.closest('tr').find('.cart-qty').val();
 			const notes = $textarea.val();
+			const region = getCookie('country');
 			shopping_cart.shopping_cart_update({
 				item_code,
 				qty,
-				additional_notes: notes
+				additional_notes: notes,
+				region: region
 			});
 		});
 	},
@@ -194,10 +184,11 @@ $.extend(shopping_cart, {
 		$(".cart-items").on("click", ".remove-cart-item", (e) => {
 			const $remove_cart_item_btn = $(e.currentTarget);
 			var item_code = $remove_cart_item_btn.data("item-code");
-
-			aetesis.e_commerce.shopping_cart.shopping_cart_update({
+			const region = getCookie('country');
+			shopping_cart.shopping_cart_update({
 				item_code: item_code,
-				qty: 0
+				qty: 0, 
+				region: region
 			});
 		});
 	},
@@ -254,7 +245,7 @@ $.extend(shopping_cart, {
 
 		return frappe.call({
 			type: "POST",
-			method: "erpnext.e_commerce.shopping_cart.cart.place_order",
+			method: "aetesis.e_commerce.shopping_cart.cart.place_order",
 			btn: btn,
 			callback: function(r) {
 				if(r.exc) {
@@ -339,3 +330,19 @@ function show_terms() {
 	var html = $(".cart-terms").html();
 	frappe.msgprint(html);
 }
+
+function getCookie(cname) {
+	let name = cname + "=";
+	let decodedCookie = decodeURIComponent(document.cookie);
+	let ca = decodedCookie.split(';');
+	for(let i = 0; i <ca.length; i++) {
+	  let c = ca[i];
+	  while (c.charAt(0) == ' ') {
+		c = c.substring(1);
+	  }
+	  if (c.indexOf(name) == 0) {
+		return c.substring(name.length, c.length);
+	  }
+	}
+	return "";
+  }

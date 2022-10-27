@@ -211,7 +211,7 @@ $.extend(shopping_cart, {
 			$btn.parent().find('.cart-indicator').removeClass('hidden');
 
 			const item_code = $btn.data('item-code');
-			const region = getCookie('region');
+			const region = getCookie('country');
 			aetesis.e_commerce.shopping_cart.update_cart({
 				item_code,
 				region,

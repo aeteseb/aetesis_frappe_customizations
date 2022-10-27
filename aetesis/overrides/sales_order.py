@@ -6,11 +6,6 @@ import frappe
 from datetime import timedelta
 
 class CustomSalesOrder(SalesOrder):
-	
-	def on_submit(self):
-		super().on_submit()
-			
-		self.sort_items_and_create_requests()
 		
 	def sort_items_and_create_requests(self):
 		purchasing_items = []
@@ -34,7 +29,6 @@ class CustomSalesOrder(SalesOrder):
 		
 		
 		#purchasing_str = self.create_purchasing_str()
-		print(purchasing_items)
 		#make_material_request(purchasing_items)
 		
 	def item_needs_purchasing(self, item):
@@ -59,7 +53,7 @@ class CustomSalesOrder(SalesOrder):
 			if count < len(items) : res += ','
 			
 		res += ']}'
-		print(res)
+
 		return res
 #{"include_exploded_items":0,"ignore_existing_ordered_qty":0,"items":[{"name":"bf67788718","item_code":"Test Fini-AG","description":"Test-AG","bom":"BOM-Test Fini-AG-001","warehouse":"Stores - Æ","pending_qty":1,"required_qty":1,"sales_order_item":"bf67788718","idx":1},{"name":"05e935d68e","item_code":"Test Fini-AU J","description":"Test-AU J","bom":"","warehouse":"Stores - Æ","pending_qty":2,"required_qty":2,"sales_order_item":"05e935d68e","idx":2}]}
 
