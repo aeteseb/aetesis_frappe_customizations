@@ -7,7 +7,11 @@
 <li class="nav-item dropdown {% if submenu %} dropdown-submenu {% endif %}">
 	<a class="nav-link dropdown-toggle" href="#" id="{{ dropdown_id }}" role="button"
 		data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		{% if item.icon %}
+		<img id="nav-icon-{{ dropdown_id }}" class="nav_icon" src="{{ item.icon }}" style="width:2rem; height: 2rem"></img>
+		{% else %}
 		{{ _(item.label) }}
+		{% endif %}
 	</a>
   	<ul class="dropdown-menu" aria-labelledby="{{ dropdown_id }}">
 		{% for child in item.child_items %}
@@ -20,7 +24,11 @@
 <li class="dropdown {% if submenu %} dropdown-submenu {% endif %}">
 	<a class="dropdown-item dropdown-toggle" href="#" id="{{ dropdown_id }}" role="button"
 		data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		{% if item.icon %}
+		<img id="nav-icon-{{ dropdown_id }}" class="nav_icon" src="{{ item.icon }}" style="width:2rem; height: 2rem"></img>
+		{% else %}
 		{{ _(item.label) }}
+		{% endif %}
 	</a>
 	<ul class="dropdown-menu" aria-labelledby="{{ dropdown_id }}">
 		{% for child in item.child_items %}
@@ -38,13 +46,21 @@
 <li class="nav-item">
 	<a class="nav-link" {% if url != '' %} href="{{ url }}" {% endif %}
 		{% if item.open_in_new_tab %} target="_blank" {% endif %} style="cursor:pointer">
+		{% if item.icon %}
+		<img id="nav-icon-{{ dropdown_id }}" class="nav_icon" src="{{ item.icon }}" style="width:2rem; height: 2rem"></img>
+		{% else %}
 		{{ _(item.label) }}
+		{% endif %}
 	</a>
 </li>
 {% else %}
 <a class="dropdown-item" href="{{ url }}"
 	{% if item.open_in_new_tab %} target="_blank" {% endif %}>
+	{% if item.icon %}
+	<img id="nav-icon-{{ dropdown_id }}" class="nav_icon" src="{{ item.icon }}" style="width:2rem; height: 2rem"></img>
+	{% else %}
 	{{ _(item.label) }}
+	{% endif %}
 </a>
 {% endif %}
 
