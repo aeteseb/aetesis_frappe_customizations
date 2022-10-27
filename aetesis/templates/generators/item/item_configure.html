@@ -16,7 +16,11 @@
 		{% include "templates/generators/item/item_inquiry.html" %}
 	{% endif %}
 </div>
-<script>
-{% include "templates/generators/item/new_item_configure.js" %}
-</script>
+
 {% endif %}
+
+{% block script%}
+<script>
+	{% include "templates/generators/item/new_item_configure.js" %}
+</script>
+{% endblock %}

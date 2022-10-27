@@ -1,9 +1,8 @@
 import frappe
 
 def get_price_list(region):
-	chart = frappe.get_doc('Price List Chart')
-	for country in chart.correspondance:
-		print(region.lower(), country.country_code)
-		if region.lower() == country.country_code:
+	countries = frappe.get_all('Website Region', fields=['country', 'price_list'])
+	for country in countries:
+		if region == country.country:
 			return country.price_list
 	return False

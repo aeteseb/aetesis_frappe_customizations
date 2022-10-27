@@ -130,7 +130,7 @@ $.extend(shopping_cart, {
 	},
 
 	bind_change_qty: function() {
-		const region = getCookie('region');
+		const region = getCookie('country');
 		// bind update button
 		$(".cart-items").on("change", ".cart-qty", function() {
 			var item_code = $(this).attr("data-item-code");
@@ -170,7 +170,7 @@ $.extend(shopping_cart, {
 			const item_code = $textarea.attr('data-item-code');
 			const qty = $textarea.closest('tr').find('.cart-qty').val();
 			const notes = $textarea.val();
-			const region = getCookie('region');
+			const region = getCookie('country');
 			shopping_cart.shopping_cart_update({
 				item_code,
 				qty,
@@ -184,7 +184,7 @@ $.extend(shopping_cart, {
 		$(".cart-items").on("click", ".remove-cart-item", (e) => {
 			const $remove_cart_item_btn = $(e.currentTarget);
 			var item_code = $remove_cart_item_btn.data("item-code");
-			const region = getCookie('region');
+			const region = getCookie('country');
 			shopping_cart.shopping_cart_update({
 				item_code: item_code,
 				qty: 0, 

@@ -26,7 +26,7 @@ frappe.ready(() => {
       		update_view(null, selected);
 	});
 	
-	const region = getCookie('region');
+	const region = getCookie('country');
 	var items = [];
 	var prices;
 	$('.price').each(function(){ items.push( $(this).data('item-code'))});

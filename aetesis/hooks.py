@@ -169,6 +169,7 @@ override_whitelisted_methods = {
 	"erpnext.e_commerce.doctype.wishlist.wishlist.add_to_wishlist" : "aetesis.whitelisted.wishlist.add_to_wishlist",
 	"erpnext.e_commerce.shopping_cart.product_info.get_product_info_for_website" : "aetesis.whitelisted.product_info.get_product_info_for_website",
 	"erpnext.templates.pages.cart": "aetesis.templates.pages.cart",
+	"erpnext.accounts.doctype.payment_request.payment_request.make_payment_request" : "aetesis.whitelisted.payment_request.make_payment_request"
 #	"frappe.core.doctype.user.user.sign_up" : "aetesis.whitelisted.user.sign_up",
  }
 #

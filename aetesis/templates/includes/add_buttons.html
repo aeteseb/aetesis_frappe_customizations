@@ -91,7 +91,7 @@
 					$btn.prop('disabled', true);
 					const item_code = $btn.data('item-code');
 					const additional_notes = $btn.data('csas') || undefined;
-					const region = getCookie('region');
+					const region = getCookie('country');
 					aetesis.e_commerce.shopping_cart.update_cart({
 						item_code,
 						qty: 1,

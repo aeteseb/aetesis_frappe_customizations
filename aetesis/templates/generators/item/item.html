@@ -71,3 +71,17 @@
 </div>
 {% endblock %}
 
+{% block base_scripts %}
+<!-- js should be loaded in body! -->
+<script>
+		
+	frappe.boot = {{ boot }}
+	
+	// for backward compatibility of some libs
+	frappe.sys_defaults = frappe.boot.sysdefaults;
+</script>
+<!-- js should be loaded in body! -->
+{{ include_script("frappe-web.bundle.js") }}
+{{ include_script("controls.bundle.js") }}
+{{ include_script("dialog.bundle.js") }}
+{% endblock %}
