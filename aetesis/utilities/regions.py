@@ -1,4 +1,5 @@
 import frappe
+from frappe.translate import set_preferred_language_cookie
 
 @frappe.whitelist(allow_guest=True)
 def get_countries_and_languages():
@@ -14,4 +15,9 @@ def get_countries_and_languages():
 
 def get_dict(lang):
     doc = frappe.get_doc('Language', lang)
-    return {'language': doc.language_name, 'flag': doc.flag, 'countries': doc.countries}
+    return {'language': doc.language_name, 'flag': doc.flag, 'countries': doc.countries, 'code': doc.language_code}
+
+@frappe.whitelist(allow_guest=True)
+def set_language(preferred_language):
+    print(preferred_language)
+    return set_preferred_language_cookie(preferred_language)
