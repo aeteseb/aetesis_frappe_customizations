@@ -33,17 +33,42 @@
       }],
       primary_action_label: __("Confirm"),
       primary_action: () => {
-        const $card = d2.$wrapper.find(".region-card.active");
-        const country_name = $card.closest("[data-country-name]").attr("data-country-name");
-        document.cookie = "country=" + country_name + "; samesite=Lax; path=/";
-        d2.hide();
-        window.location.reload();
+        const $ccard = d2.$wrapper.find(".country-card.active");
+        const country_name = $ccard.closest("[data-country-name]").attr("data-country-name");
+        const $lcard = d2.$wrapper.find(".language-card.active");
+        const language_code = $lcard.closest("[data-language-code]").attr("data-language-code");
+        const language_name = $lcard.closest("[data-language-name]").attr("data-language-name");
+        if (language_code && country_name) {
+          document.cookie = "country=" + country_name + "; samesite=Lax; path=/";
+          document.cookie = "preferred_language_name=" + language_name + "; samesite=Lax; path=/";
+          frappe.call("aetesis.utilities.regions.set_language", {
+            preferred_language: language_code
+          }).then(() => {
+            d2.hide();
+            window.location.reload();
+          });
+        } else if (!language_code && country_name) {
+          frappe.show_alert({
+            message: __("Please select a language"),
+            indicator: "red"
+          });
+        } else if (language_code && !country_name) {
+          frappe.show_alert({
+            message: __("Please select a country"),
+            indicator: "red"
+          });
+        } else {
+          frappe.show_alert({
+            message: __("Please select a country and a language"),
+            indicator: "red"
+          });
+        }
       }
     });
     return d2;
   }
   function get_Card(thing, type) {
-    return `<div class="card ${type}-card h-100">
+    return `<div class="card address-card ${type}-card h-100">
 	<div class="check" style="position: absolute; right: 15px; top: 15px;">
 		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
 	</div>
@@ -53,12 +78,12 @@
 </div>`;
   }
   function get_country_html(countries) {
-    let country = getCookie("country");
+    let country2 = getCookie("country");
     var html = `<div class="col mb-3" data-section="countries"><div class="row no-gutters" >`;
     countries.forEach((c) => {
       var subhtml = `<div class="mr-3 mb-3 w-100" data-country-name="${c.country}" data-region-type="country"`;
-      console.log(c, country);
-      c.country === country ? subhtml += "data-active>" : subhtml += ">";
+      console.log(c, country2);
+      c.country === country2 ? subhtml += "data-active>" : subhtml += ">";
       console.log(subhtml, get_Card(c, "counrty"));
       subhtml += get_Card(c, "country");
       subhtml += "</div>";
@@ -67,11 +92,88 @@
     html += "</div></div>";
     return html;
   }
-  $(document).on("click", ".country-card", (e) => {
+  function get_language_html(languages) {
+    let language = getCookie("preferred_language_name") || "English";
+    var html = `<div class="col mb-3" data-section="languages"><div class="row no-gutters" >`;
+    languages.forEach((lang) => {
+      var subhtml = `<div class="mr-3 mb-3 w-100" data-language-name="${lang.language}" data-language-code="${lang.code}" data-region-type="country"`;
+      lang.language === language ? subhtml += "data-active>" : subhtml += ">";
+      subhtml += get_Card(lang, "language");
+      subhtml += "</div>";
+      html += subhtml;
+    });
+    html += get_less_or_more_button();
+    html += "</div></div>";
+    return html;
+  }
+  function get_less_or_more_button() {
+    return `<div class="card more-or-less h-100 w-100" style="cursor:pointer">
+	<div class="card-body">
+  <symbol xmlns="http://www.w3.org/2000/svg" id="icon-add">
+		<path d="M8 3v10M3 8h10" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+	</symbol><span id="less-or-more-text" class="card-title align-center"> Show More</span>
+	</div>
+</div>`;
+  }
+  function show_recommended(country2) {
+    const all_langs = document.languages;
+    console.log(all_langs);
+    $(".language-card").each(function() {
+      var lang = $(this).parent().data("language-name");
+      console.log("card:", lang);
+      me = this;
+      var show = false;
+      all_langs.some((l) => {
+        console.log("card:", lang, "lang:", l.language);
+        if (lang === l.language) {
+          l.countries.some((c) => {
+            console.log("card:", lang, "lang:", l.language, "country:", c.country, country2);
+            if (country2 === c.country) {
+              show = true;
+              return true;
+            }
+          });
+        }
+        if (show)
+          return true;
+      });
+      if (show) {
+        $(me).parent().show();
+      } else {
+        $(me).parent().hide();
+      }
+    });
+  }
+  function show_all() {
+    $(".language-card").each(function() {
+      $(this).parent().show();
+    });
+  }
+  function less_or_more() {
+    if (document.show_recommended) {
+      show_all();
+      $("#less-or-more-text").html("Show Less");
+      document.show_recommended = false;
+    } else {
+      var country2 = $('[data-section="countries"').find("[data-active]").data("country-name");
+      console.log(country2);
+      show_recommended(country2);
+      $("#less-or-more-text").html("Show More");
+      document.show_recommended = true;
+    }
+  }
+  $(document).on("click", ".more-or-less", (e) => {
+    less_or_more();
+  });
+  $(document).on("click", ".address-card", (e) => {
     const $target = $(e.currentTarget);
     const $section = $target.closest("[data-section]");
-    $section.find(".region-card").removeClass("active");
+    $section.find(".address-card").removeClass("active");
     $target.addClass("active");
+    if ($target.hasClass("country-card") && document.show_recommended) {
+      country = $target.closest("[data-country-name]").data("country-name");
+      show_recommended(country);
+    }
   });
   var $link = $("a.nav-link:not([href])");
   var d = getPickerDialog();
@@ -80,8 +182,15 @@
       console.log(r.message);
       const countries = r.message["countries"];
       const languages = r.message["languages"];
-      $(d.get_field("region_picker").wrapper).html(get_country_html(countries));
+      document.languages = languages;
+      document.show_recommended = true;
+      const html = '<div class="row">' + get_country_html(countries) + get_language_html(languages) + "</div>";
+      $(d.get_field("region_picker").wrapper).html(html);
       d.show();
+    }).then(function() {
+      var country2 = $('[data-section="countries"').find("[data-active]");
+      console.log(country2);
+      show_recommended(country2);
     });
   });
 
@@ -360,7 +469,7 @@
       });
     },
     bind_remove_action: function() {
-      let me = this;
+      let me2 = this;
       $(".page_content").on("click", ".remove-wish", (e) => {
         const $remove_wish_btn = $(e.currentTarget);
         let item_code = $remove_wish_btn.data("item-code");
@@ -369,7 +478,7 @@
           $card_wrapper.addClass("wish-removed");
           if (frappe.get_cookie("wish_count") == 0) {
             $(".page_content").empty();
-            me.render_empty_state();
+            me2.render_empty_state();
           }
         };
         let args = { item_code };
@@ -384,7 +493,7 @@
     },
     wishlist_action(btn) {
       const $wish_icon = btn.find(".wish-icon");
-      let me = this;
+      let me2 = this;
       if (frappe.session.user === "Guest") {
         if (localStorage) {
           localStorage.setItem("last_visited", window.location.pathname);
@@ -405,7 +514,7 @@
         btn.addClass("like-action-wished");
         this.toggle_button_class($wish_icon, "wished", "not-wished");
         let failure_action = function() {
-          me.toggle_button_class($wish_icon, "not-wished", "wished");
+          me2.toggle_button_class($wish_icon, "not-wished", "wished");
         };
         this.add_remove_from_wishlist("remove", args, success_action, failure_action);
       } else {
@@ -413,7 +522,7 @@
         btn.addClass("like-action-wished");
         this.toggle_button_class($wish_icon, "not-wished", "wished");
         let failure_action = function() {
-          me.toggle_button_class($wish_icon, "wished", "not-wished");
+          me2.toggle_button_class($wish_icon, "wished", "not-wished");
         };
         this.add_remove_from_wishlist("add", args, success_action, failure_action);
       }
@@ -492,14 +601,14 @@
       this.make();
     }
     make() {
-      let me = this;
+      let me2 = this;
       let html = `<br><br>`;
       this.items.forEach((item) => {
         let title = item.web_item_name || item.item_name || item.item_code || "";
         title = title.length > 200 ? title.substr(0, 200) + "..." : title;
         html += `<div class='row list-row w-100 mb-4' style="cursor: pointer;" onclick="window.location='/${item.route || "#"}'">`;
-        html += me.get_image_html(item, title, me.settings);
-        html += me.get_row_body_html(item, title, me.settings);
+        html += me2.get_image_html(item, title, me2.settings);
+        html += me2.get_row_body_html(item, title, me2.settings);
         html += `</div>`;
       });
       let $product_wrapper = this.products_section;
@@ -688,7 +797,7 @@
       }
     }
     get_item_filter_data(from_filters = false) {
-      let me = this;
+      let me2 = this;
       this.from_filters = from_filters;
       let args = this.get_query_filters();
       this.disable_view_toggler(true);
@@ -699,27 +808,27 @@
         },
         callback: function(result) {
           if (!result || result.exc || !result.message || result.message.exc) {
-            me.render_no_products_section(true);
+            me2.render_no_products_section(true);
           } else {
-            if (me.item_group && result.message["sub_categories"].length) {
-              me.render_item_sub_categories(result.message["sub_categories"]);
+            if (me2.item_group && result.message["sub_categories"].length) {
+              me2.render_item_sub_categories(result.message["sub_categories"]);
             }
             if (!result.message["items"].length) {
-              me.render_no_products_section();
+              me2.render_no_products_section();
             } else {
-              me.re_render_discount_filters(result.message["filters"].discount_filters);
-              me.render_list_view(result.message["items"], result.message["settings"]);
-              me.render_grid_view(result.message["items"], result.message["settings"]);
-              me.products = result.message["items"];
-              me.product_count = result.message["items_count"];
+              me2.re_render_discount_filters(result.message["filters"].discount_filters);
+              me2.render_list_view(result.message["items"], result.message["settings"]);
+              me2.render_grid_view(result.message["items"], result.message["settings"]);
+              me2.products = result.message["items"];
+              me2.product_count = result.message["items_count"];
             }
             if (!from_filters) {
-              me.bind_filters();
-              me.restore_filters_state();
+              me2.bind_filters();
+              me2.restore_filters_state();
             }
-            me.add_paging_section(result.message["settings"]);
+            me2.add_paging_section(result.message["settings"]);
           }
-          me.disable_view_toggler(false);
+          me2.disable_view_toggler(false);
         }
       });
     }
@@ -728,23 +837,23 @@
       $("#image-view").prop("disabled", disable);
     }
     render_grid_view(items, settings) {
-      let me = this;
+      let me2 = this;
       this.prepare_product_area_wrapper("grid");
       new aetesis.ProductGrid({
         items,
         products_section: $("#products-grid-area"),
         settings,
-        preference: me.preference
+        preference: me2.preference
       });
     }
     render_list_view(items, settings) {
-      let me = this;
+      let me2 = this;
       this.prepare_product_area_wrapper("list");
       new aetesis.ProductList({
         items,
         products_section: $("#products-list-area"),
         settings,
-        preference: me.preference
+        preference: me2.preference
       });
     }
     prepare_product_area_wrapper(view) {
@@ -867,10 +976,10 @@
       }
     }
     bind_paging_action() {
-      let me = this;
+      let me2 = this;
       $(".btn-prev, .btn-next").click((e) => {
         const $btn = $(e.target);
-        me.from_filters = false;
+        me2.from_filters = false;
         $btn.prop("disabled", true);
         const start = $btn.data("start");
         let query_params = frappe.utils.get_query_params();
@@ -933,7 +1042,7 @@
       }
     }
     bind_discount_filter_action() {
-      let me = this;
+      let me2 = this;
       $(".discount-filter").on("change", (e) => {
         const $checkbox = $(e.target);
         const is_checked = $checkbox.is(":checked");
@@ -948,15 +1057,15 @@
         if (this.field_filters["discount"].length === 0) {
           delete this.field_filters["discount"];
         }
-        me.change_route_with_filters();
+        me2.change_route_with_filters();
       });
     }
     bind_filters() {
-      let me = this;
+      let me2 = this;
       this.field_filters = {};
       this.attribute_filters = {};
       $(".product-filter").on("change", (e) => {
-        me.from_filters = true;
+        me2.from_filters = true;
         const $checkbox = $(e.target);
         const is_checked = $checkbox.is(":checked");
         if ($checkbox.is(".attribute-filter")) {
@@ -995,7 +1104,7 @@
             delete this.field_filters[filter_name];
           }
         }
-        me.change_route_with_filters();
+        me2.change_route_with_filters();
       });
       $(".filter-lookup-input").on("keydown", frappe.utils.debounce((e) => {
         const $input = $(e.target);
@@ -1120,14 +1229,14 @@
       this.make();
     }
     make() {
-      let me = this;
+      let me2 = this;
       let html = ``;
       this.items.forEach((item) => {
         let title = item.web_item_name || item.item_name || item.item_code || "";
         title = title.length > 90 ? title.substr(0, 90) + "..." : title;
         html += `<div class="col-sm-4 item-card"><div class="card text-left" style="cursor: pointer;" onclick="window.location='/${item.route || "#"}'">`;
-        html += me.get_image_html(item, title);
-        html += me.get_card_body_html(item, title, me.settings);
+        html += me2.get_image_html(item, title);
+        html += me2.get_card_body_html(item, title, me2.settings);
         html += `</div></div>`;
       });
       let $product_wrapper = this.products_section;
@@ -1294,7 +1403,7 @@
       this.populateRecentSearches();
     }
     bindSearchAction() {
-      let me = this;
+      let me2 = this;
       this.searchBox.on("focus", () => {
         this.search_dropdown.removeClass("hidden");
       });
@@ -1309,8 +1418,8 @@
       this.searchBox.on("input", (e) => {
         let query = e.target.value;
         if (query.length == 0) {
-          me.populateResults(null);
-          me.populateCategoriesList(null);
+          me2.populateResults(null);
+          me2.populateCategoriesList(null);
         }
         if (query.length < 3 || !query.length)
           return;
@@ -1322,13 +1431,13 @@
           callback: (data) => {
             let product_results = null, category_results = null;
             product_results = data.message ? data.message.product_results : null;
-            me.populateResults(product_results);
-            if (me.category_container) {
+            me2.populateResults(product_results);
+            if (me2.category_container) {
               category_results = data.message ? data.message.category_results : null;
-              me.populateCategoriesList(category_results);
+              me2.populateCategoriesList(category_results);
             }
             if (!$.isEmptyObject(product_results) || !$.isEmptyObject(category_results)) {
-              me.setRecentSearches(query);
+              me2.setRecentSearches(query);
             }
           }
         });
@@ -1380,14 +1489,14 @@
       return JSON.parse(localStorage.getItem("recent_searches") || "[]");
     }
     attachEventListenersToChips() {
-      let me = this;
+      let me2 = this;
       const chips = $(".recent-search");
       window.chips = chips;
       for (let chip of chips) {
         chip.addEventListener("click", () => {
-          me.searchBox[0].value = chip.innerText.trim();
-          me.searchBox.trigger("input");
-          me.searchBox.focus();
+          me2.searchBox[0].value = chip.innerText.trim();
+          me2.searchBox.trigger("input");
+          me2.searchBox.focus();
         });
       }
     }
@@ -1475,4 +1584,4 @@
     }
   };
 })();
-//# sourceMappingURL=aetesis-web.bundle.OT4MEBPA.js.map
+//# sourceMappingURL=aetesis-web.bundle.YJ2QUK2J.js.map
