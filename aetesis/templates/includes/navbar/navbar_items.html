@@ -44,10 +44,10 @@
 {% set url = url if url != None else '' %}
 {% if parent %}
 <li class="nav-item">
-	<a class="nav-link" {% if url != '' %} href="{{ url }}" {% endif %}
+	<a class="d-flex flex-column align-items-center nav-link" {% if url != '' %} href="{{ url }}" {% endif %}
 		{% if item.open_in_new_tab %} target="_blank" {% endif %} style="cursor:pointer">
 		{% if item.icon %}
-		<img id="nav-icon-{{ dropdown_id }}" class="nav_icon" src="{{ item.icon }}" style="width:2rem; height: 2rem"></img>
+		<img id="nav-icon-{{ dropdown_id }}" class="nav-icon" src="{{ item.icon }}" style="width:2rem; height: 2rem"></img> <span class="nav-label">{{ item.label }}</span>
 		{% else %}
 		{{ _(item.label) }}
 		{% endif %}
@@ -68,7 +68,7 @@
 {% endmacro %}
 
 {% if top_bar_items -%}
-<ul class="mr-auto navbar-nav">
+<ul class="navbar-nav">
 	{%- for item in top_bar_items -%}
 		{% if not item.parent_label and not item.right -%}
 			{{ render_item(item, parent=True) }}
@@ -76,7 +76,7 @@
 	{%- endfor %}
 </ul>
 {%- endif %}
-<ul class="ml-auto navbar-nav">
+<ul class="ml-auto navbar-nav align-items-baseline">
 	{% include "templates/includes/navbar/navbar_search.html" %}
 	{%- for item in top_bar_items -%}
 		{% if not item.parent_label and item.right -%}
@@ -104,6 +104,25 @@
 	</div>
 	{% endif %}
 
+	<li class="nav-item shopping-cart cart-icon">
+		<a class="nav-link d-flex flex-column align-items-center" href="/cart">
+			<img class="nav-icon" src="/files/Panier@2x.png">
+			</img>
+			<span class="badge badge-primary shopping-badge" id="cart-count"></span>
+			<span>Cart</span>
+		</a>
+	</li>
+	{% if frappe.db.get_single_value("E Commerce Settings", "enable_wishlist") %}
+		<li class="wishlist wishlist-icon hidden">
+			<a class="nav-link" href="/wishlist">
+				<svg class="icon icon-lg">
+					<use href="#icon-heart"></use>
+				</svg>
+				<span class="badge badge-primary shopping-badge" id="wish-count"></span>
+			</a>
+		</li>
+	{% endif %}
+
 	{% if read_only_mode %}
 		<div
 			class="indicator-pill yellow no-indicator-dot align-self-center"
@@ -121,3 +140,6 @@
 	{{ call_to_action }}
 </a>
 {%- endif -%}
+
+
+

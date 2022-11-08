@@ -23,25 +23,30 @@
 	</section>
 	{% elif homepage.hero_section_based_on == 'Slideshow' and slideshow %}
 	<section class="hero-section">
+		<h1 id="home-title">ÆTESIS</h1>
 		{% include "templates/includes/slideshow.html" %}
+		<a class="btn btn-primary btn-over-image" role="button" href="/all-products">
+			<img class="btn-icon" src="files/Produits.svg" alt="products-icon"> Découvrez nos Bijoux!
+		</a>
 	</section>
 	{% elif homepage.hero_section_based_on == 'Homepage Section' %}
 		{{ render_homepage_section(homepage.hero_section_doc) }}
 	{% endif %}
 
 	{% if homepage.products %}
-	<section class="container section-products my-5">
-		<h3>{{ _('Products') }}</h3>
+	<section class="container-fluid section-products my-5">
+
 
 		<div class="row">
 			{% for item in homepage.products %}
-			<div class="col-md-4 mb-4">
+			<div class="col-md-3 mb-3">
 				<div class="card h-100 justify-content-between">
-					<img class="card-img-top website-image-extra-large" src="{{ item.image }}" loading="lazy" alt="{{ item.item_name }}"></img>
-					<div class="card-body flex-grow-0">
-						<h5 class="card-title">{{ item.item_name }}</h5>
-						<a href="{{ item.route }}" class="card-link">{{ _('More details') }}</a>
-					</div>
+					<a href="{{ item.route }}">
+						<img class="card-img-top" src="{{ item.image }}" loading="lazy" alt="{{ item.item_name }}"></img>
+						<div class="card-body flex-grow-0 text-center">
+							<h3 class="card-title">{{ item.item_name }}</h3>
+						</div>
+					</a>
 				</div>
 			</div>
 			{% endfor %}

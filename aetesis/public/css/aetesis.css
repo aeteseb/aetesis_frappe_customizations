@@ -1,12 +1,247 @@
 :root {
-  --bg-light: #424242;
-  --bg-dark: #212121;
-  --primary: goldenrod;
-  --secondary: darkgoldenrod;
-  --text-primary: mintcream;
-  --text-secondary: darkgrey;
-  --text-highlight: goldenrod;
-  --text-darklight: darkgoldenrod;
+  /* Colors: */
+  --bg-light: #48484A;
+  --bg-dark: #202021;
+  --primary: #ffd519;
+  --secondary: #daa520;
+  --text-primary: #f2f2f2;
+  --text-secondary: #202021;
+  --text-highlight: #ffd519;
+  --text-darklight: #daa520;
+
+  /* Font/text values */
+--font-h1: Via Appia;
+--font-h2: Gimlet Text;
+--font-p: Plume;
+--font-h3: LTC Italian Old Style Pro;
+---font-normal: normal;
+--font-weight-300: 300px;
+--font-weight-900: 900px;
+--font-weight-normal: normal;
+--font-size-21: 21px;
+--font-size-35: 35px;
+--font-size-48: 48px;
+--font-size-64: 64px;
+--font-size-128: 128px;
+--character-spacing-0: 0px;
+--line-spacing-26: 26px;
+--line-spacing-43: 43px;
+--line-spacing-57: 57px;
+--line-spacing-77: 77px;
+--line-spacing-162: 162px;
+}
+
+body {
+  background: transparent url('/files/Fond@2x.png') 0% 0% repeat padding-box;
+  background-position: center !important;
+  background-color: var(--bg-dark) !important;
+  opacity: 1;
+}
+
+footer {
+  background: var(--bg-light);
+  border-radius: 16px 16px 0 0;
+}
+
+footer h2 {
+  font-size: 42px;
+  margin-top: 0;
+}
+
+footer p, footer {
+  font-size: 21px;
+  line-height: 1.5rem;
+}
+
+footer a {
+  color: var(--text-primary) !important;
+}
+
+.footer-logo {
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+.footer-img, .footer-content {
+  transform: translateY(-28%);
+}
+
+.footer-links {
+  margin-left: 1rem;
+}
+
+.frame {
+  padding-bottom: 4rem;
+  padding-top: 2rem;
+  z-index: 1;
+}
+
+.frame > h2 {
+  margin-top: 0;
+}
+
+.frame-dark {
+  width: 70%;
+  background: transparent url('/files/Fond Sombre@2x.png') 0% 0% no-repeat padding-box;
+  border-radius: 64px;
+}
+
+.frame-right {
+  transform: translate(-20%, 40%);
+}
+
+.frame-left {
+  transform: translate(20%, 40%);
+}
+
+.frame-light {
+  width: 70%;
+  height: 50%;
+  background: transparent url('/files/Fond Clair@2x.png') 0% 0% no-repeat padding-box;
+  border-radius: 64px;
+  margin-left: 0
+}
+
+
+
+.img-right {
+  margin-left: 0;
+}
+
+.section {
+  margin-bottom: 5rem;
+}
+
+.img-left, .img-right {
+  padding: 0;
+}
+
+.btn-secondary .btn-icon {
+  color: var--(primary) !important;
+}
+
+/* Character Styles */
+.btn {
+  font-family: var(--font-h2);
+  font-style: var(--font-normal);
+  font-weight: var(--font-weight-900);
+  font-size: var(--font-size-21);
+  line-height: var(--line-spacing-26);
+  letter-spacing: var(--character-spacing-0);
+}
+.btn-primary {
+  color: var(--text-secondary) !important;
+}
+.btn-secondary {
+  color: var(--text-highlight) !important;
+}
+
+h1 {
+  font-family: var(--font-h1) !important;
+  font-style: var(--font-normal) !important;
+  font-weight: var(--font-weight-normal) !important;
+  font-size: var(--font-size-128) !important;
+  line-height: var(--line-spacing-162) !important;
+  letter-spacing: var(--character-spacing-0) !important;
+  color: var(--text-highlight) !important;
+  text-shadow: 1px 2px 15px var(--bg-dark); 
+}
+
+img:not(.no-round) {
+  border-radius: 16px;
+}
+
+
+.btn-icon {
+  width: 5rem;
+  padding-right: 1rem;
+}
+
+.hero-section, .frame{
+  position:relative;
+}
+.btn-over-frame {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+.btn-over-image {
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+.img-under-frame {
+  transform: translateY(-10%);
+  padding: 0;
+}
+
+#home-title {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+h2 {
+  font-family: var(--font-h2);
+  font-style: var(--font-normal);
+  font-weight: var(--font-weight-300);
+  font-size: var(--font-size-64);
+  line-height: var(--line-spacing-77);
+  letter-spacing: var(--character-spacing-0);
+  color: var(--text-primary);
+  text-shadow: 1px 2px 15px var(--bg-dark);
+}
+h2.in-fluid {
+  margin-left: 18rem;
+}
+h3 {
+  font-family: var(--font-h3);
+  font-style: var(--font-normal);
+  font-weight: var(--font-weight-normal);
+  font-size: var(--font-size-48);
+  line-height: var(--line-spacing-57);
+  letter-spacing: var(--character-spacing-0);
+  color: var(--text-primary);
+}
+h3.card-title {
+  margin-top: 1rem;
+}
+
+p {
+  font-family: var(--font-family-plume) !important;
+  font-style: var(--font-normal);
+  font-weight: var(--font-weight-normal);
+  font-size: var(--font-size-35);
+  line-height: var(--line-spacing-43);
+  letter-spacing: var(--character-spacing-0);
+  color: var(--text-primary);
+}
+
+.nav-icon, .nav-avatar, .avatar-frame{
+  height: 80px !important;
+  width: 80px !important;
+}
+
+.user-image-wrapper {
+  position: absolute;
+}
+
+.nav-avatar {
+  padding-left: 0 !important;
+
+}
+
+.navbar-image {
+  /* Layout Properties */
+  width: 1185px;
+  height: 140px;
+  margin-left: -22px;
 }
 
 .page-content-wrapper {
@@ -50,7 +285,7 @@
 
 /* BG */
 
-body, .web-footer, .attached-file, .indicator-pill, .dropdown-item:hover,  .chat-welcome-footer, .dropdown-item:hover, .recent-search:hover {
+.web-footer, .attached-file, .indicator-pill, .dropdown-item:hover,  .chat-welcome-footer, .dropdown-item:hover, .recent-search:hover {
   background: var(--bg-light) !important;
 }
 
@@ -97,12 +332,7 @@ body, .web-footer, .attached-file, .indicator-pill, .dropdown-item:hover,  .chat
 
 .navbar {
   background: var(--bg-light) !important;
-  box-shadow: 0 0 0  currentColor, 0 2px 15px 1px rgba(21, 21, 21, 0.51);
   border-bottom: none !important;
-  position: fixed;
-  top: 0 !important;
-  width: 100%;
-  z-index: 1;
 }
 
 a.nav-link {
@@ -147,7 +377,7 @@ textarea:focus {
 }
 
 
-.recommendation-header, h4, h3, h1 {
+.recommendation-header, {
   color: var(--text-primary) !important;
   text-shadow: 1px 2px 15px var(--bg-dark);
 }
@@ -319,11 +549,9 @@ symbol#icon-list path{
 /* Buttons */
 
 .btn{
-  color: var(--text-primary) !important;
   background-color: var(--bg-dark) !important;
   box-shadow: 0 0 0  currentColor, 0 2px 15px 1px rgba(21, 21, 21, 0.51);
-  border: solid 1px var(--bg-light) !important;
-  border-bottom: solid 1px var(--secondary) !important;
+  border: solid 3px var(--secondary) !important;;
 }
 
 #toggle-view .btn-primary, .btn-explore-variants {
