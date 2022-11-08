@@ -24,7 +24,7 @@ aetesis.ProductGrid = class {
 			let title = item.web_item_name || item.item_name || item.item_code || "";
 			title =  title.length > 90 ? title.substr(0, 90) + "..." : title;
 
-			html += `<div class="col-sm-4 item-card"><div class="card text-left" style="cursor: pointer;" onclick="window.location='/${ item.route || "#" }'">`;
+			html += `<div class="col-sm-2 item-card"><div class="card text-left" style="cursor: pointer;" onclick="window.location='/${ item.route || "#" }'">`;
 			html += me.get_image_html(item, title);
 			html += me.get_card_body_html(item, title, me.settings);
 			html += `</div></div>`;
@@ -56,8 +56,8 @@ aetesis.ProductGrid = class {
 
 	get_card_body_html(item, title, settings) {
 		let body_html = `
-			<div class="card-body text-left card-body-flex" style="width:100%">
-				<div style="margin-top: 1rem; display: flex;">
+			<div class="card-body text-center card-body-flex" style="width:100%">
+				<div >
 		`;
 		body_html += this.get_title(item, title);
 
@@ -80,7 +80,6 @@ aetesis.ProductGrid = class {
 		}
 
 		body_html += this.get_stock_availability(item, settings);
-		body_html += this.get_primary_button(item, settings);
 		body_html += `</div>`; // close div on line 49
 
 		return body_html;
@@ -88,11 +87,9 @@ aetesis.ProductGrid = class {
 
 	get_title(item, title) {
 		let title_html = `
-			<a href="/${ item.route || '#' }">
-				<div class="product-title">
+				<h3 class="card-title">
 					${ title || '' }
-				</div>
-			</a>
+				</h3>
 		`;
 		return title_html;
 	}

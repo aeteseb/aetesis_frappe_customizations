@@ -12,37 +12,16 @@ aetesis.ProductView =  class {
 
 	make(from_filters=false) {
 		this.products_section.empty();
-		this.prepare_toolbar();
 		this.get_item_filter_data(from_filters);
 	}
 
-	prepare_toolbar() {
-		this.products_section.append(`
-			<div class="toolbar d-flex">
-			</div>
-		`);
-		this.prepare_search();
-		this.prepare_view_toggler();
 
-		new erpnext.ProductSearch();
-	}
-
-	prepare_view_toggler() {
-
-		if (!$("#list").length || !$("#image-view").length) {
-			this.render_view_toggler();
-			this.bind_view_toggler_actions();
-			this.set_view_state();
-		}
-	}
 
 	get_item_filter_data(from_filters=false) {
 		// Get and render all Product related views
 		let me = this;
 		this.from_filters = from_filters;
 		let args = this.get_query_filters();
-
-		this.disable_view_toggler(true);
 
 		frappe.call({
 			method: "erpnext.e_commerce.api.get_product_filter_data",
@@ -66,7 +45,6 @@ aetesis.ProductView =  class {
 						me.re_render_discount_filters(result.message["filters"].discount_filters);
 
 						// Render views
-						me.render_list_view(result.message["items"], result.message["settings"]);
 						me.render_grid_view(result.message["items"], result.message["settings"]);
 
 						me.products = result.message["items"];
@@ -86,14 +64,8 @@ aetesis.ProductView =  class {
 					me.add_paging_section(result.message["settings"]);
 				}
 
-				me.disable_view_toggler(false);
 			}
 		});
-	}
-
-	disable_view_toggler(disable=false) {
-		$('#list').prop('disabled', disable);
-		$('#image-view').prop('disabled', disable);
 	}
 
 	render_grid_view(items, settings) {
@@ -109,17 +81,6 @@ aetesis.ProductView =  class {
 		});
 	}
 
-	render_list_view(items, settings) {
-		let me = this;
-		this.prepare_product_area_wrapper("list");
-
-		new aetesis.ProductList({
-			items: items,
-			products_section: $("#products-list-area"),
-			settings: settings,
-			preference: me.preference
-		});
-	}
 
 	prepare_product_area_wrapper(view) {
 		let left_margin = view == "list" ? "ml-2" : "";
@@ -152,9 +113,9 @@ aetesis.ProductView =  class {
 		if (this.products) {
 			let paging_html = `
 				<div class="row product-paging-area mt-5">
-					<div class="col-3">
+					<div class="col-2">
 					</div>
-					<div class="col-9 text-right">
+					<div class="col-10 d-flex justify-content-between paging-buttons-area">
 			`;
 			let query_params = frappe.utils.get_query_params();
 			let start = query_params.start ? cint(JSON.parse(query_params.start)) : 0;
@@ -183,80 +144,12 @@ aetesis.ProductView =  class {
 		}
 	}
 
-	prepare_search() {
-		$(".toolbar").append(`
-			<div class="input-group col-8 p-0">
-				<div class="dropdown w-100" id="dropdownMenuSearch">
-					<input type="search" name="query" id="search-box" class="form-control font-md"
-						placeholder="Search for Products"
-						aria-label="Product" aria-describedby="button-addon2">
-					<div class="search-icon">
-						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor" stroke-width="2" stroke-linecap="round"
-							stroke-linejoin="round"
-							class="feather feather-search">
-							<circle cx="11" cy="11" r="8"></circle>
-							<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-						</svg>
-					</div>
-					<!-- Results dropdown rendered in product_search.js -->
-				</div>
-			</div>
-		`);
-	}
 
-	render_view_toggler() {
-		$(".toolbar").append(`<div class="toggle-container col-4 p-0"></div>`);
 
-		["btn-list-view", "btn-grid-view"].forEach(view => {
-			let icon = view === "btn-list-view" ? "list" : "image-view";
-			$(".toggle-container").append(`
-				<div class="form-group mb-0" id="toggle-view">
-					<button id="${ icon }" class="btn ${ view } mr-2">
-						<span>
-							<svg class="icon icon-md">
-								<use href="#icon-${ icon }"></use>
-							</svg>
-						</span>
-					</button>
-				</div>
-			`);
-		});
-	}
-
-	bind_view_toggler_actions() {
-		$("#list").click(function() {
-			let $btn = $(this);
-			$btn.removeClass('btn-primary');
-			$btn.addClass('btn-primary');
-			$(".btn-grid-view").removeClass('btn-primary');
-
-			$("#products-grid-area").addClass("hidden");
-			$("#products-list-area").removeClass("hidden");
-			localStorage.setItem("product_view", "List View");
-		});
-
-		$("#image-view").click(function() {
-			let $btn = $(this);
-			$btn.removeClass('btn-primary');
-			$btn.addClass('btn-primary');
-			$(".btn-list-view").removeClass('btn-primary');
-
-			$("#products-list-area").addClass("hidden");
-			$("#products-grid-area").removeClass("hidden");
-			localStorage.setItem("product_view", "Grid View");
-		});
-	}
 
 	set_view_state() {
-		if (this.preference === "List View") {
-			$("#list").addClass('btn-primary');
-			$("#image-view").removeClass('btn-primary');
-		} else {
-			$("#image-view").addClass('btn-primary');
-			$("#list").removeClass('btn-primary');
-		}
+		$("#image-view").addClass('btn-primary');
+		$("#list").removeClass('btn-primary');
 	}
 
 	bind_paging_action() {

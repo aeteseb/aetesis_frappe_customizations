@@ -3,18 +3,18 @@
 
 {% block title %}{{ _('All Products') }}{% endblock %}
 {% block header %}
-<div class="mb-6">{{ _('All Products AETESIS') }}</div>
+<div class="mb-6"><h1>{{ _('All Products') }}</h1></div>
 {% endblock header %}
 
 {% block page_content %}
 <div class="row">
 	<!-- Items section -->
-	<div id="product-listing" class="col-12 order-2 col-md-9 order-md-2 item-card-group-section">
+	<div id="product-listing" class="col-12 order-2 col-md-10 order-md-2 item-card-group-section">
 		<!-- Rendered via JS -->
 	</div>
 
 	<!-- Filters Section -->
-	<div class="col-12 order-1 col-md-3 order-md-1">
+	<div class="col-12 order-1 col-md-2 order-md-1">
 		<div class="collapse d-md-block mr-4 filters-section" id="product-filters">
 			<div class="d-flex justify-content-between align-items-center mb-5 title-section">
 				<div class="mb-4 filters-title" > {{ _('Filters') }} </div>
@@ -49,6 +49,14 @@
 </script>
 
 {% endblock page_content %}
+
+{% block extras %}
+
+{% include "templates/sections/about-us.html" %}
+{% include "templates/sections/contact.html" %}
+{% include "templates/sections/portfolio.html" %}
+
+{% endblock %}
 
 {% block base_scripts %}
 <!-- js should be loaded in body! -->

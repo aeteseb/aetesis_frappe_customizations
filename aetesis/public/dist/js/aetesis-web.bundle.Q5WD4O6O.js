@@ -590,6 +590,38 @@
     }
   });
 
+  // ../aetesis/aetesis/public/js/search.js
+  function prepare_search() {
+    $(".toolbar").append(`
+        <div class="input-group p-0">
+            <div class="dropdown w-100" id="dropdownMenuSearch">
+                <input type="search" name="query" id="search-box" class="form-control font-md"
+                    placeholder="Search for Products"
+                    aria-label="Product" aria-describedby="button-addon2">
+                <div class="search-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="feather feather-search">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </div>
+                <!-- Results dropdown rendered in product_search.js -->
+            </div>
+        </div>
+    `);
+  }
+  frappe.ready(() => {
+    $(".nav-bottom").append(`
+        <div id="nav-search" class="toolbar col-4">
+        </div>
+    `);
+    prepare_search();
+    new aetesis.ProductSearch();
+  });
+
   // ../aetesis/aetesis/e_commerce/product_ui/list.js
   aetesis.ProductList = class {
     constructor(options) {
@@ -777,30 +809,12 @@
     }
     make(from_filters = false) {
       this.products_section.empty();
-      this.prepare_toolbar();
       this.get_item_filter_data(from_filters);
-    }
-    prepare_toolbar() {
-      this.products_section.append(`
-			<div class="toolbar d-flex">
-			</div>
-		`);
-      this.prepare_search();
-      this.prepare_view_toggler();
-      new erpnext.ProductSearch();
-    }
-    prepare_view_toggler() {
-      if (!$("#list").length || !$("#image-view").length) {
-        this.render_view_toggler();
-        this.bind_view_toggler_actions();
-        this.set_view_state();
-      }
     }
     get_item_filter_data(from_filters = false) {
       let me2 = this;
       this.from_filters = from_filters;
       let args = this.get_query_filters();
-      this.disable_view_toggler(true);
       frappe.call({
         method: "erpnext.e_commerce.api.get_product_filter_data",
         args: {
@@ -817,7 +831,6 @@
               me2.render_no_products_section();
             } else {
               me2.re_render_discount_filters(result.message["filters"].discount_filters);
-              me2.render_list_view(result.message["items"], result.message["settings"]);
               me2.render_grid_view(result.message["items"], result.message["settings"]);
               me2.products = result.message["items"];
               me2.product_count = result.message["items_count"];
@@ -828,13 +841,8 @@
             }
             me2.add_paging_section(result.message["settings"]);
           }
-          me2.disable_view_toggler(false);
         }
       });
-    }
-    disable_view_toggler(disable = false) {
-      $("#list").prop("disabled", disable);
-      $("#image-view").prop("disabled", disable);
     }
     render_grid_view(items, settings) {
       let me2 = this;
@@ -842,16 +850,6 @@
       new aetesis.ProductGrid({
         items,
         products_section: $("#products-grid-area"),
-        settings,
-        preference: me2.preference
-      });
-    }
-    render_list_view(items, settings) {
-      let me2 = this;
-      this.prepare_product_area_wrapper("list");
-      new aetesis.ProductList({
-        items,
-        products_section: $("#products-list-area"),
         settings,
         preference: me2.preference
       });
@@ -882,9 +880,9 @@
       if (this.products) {
         let paging_html = `
 				<div class="row product-paging-area mt-5">
-					<div class="col-3">
+					<div class="col-2">
 					</div>
-					<div class="col-9 text-right">
+					<div class="col-10 d-flex justify-content-between paging-buttons-area">
 			`;
         let query_params = frappe.utils.get_query_params();
         let start = query_params.start ? cint(JSON.parse(query_params.start)) : 0;
@@ -907,73 +905,9 @@
         this.bind_paging_action();
       }
     }
-    prepare_search() {
-      $(".toolbar").append(`
-			<div class="input-group col-8 p-0">
-				<div class="dropdown w-100" id="dropdownMenuSearch">
-					<input type="search" name="query" id="search-box" class="form-control font-md"
-						placeholder="Search for Products"
-						aria-label="Product" aria-describedby="button-addon2">
-					<div class="search-icon">
-						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor" stroke-width="2" stroke-linecap="round"
-							stroke-linejoin="round"
-							class="feather feather-search">
-							<circle cx="11" cy="11" r="8"></circle>
-							<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-						</svg>
-					</div>
-					<!-- Results dropdown rendered in product_search.js -->
-				</div>
-			</div>
-		`);
-    }
-    render_view_toggler() {
-      $(".toolbar").append(`<div class="toggle-container col-4 p-0"></div>`);
-      ["btn-list-view", "btn-grid-view"].forEach((view) => {
-        let icon = view === "btn-list-view" ? "list" : "image-view";
-        $(".toggle-container").append(`
-				<div class="form-group mb-0" id="toggle-view">
-					<button id="${icon}" class="btn ${view} mr-2">
-						<span>
-							<svg class="icon icon-md">
-								<use href="#icon-${icon}"></use>
-							</svg>
-						</span>
-					</button>
-				</div>
-			`);
-      });
-    }
-    bind_view_toggler_actions() {
-      $("#list").click(function() {
-        let $btn = $(this);
-        $btn.removeClass("btn-primary");
-        $btn.addClass("btn-primary");
-        $(".btn-grid-view").removeClass("btn-primary");
-        $("#products-grid-area").addClass("hidden");
-        $("#products-list-area").removeClass("hidden");
-        localStorage.setItem("product_view", "List View");
-      });
-      $("#image-view").click(function() {
-        let $btn = $(this);
-        $btn.removeClass("btn-primary");
-        $btn.addClass("btn-primary");
-        $(".btn-list-view").removeClass("btn-primary");
-        $("#products-list-area").addClass("hidden");
-        $("#products-grid-area").removeClass("hidden");
-        localStorage.setItem("product_view", "Grid View");
-      });
-    }
     set_view_state() {
-      if (this.preference === "List View") {
-        $("#list").addClass("btn-primary");
-        $("#image-view").removeClass("btn-primary");
-      } else {
-        $("#image-view").addClass("btn-primary");
-        $("#list").removeClass("btn-primary");
-      }
+      $("#image-view").addClass("btn-primary");
+      $("#list").removeClass("btn-primary");
     }
     bind_paging_action() {
       let me2 = this;
@@ -1234,7 +1168,7 @@
       this.items.forEach((item) => {
         let title = item.web_item_name || item.item_name || item.item_code || "";
         title = title.length > 90 ? title.substr(0, 90) + "..." : title;
-        html += `<div class="col-sm-4 item-card"><div class="card text-left" style="cursor: pointer;" onclick="window.location='/${item.route || "#"}'">`;
+        html += `<div class="col-sm-2 item-card"><div class="card text-left" style="cursor: pointer;" onclick="window.location='/${item.route || "#"}'">`;
         html += me2.get_image_html(item, title);
         html += me2.get_card_body_html(item, title, me2.settings);
         html += `</div></div>`;
@@ -1262,8 +1196,8 @@
     }
     get_card_body_html(item, title, settings) {
       let body_html = `
-			<div class="card-body text-left card-body-flex" style="width:100%">
-				<div style="margin-top: 1rem; display: flex;">
+			<div class="card-body text-center card-body-flex" style="width:100%">
+				<div >
 		`;
       body_html += this.get_title(item, title);
       if (!item.has_variants) {
@@ -1280,17 +1214,14 @@
         body_html += this.get_price_html(item);
       }
       body_html += this.get_stock_availability(item, settings);
-      body_html += this.get_primary_button(item, settings);
       body_html += `</div>`;
       return body_html;
     }
     get_title(item, title) {
       let title_html = `
-			<a href="/${item.route || "#"}">
-				<div class="product-title">
+				<h3 class="card-title">
 					${title || ""}
-				</div>
-			</a>
+				</h3>
 		`;
       return title_html;
     }
@@ -1584,4 +1515,4 @@
     }
   };
 })();
-//# sourceMappingURL=aetesis-web.bundle.YJ2QUK2J.js.map
+//# sourceMappingURL=aetesis-web.bundle.Q5WD4O6O.js.map

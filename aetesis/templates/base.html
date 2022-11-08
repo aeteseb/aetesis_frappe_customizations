@@ -59,7 +59,7 @@
 		window.show_language_picker = {{ show_language_picker or 'false' }};
 	</script>
 </head>
-<body frappe-session-status="{{ 'logged-in' if frappe.session.user != 'Guest' else 'logged-out'}}" data-path="{{ path | e }}" {%- if template and template.endswith('.md') %} frappe-content-type="markdown" {%- endif %} class="{{ body_class or ''}}">
+<body style="background: transparent url('/files/Fond@2x.png') 0% 0% repeat padding-box;" frappe-session-status="{{ 'logged-in' if frappe.session.user != 'Guest' else 'logged-out'}}" data-path="{{ path | e }}" {%- if template and template.endswith('.md') %} frappe-content-type="markdown" {%- endif %} class="{{ body_class or ''}}">
 	{% include "public/icons/timeless/icons.svg" %}
 	{%- block banner -%}
 		{% include "templates/includes/banner_extension.html" ignore missing %}
