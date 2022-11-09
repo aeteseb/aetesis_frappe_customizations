@@ -1,7 +1,10 @@
 {% extends "templates/web.html" %}
 
 {% set title = heading or "Contact Us" %}
-{% block header %}<h1>{{ heading or "Contact Us" }}</h1>{% endblock %}
+{% block header %}<img src="/files/Volute Bague-01.jpg"><h1 id="contact-title">{{ heading or "Contact Us" }}</h1>{% endblock %}
+
+{% block breadcrumbs %}
+{% endblock %}
 
 {% block page_content %}
 <style>
@@ -9,42 +12,37 @@
 		line-height: 1.7em;
 	}
 </style>
-<div class="contact-content">
+<div class="container contact-content">
 	{% if introduction %}
 	<div>
 		{{ introduction or "" }}<br>
 	</div>
 	{% endif %}
 	<div class="row">
-		<div class="col-md-8">
+		<form class="col-md-7 frame-light contact-form">
 			<p id="contact-alert" class="alert alert-warning"
 				style="display: none;">&nbsp;</p>
-			<div class="form-group">
-				<select name="subject" class="form-control">
-				{% if query_options -%}
-					{% for option in query_options.split("\n") -%}
-					<option value="{{ option }}">{{ option }}</option>
-					{%- endfor %}
-				{% else %}
-					<option value="General">General</option>
-				{% endif %}
-				</select>
-			</div>
-			<div class="form-group">
+				<div class="form-group">
+					<input class="form-control" name="name" type="text"
+					placeholder="{{ _('Your name') }}" />
+				</div>
+				<div class="form-group">
 				<input class="form-control" name="email" type="text"
 				placeholder="{{ _('Your email address') }}" />
 			</div>
 			<div class="form-group">
-				<textarea rows="10" name="message" class="form-control"></textarea>
+				<textarea rows="10" name="message" class="form-control" placeholder="{{ _('Your message') }}"></textarea>
 			</div>
 			<div class="form-group">
 				<button class="btn btn-primary btn-send">{{ _("Send") }}</button>
 			</div>
-		</div>
+		</form>
+
 		{% if address_title %}
-		<div class="col-md-3 col-md-offset-1 address"
+		<div class="col-md-5 frame-light text-center address"
 				itemscope itemtype="http://schema.org/PostalAddress">
-			<h4 style="margin-top: 0px;"><i class="fa fa-map-marker"></i> {{ address_title }}</h4>
+			<h2>Nos Coordonnées</h2>
+			<h3 style="margin-top: 0px;"><i class="fa fa-map-marker"></i> {{ address_title }}</h3>
 			{% if address_line1 %}
 				<span itemprop="streetAddress">{{ address_line1 }}</span><br>
 			{% endif %}
@@ -52,14 +50,15 @@
 				<span itemprop="streetAddress">{{ address_line2 }}</span><br>
 			{% endif %}
 			{% if city %}
+				{% if pincode %}
+					<span itemprop="postalCode">{{ pincode }}</span>
+				{% endif %}
 				<span itemprop="addressLocality">{{ city }}</span><br>
 			{% endif %}
 			{% if state %}
 				<span itemprop="addressRegion">{{ state }}</span><br>
 			{% endif %}
-			{% if pincode %}
-				<span itemprop="postalCode">{{ pincode }}</span><br>
-			{% endif %}
+			
 			{% if country %}
 				<span itemprop="addressCountry">{{ country }}</span><br><br>
 			{% endif %}
@@ -67,7 +66,6 @@
 				<i class='fa fa-phone'></i> <span itemprop="telephone">{{ phone }}</span><br>
 			{% endif %}
 			{% if email_id %}
-				<i class='fa fa-envelope'></i>
 				<span itemprop="email">
 					<a href="mailto:{{ email_id }}">{{ email_id }}</a>
 				</span>
@@ -76,6 +74,7 @@
 			{% if skype %}
 				<i class='fa fa-skype'></i> <span itemprop="email">{{ skype }}</span><br>
 			{% endif %}
+			<img class="no-round" src="/files/insta.svg"> <a href="https://instagram.com/aetesis_jewelry">@aetesis_jewelry</a></span>
 
 		</div>
 		{% endif %}
@@ -84,4 +83,10 @@
 <script>
 	{% include "templates/includes/contact.js" %}
 </script>
+{% endblock %}
+
+{% block extras %}
+
+{% include "templates/sections/about-us.html" %}
+
 {% endblock %}

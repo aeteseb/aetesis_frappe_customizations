@@ -404,15 +404,15 @@
 {%- macro item_images(variants)-%}
 	{% for v in variants %}
 		{% set column_size = 5 if v.slides else 4 %}
-		<div class="col-md-{{ column_size }} h-100 d-flex mb-4 {{ v.item_code }} my-hidden" >
+		<div class="col-md-{{ column_size }} h-100 d-flex flex-column align-items-center mb-4 slideshow-container {{ v.item_code.replace(' ', '_') }} my-hidden" >
 		{% if v.slides %}
-			<div class="item-slideshow d-flex flex-column mr-3">
-			{% for item in v.slides %}
-				<img class="item-slideshow-image mb-2 {% if loop.first %}active{% endif %}"
-				src="{{ item.image }}" alt="{{ item.heading }}">
-			{% endfor %}
-			</div>
 			{{ product_image(v.slides[0].image, 'product-image', item_code = v.item_code) }}
+			<div class="item-slideshow d-flex mt-3">
+				{% for item in v.slides %}
+					<img class="item-slideshow-image mb-2 {% if loop.first %}active{% endif %}"
+					src="{{ item.image }}" alt="{{ item.heading }}">
+				{% endfor %}
+				</div>
 			<!-- Simple image slideshow -->
 			<script>
 			frappe.ready(() => {

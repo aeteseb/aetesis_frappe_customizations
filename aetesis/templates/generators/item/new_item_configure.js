@@ -18,7 +18,7 @@ class ItemConfigure {
 		this.attribute_data.map(a => {
 			this.$container.append(
 			$('<div>').prop({
-				class: 'row attribute',
+				class: 'row attribute d-flex align-items-baseline',
 				id: `Attr-${a.attribute}`
 				}))
 			var $div = $(`#Attr-${a.attribute}`)
@@ -26,7 +26,7 @@ class ItemConfigure {
 				$div.append(
             				$('<label>').prop({
                 			for: 'Size'
-            				}).html('Size')
+            				}).html('<h3>Size</h3>')
 				).append( $('<select>').prop({
                 			id: 'Size',
                 			name: 'Size'
@@ -44,7 +44,7 @@ class ItemConfigure {
 						id: a.attribute
 						})
 						.append($('<div>').prop({ class: 'row variant-label' }).append(`<h3>${a.attribute}</h3>`))
-						.append($('<div>').prop({ class: 'row attribute-values'})
+						.append($('<div>').prop({ class: 'row attribute-values align-items-end'})
 							.append( a.values.map(v => {
 								return $('<div>').prop({class:'col attribute-value'})
 									.append($('<input>').prop({
@@ -56,11 +56,14 @@ class ItemConfigure {
 									}).on('change', (e) => this.on_attribute_selection(e)))
 									.append($('<label>').prop({
 										class: 'label_item',
+										id: `label-${v.replace(' ', '_')}`,
 										for: v.replace(' ', '_')
 										})
 									.append($('<div>').prop({
-										class:'variant-selector'
-										}).append(v)))
+										class:'variant-selector d-flex align-items-center justify-content-center'
+										}).append($('<div>').prop({
+											class: 'variant-selector-text'
+										})).append(v)))
 							}))
 						)
 				)
@@ -78,7 +81,6 @@ class ItemConfigure {
 		}
 
 		const values = this.get_values();
-		console.log(values)
 		this.get_next_attribute_and_values(values)
 			.then(data => {
 				const {
@@ -91,9 +93,7 @@ class ItemConfigure {
 				var index = 0
 				for (let attribute in valid_options_for_attributes) {
 					const valid_options = valid_options_for_attributes[attribute];
-					console.log('attr', attribute, 'valid:', valid_options)
 					const options = this.get_options(attribute);
-					console.log(options)
 					const new_options = options.map(o => {
 						if (index < 2)  o.disabled = false;
 						else {o.disabled = !valid_options.includes(o.value)
@@ -155,7 +155,6 @@ class ItemConfigure {
 
 	update_checked(selected) {
 		this.get_item_attrs_and_values(selected).then( r => {
-			console.log(r)
 			for (let attr in r) {
 				var $attr = $(`#${attr}`)
 				if ($attr.is('select')) {
@@ -195,7 +194,6 @@ class ItemConfigure {
 			})
 		} else if ($attr.is('form')) {
 			$attr.find('.radio_item').each(function() {
-				console.log('found', $(this).val())
 				options.push({'value':$(this).val()})
 				})
 		}
@@ -289,16 +287,18 @@ class ItemConfigure {
 }
 function update_visibility(selected){
 	$('.item-slideshow-image').removeClass('active');
-	const $img = $(`.${selected.split(' ').slice(-1)[0]}`).find('img');
-
+	console.log(selected)
+	const $img = $(`.${selected}`).find('img');
+	console.log($img)
 	const link = $img.prop('src');
 
 	const $product_image = $('.product-image');
 	$product_image.find('img').prop('src', link);
 	
 	$product_image.find('a').prop('href', link);
-	$(`.${selected.split(' ')[0]}`).each( function() {$(this).addClass('my-hidden');});
-	$(`.${selected.split(' ').slice(-1)[0]}`).each( function() {$(this).removeClass('my-hidden');});
+	$(`.slideshow-container:not(.${selected})`).each( function() {$(this).addClass('my-hidden');});
+	$(`.buying`).each( function() {$(this).addClass('my-hidden');});
+	$(`.${selected.replace(' ', '_')}`).each( function() {$(this).removeClass('my-hidden');});
 }
 
 frappe.ready(() => {
@@ -318,7 +318,6 @@ frappe.ready(() => {
 	$('.price').each(function(){ items.push( $(this).data('item-code'))});
 	frappe.call('aetesis.whitelisted.product_info.get_prices', {item_codes: items, region : region}).then( r => {
 			prices = r.message;
-			console.log(r.message)
 			$('.price').each(function() {set_price($(this), prices)});
 		});
 });

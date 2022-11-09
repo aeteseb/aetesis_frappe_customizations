@@ -3,7 +3,7 @@
 	{% for v in variants %}
 		{% set product_info = v.product_info.product_info %}
 		{% set item_code = v.item_code %}
-		<div class="buying {{item_code}} my-hidden">
+		<div class="buying {{item_code.replace(' ', '_')}} my-hidden">
 			<div class="item-cart row mt-2" data-variant-item-code="{{ item_code }}">
 				<div class="col-md-12">
 					<!-- Price and Availability -->					
@@ -13,7 +13,7 @@
 
 						<div class="product-price">
 							<!-- Final Price -->
-							<span class="price" data-item-code="{{ item_code }}"></span>
+							<h3 class="price" data-item-code="{{ item_code }}"></h3>
 
 							<!-- Striked Price and Discount  -->
 							{% if price_info.formatted_mrp %}
@@ -25,10 +25,6 @@
 								</small>
 							{% endif %}
 
-							<!-- Price per UOM -->
-							<small class="formatted-price used-price ml-2" data-item-code="{{ item_code }}">
-								
-							</small>
 						</div>
 					{% endif %}
 
@@ -67,9 +63,7 @@
 							class="btn btn-primary btn-add-to-cart mr-2 w-30-40"
 						>
 							<span class="mr-2">
-								<svg class="icon icon-md">
-									<use href="#icon-assets"></use>
-								</svg>
+								<img class="btn-icon" src="/files/Ajouter au panier.svg">
 							</span>
 							{{ _("Add to Cart") if cart_settings.enable_checkout else  _("Add to Quote") }}
 						</button>

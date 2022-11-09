@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block page_content %}
-<div class="product-container item-main">
+<div class="product-container item-main frame-dark" style="background: transparent url('/files/Fond Sombre@2x.png') 0% 0% no-repeat padding-box;">
 	{% from "aetesis/templates/includes/macros.html" import product_image %}
 	<div class="item-content">
 		<div class="product-page-content" itemscope itemtype="http://schema.org/Product">
@@ -41,8 +41,13 @@
 								add_top_padding=0, add_bottom_padding=0)
 							}}
 					</div>
-				{% elif website_specifications %}
-					{% include "templates/generators/item/item_specifications.html"%}
+				{% elif website_specifications or doc.web_long_description %}
+					{% if frappe.utils.strip_html(doc.web_long_description or '') %}
+						{{ doc.web_long_description | safe }}
+					{% endif %}
+					{% if website_specifications %}
+						{% include "templates/generators/item/item_specifications.html"%}
+					{% endif %}
 				{% endif %}
 
 				<!-- Advanced Custom Website Content -->
@@ -69,6 +74,12 @@
 	{% endif %}
 
 </div>
+{% endblock %}
+
+{% block extras %}
+
+{% include "templates/sections/contact.html" %}
+
 {% endblock %}
 
 {% block base_scripts %}

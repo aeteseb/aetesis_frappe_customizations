@@ -66,7 +66,7 @@ function update_view(e=null, sel=null) {
 
 function update_visibility(selected){
 	$('.item-slideshow-image').removeClass('active');
-	const $img = $(`.${selected.split(' ').slice(-1)[0]}`).find('img');
+	const $img = $(`.${selected}`).find('img');
 
 	const link = $img.prop('src');
 
@@ -74,7 +74,8 @@ function update_visibility(selected){
 	$product_image.find('img').prop('src', link);
 	
 	$product_image.find('a').prop('href', link);
-	$(`.${selected.split(' ')[0]}`).each( function() {$(this).addClass('my-hidden');});
+	$(`.${selected.split(' ')[0]}`).each( function() {$(this).addClass('my-hidden');
+console.log($(this))});
 	$(`.${selected.split(' ').slice(-1)[0]}`).each( function() {$(this).removeClass('my-hidden');});
 }
 	
