@@ -6,26 +6,27 @@
 {% macro main_content() %}
 <div class="page-content-wrapper">
 	<!-- breadcrumbs -->
-	<div class="page-breadcrumbs">
-		{% block breadcrumbs %}
+	{% block breadcrumbs %}
+		<div class="page-breadcrumbs">
 			{% include 'templates/includes/breadcrumbs.html' %}
-		{% endblock %}
-	</div>
+		</div>
+	{% endblock %}
 
 	{% block page_container %}
-	<main class="{% if not full_width %}container-fluid my-4{% endif %}">
-		<div class="page-header-wrapper justify-content-center">
-			<div class="page-header">
-				{% block header %}{% endblock %}
-			</div>
+	<main class="{% if not full_width %}container-fluid mb-4{% endif %}">
+		{% block header_wrapper %}
+			<div class="page-header-wrapper justify-content-center">
+				<div class="page-header">
+					{% block header %}{% endblock %}
+				</div>
 
-			{% if self.header_actions() %}
-			<div class="page-header-actions-block">
-				{% block header_actions %}{% endblock %}
+				{% if self.header_actions() %}
+				<div class="page-header-actions-block">
+					{% block header_actions %}{% endblock %}
+				</div>
+				{% endif %}
 			</div>
-			{% endif %}
-		</div>
-
+		{% endblock %}
 		<div class="page_content">
 			{%- block page_content -%}{%- endblock -%}
 		</div>

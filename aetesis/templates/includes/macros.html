@@ -363,8 +363,8 @@
 
 
 {%- macro recommended_item_row(item)-%}
-<div class="recommended-item mb-6 d-flex">
-	<div class="r-item-image">
+<a class="recommended-item mb-6 d-flex flex-row card" href="/{{ item.route or '#'}}" target="_blank">
+	<div class="r-item-image card-img w-50">
 		{% if item.website_item_thumbnail %}
 			{{ product_image(item.website_item_thumbnail, css_class="r-product-image", alt="item.website_item_name", no_border=True) }}
 		{% else %}
@@ -373,11 +373,11 @@
 			</div>
 		{% endif %}
 	</div>
-	<div class="r-item-info">
-		<a href="/{{ item.route or '#'}}" target="_blank">
+	<div class="r-item-info card-body text-center" >
+		<h3>
 			{% set title = item.website_item_name %}
 			{{ title[:70] + "..." if title|len > 70 else title }}
-		</a>
+		</h3>
 
 		{% if item.get('price_info') %}
 			{% set price = item.get('price_info') %}
@@ -398,7 +398,7 @@
 			</div>
 		{% endif %}
 	</div>
-</div>
+</a>
 {%- endmacro -%}
 
 {%- macro item_images(variants)-%}
