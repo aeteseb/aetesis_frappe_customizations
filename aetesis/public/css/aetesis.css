@@ -1,5 +1,6 @@
 :root {
   /* Colors: */
+  --bg-ultra-light: #68686b;
   --bg-light: #48484A;
   --bg-dark: #202021;
   --primary: #ffd519;
@@ -56,9 +57,29 @@ footer a {
   color: var(--text-primary) !important;
 }
 
+.nav-top {
+  background: var(--bg-ultra-light)
+}
+.nav-bottom {
+  padding-top: 1rem !important;
+  background: var(--bg-light)
+}
+
+
+.nav-b-icon {
+  height: 2rem;
+}
+
 .price {
   margin-top: 1rem;
   color: var(--text-primary) !important;
+}
+.modal-title {
+  color: unset;
+}
+
+h5.card-title {
+  color: unset;
 }
 
 .footer-logo {
@@ -497,6 +518,7 @@ p {
 .navbar {
   background: var(--bg-light) !important;
   border-bottom: none !important;
+  padding-top: 0;
 }
 
 a.nav-link {
@@ -711,11 +733,12 @@ symbol#icon-list path{
 /* Avatar */
 
 .avatar-frame {
-  background-color: var(--bg-dark) !important;
+  background-color: white!important;
   box-shadow: none !important;
   border-top: 1px solid var(--bg-light) !important;
   border-bottom: 1px solid var(--secondary) !important;
-  color: mintcream !important;
+  color: var(--bg-light) !important;
+  font-size: 2rem !important;
 }
 
 /* Buttons */

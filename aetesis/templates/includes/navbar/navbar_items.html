@@ -104,14 +104,7 @@
 	</div>
 	{% endif %}
 
-	<li class="nav-item shopping-cart cart-icon">
-		<a class="nav-link d-flex flex-column align-items-center" href="/cart">
-			<img class="nav-icon" src="/files/Panier@2x.png">
-			</img>
-			<span class="badge badge-primary shopping-badge" id="cart-count"></span>
-			<span>Cart</span>
-		</a>
-	</li>
+	
 	{% if frappe.db.get_single_value("E Commerce Settings", "enable_wishlist") %}
 		<li class="wishlist wishlist-icon hidden">
 			<a class="nav-link" href="/wishlist">
@@ -133,7 +126,15 @@
 	{% endif %}
 
 	{% include "templates/includes/navbar/navbar_login.html" %}
-
+	
+	<li class="nav-item shopping-cart cart-icon">
+		<a class="nav-link d-flex flex-column align-items-center" href="/cart">
+			<img class="nav-icon no-round" src="/files/Panier@2x.png">
+			</img>
+			<span class="badge badge-primary shopping-badge" id="cart-count"></span>
+			<span>Cart</span>
+		</a>
+	</li>
 </ul>
 {%- if call_to_action -%}
 <a class="btn btn-primary navbar-cta" href="{{ call_to_action_url | abs_url }}">

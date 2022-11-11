@@ -23,8 +23,8 @@ function prepare_search() {
 }
 
 frappe.ready(() => {
-    $('.nav-bottom').append(`
-        <div id="nav-search" class="toolbar col-4">
+    $('#nav-search-container').append(`
+        <div id="nav-search" class="toolbar">
         </div>
     `);
     prepare_search();

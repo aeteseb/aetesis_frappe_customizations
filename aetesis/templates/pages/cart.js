@@ -241,6 +241,16 @@ $.extend(shopping_cart, {
 	},
 
 	place_order: function(btn) {
+		if (frappe.session.user==="Guest") {
+			if (localStorage) {
+				localStorage.setItem("last_visited", window.location.pathname);
+			}
+			frappe.call('erpnext.e_commerce.api.get_guest_redirect_on_action').then((res) => {
+				window.location.href = res.message || "/login";
+			});
+			return;
+		}
+
 		shopping_cart.freeze();
 
 		return frappe.call({

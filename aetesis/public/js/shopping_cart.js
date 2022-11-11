@@ -76,14 +76,27 @@ $.extend(shopping_cart, {
 
 	update_cart: function(opts) {
 		if (frappe.session.user==="Guest") {
-			if (localStorage) {
-				localStorage.setItem("last_visited", window.location.pathname);
-			}
-			frappe.call('erpnext.e_commerce.api.get_guest_redirect_on_action').then((res) => {
-				window.location.href = res.message || "/login";
+			shopping_cart.freeze();
+			return frappe.call({
+				type: "POST",
+				method: "aetesis.e_commerce.shopping_cart.cart.update_cart",
+				args: {
+					item_code: opts.item_code,
+					region: opts.region,
+					qty: opts.qty,
+					sid: opts.sid,
+					additional_notes: opts.additional_notes !== undefined ? opts.additional_notes : undefined,
+					with_items: opts.with_items || 0
+				},
+				btn: opts.btn,
+				callback: function(r) {
+					shopping_cart.unfreeze();
+					shopping_cart.set_cart_count(true);
+					if(opts.callback)
+						opts.callback(r);
+				}
 			});
 		} else {
-			console.log('here');
 			shopping_cart.freeze();
 			return frappe.call({
 				type: "POST",
@@ -110,28 +123,32 @@ $.extend(shopping_cart, {
 		$(".intermediate-empty-cart").remove();
 
 		var cart_count = frappe.get_cookie("cart_count");
-		if(frappe.session.user==="Guest") {
-			cart_count = 0;
-		}
-
-		if(cart_count) {
+		const guest = frappe.session.user==="Guest"
+		
+		if(!guest && cart_count) {
 			$(".shopping-cart").toggleClass('hidden', false);
 		}
 
 		var $cart = $('.cart-icon');
 		var $badge = $cart.find("#cart-count");
 
-		if(parseInt(cart_count) === 0 || cart_count === undefined) {
-			$cart.css("display", "none");
+		if(parseInt(cart_count) === 0 || cart_count === undefined || guest!=undefined) {
 			$(".cart-tax-items").hide();
 			$(".btn-place-order").hide();
 			$(".cart-payment-addresses").hide();
 
-			let intermediate_empty_cart_msg = `
+			if (guest) {
+				var intermediate_empty_cart_msg = `
 				<div class="text-center w-100 intermediate-empty-cart mt-4 mb-4 text-muted">
-					${ __("Cart is Empty") }
-				</div>
-			`;
+					Log in to Place Order
+				</div>`;
+			} else {
+				var intermediate_empty_cart_msg = `
+					<div class="text-center w-100 intermediate-empty-cart mt-4 mb-4 text-muted">
+						${ __("Cart is Empty") }
+					</div>
+				`;
+			}
 			$(".cart-table").after(intermediate_empty_cart_msg);
 		}
 		else {
@@ -194,16 +211,6 @@ $.extend(shopping_cart, {
 			const $btn = $(e.currentTarget);
 			$btn.prop('disabled', true);
 
-			if (frappe.session.user==="Guest") {
-				if (localStorage) {
-					localStorage.setItem("last_visited", window.location.pathname);
-				}
-				frappe.call('erpnext.e_commerce.api.get_guest_redirect_on_action').then((res) => {
-					window.location.href = res.message || "/login";
-				});
-				return;
-			}
-
 			$btn.addClass('hidden');
 			$btn.closest('.cart-action-container').addClass('d-flex');
 			$btn.parent().find('.go-to-cart').removeClass('hidden');
@@ -212,11 +219,21 @@ $.extend(shopping_cart, {
 
 			const item_code = $btn.data('item-code');
 			const region = getCookie('country');
-			aetesis.e_commerce.shopping_cart.update_cart({
+			if (frappe.session.user==="Guest") {
+				const sid = getCookie('sid');
+				aetesis.e_commerce.shopping_cart.update_cart({
+					item_code,
+					region,
+					qty: 1,
+					sid: sid
+				});
+			} else {
+				aetesis.e_commerce.shopping_cart.update_cart({
 				item_code,
 				region,
 				qty: 1
-			});
+				});
+			}
 
 		});
 	},

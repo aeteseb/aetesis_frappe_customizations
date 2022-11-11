@@ -26,7 +26,7 @@ function getPickerDialog() {
     title: "Select Country and Language",
     fields: [{
       'fieldtype': 'HTML',
-      'fieldname': 'region_picker',
+      'fieldname': 'region-picker',
     }],
     primary_action_label: __('Confirm'),
     primary_action: () => {
@@ -48,20 +48,23 @@ function getPickerDialog() {
           window.location.reload();
        });
       } else if (!language_code && country_name) {
-        frappe.show_alert({
-          message: __('Please select a language'),
-          indicator:'red'
-        })
+        document.cookie = "country=" + country_name + "; samesite=Lax; path=/";
+        d.hide()
+        window.location.reload();
       } else if (language_code && !country_name) {
-        frappe.show_alert({
-          message: __('Please select a country'),
-          indicator:'red'
+        document.cookie = "preferred_language_name=" + language_name + "; samesite=Lax; path=/";
+        frappe.call("aetesis.utilities.regions.set_language", {
+        preferred_language: language_code,
         })
+        .then(() => {
+          d.hide()
+          window.location.reload();
+       });
       }
       
       else {
         frappe.show_alert({
-          message: __('Please select a country and a language'),
+          message: __('Please select a country or a language'),
           indicator:'red'
         })
       }
@@ -196,7 +199,7 @@ $(document).on('click', '.address-card', (e) => {
   } 
 });
 
-var $link = $('a.nav-link:not([href])');
+var $link = $('#region-picker');
 const d = getPickerDialog();
 $link.on('click', function() {
   frappe.call('aetesis.utilities.regions.get_countries_and_languages').then( r => {
@@ -206,7 +209,7 @@ $link.on('click', function() {
     document.languages = languages;
     document.show_recommended = true;
     const html = '<div class="row">' + get_country_html(countries) + get_language_html(languages) + '</div>'
-    $(d.get_field('region_picker').wrapper).html(
+    $(d.get_field('region-picker').wrapper).html(
       html
     );
     d.show();

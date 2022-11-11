@@ -1,6 +1,7 @@
 import frappe
 from frappe.translate import set_preferred_language_cookie
 
+
 @frappe.whitelist(allow_guest=True)
 def get_countries_and_languages():
     chart = frappe.get_all('Website Region', fields=['country', 'flag'])
@@ -19,5 +20,13 @@ def get_dict(lang):
 
 @frappe.whitelist(allow_guest=True)
 def set_language(preferred_language):
+    user = frappe.session.user
     print(preferred_language)
-    return set_preferred_language_cookie(preferred_language)
+    if user == "Guest":
+        return set_preferred_language_cookie(preferred_language)
+    else:
+        doc = frappe.get_doc('User', user)
+        doc.language = preferred_language
+        doc.save()
+        print(frappe.db.get_value('User', user, 'language'))
+        return 

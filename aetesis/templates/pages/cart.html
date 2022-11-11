@@ -101,18 +101,9 @@
 {% else %}
 <div class="cart-empty frappe-card">
 	<div class="cart-empty-state">
-		<img src="/assets/erpnext/images/ui-states/cart-empty-state.png" alt="Empty State">
+		<img class="no-round" src="/assets/erpnext/images/ui-states/cart-empty-state.png" alt="Empty State">
 	</div>
-	<div class="cart-empty-message mt-4">{{ _('Your cart is Empty') }}</p>
-	{% if cart_settings.enable_checkout %}
-		<a class="btn btn-outline-primary" href="/orders" style="font-size: 16px;">
-			{{ _('See past orders') }}
-		</a>
-		{% else %}
-		<a class="btn btn-outline-primary" href="/quotations" style="font-size: 16px;">
-			{{ _('See past quotations') }}
-		</a>
-	{% endif %}
+	<div class="cart-empty-message mt-4">{{ _('Your cart is Empty') }}
 	</div>
 </div>
 {% endif %}
