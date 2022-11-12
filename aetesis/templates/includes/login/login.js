@@ -20,11 +20,21 @@ login.bind_events = function () {
 		args.usr = frappe.utils.xss_sanitise(($("#login_email").val() || "").trim());
 		args.pwd = $("#login_password").val();
 		args.device = "desktop";
+		var cart_count = frappe.get_cookie('cart_count') || 0;
 		if (!args.usr || !args.pwd) {
 			frappe.msgprint('{{ _("Both login and password required") }}');
 			return false;
 		}
-		login.call(args);
+		
+		if (cart_count) {
+			login.call(args, function() {
+				console.log(frappe.session.user)
+//				frappe.call("aetesis.whitelisted.shopping_cart.transfer_cart_from_guest", {});
+			});
+			
+		} else {
+			login.call(args);
+		}
 		return false;
 	});
 

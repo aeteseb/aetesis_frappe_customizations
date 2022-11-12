@@ -315,7 +315,7 @@
         if (guest) {
           var intermediate_empty_cart_msg = `
 				<div class="text-center w-100 intermediate-empty-cart mt-4 mb-4 text-muted">
-					Log in to Place Order
+					<a href="/login">Log in to Place Order</a>
 				</div>`;
         } else {
           var intermediate_empty_cart_msg = `
@@ -386,6 +386,7 @@
         const region = getCookie2("country");
         if (frappe.session.user === "Guest") {
           const sid = getCookie2("sid");
+          console.log(sid);
           aetesis.e_commerce.shopping_cart.update_cart({
             item_code,
             region,
@@ -1535,4 +1536,4 @@
     }
   };
 })();
-//# sourceMappingURL=aetesis-web.bundle.QUHIFCMH.js.map
+//# sourceMappingURL=aetesis-web.bundle.GSZ7MFEZ.js.map

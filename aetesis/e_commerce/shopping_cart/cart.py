@@ -325,14 +325,14 @@ def decorate_quotation_doc(doc):
 def _get_cart_quotation(party=None, region=None, sid=None):
 	"""Return the open Quotation of type "Shopping Cart" or make a new one"""
 	if not party:
-		party = get_party()
+		party = get_party(sid=sid)
 
 	if sid:
 		quotation = frappe.get_all(
 		"Quotation",
 		fields=["name"],
 		filters={
-			"party_name": party.name,
+			"party_name": sid,
 			"order_type": "Shopping Cart",
 			"docstatus": 0,
 		},
@@ -367,7 +367,7 @@ def _get_cart_quotation(party=None, region=None, sid=None):
 				"status": "Draft",
 				"docstatus": 0,
 				"__islocal": 1,
-				"party_name": party.name,
+				"party_name": sid or party.name,
 			}
 		)
 
@@ -497,6 +497,8 @@ def set_taxes(quotation, cart_settings, region=None):
 
 
 def get_party(user=None, sid=None):
+	print('getting_party', sid)
+
 	if sid:
 		customer = frappe.new_doc("Customer")
 		fullname = sid
@@ -511,6 +513,7 @@ def get_party(user=None, sid=None):
 
 		customer.flags.ignore_mandatory = True
 		customer.insert(ignore_permissions=True)
+		print(customer)
 		return customer
 	
 	if not user:
