@@ -2,6 +2,21 @@
   // ../aetesis/aetesis/public/js/website_utils.js
   if (!window.aetesis)
     window.aetesis = {};
+  frappe.ready(function() {
+    var guest_id = frappe.get_cookie("guest_id");
+    console.log(!guest_id, frappe.session.user);
+    if (!guest_id && frappe.session.user === "Guest") {
+      guest_id = Math.floor(1e5 + Math.random() * 9e5);
+      var d2 = new Date();
+      d2.setTime(d2.getTime() + 6048e5);
+      var expires = "; expires=" + d2.toUTCString();
+      console.log(expires);
+      document.cookie = "guest_id=" + guest_id + expires + "; samesite=Lax; path=/";
+      frappe.boot["guest_id"] = guest_id;
+    } else if (guest_id) {
+      frappe.boot["guest_id"] = guest_id;
+    }
+  });
 
   // ../aetesis/aetesis/public/js/regions.js
   if (!getCookie("country")) {
@@ -265,7 +280,7 @@
             item_code: opts.item_code,
             region: opts.region,
             qty: opts.qty,
-            sid: opts.sid,
+            guest_id: opts.guest_id,
             additional_notes: opts.additional_notes !== void 0 ? opts.additional_notes : void 0,
             with_items: opts.with_items || 0
           },
@@ -273,6 +288,7 @@
           callback: function(r) {
             shopping_cart.unfreeze();
             shopping_cart.set_cart_count(true);
+            $(".cart-container").removeClass("hidden");
             if (opts.callback)
               opts.callback(r);
           }
@@ -293,6 +309,7 @@
           callback: function(r) {
             shopping_cart.unfreeze();
             shopping_cart.set_cart_count(true);
+            $(".cart-container").removeClass("hidden");
             if (opts.callback)
               opts.callback(r);
           }
@@ -342,11 +359,14 @@
       }
     },
     shopping_cart_update: function({ item_code, qty, cart_dropdown, additional_notes }) {
+      var guest_id = frappe.get_cookie("guest_id") || void 0;
+      console.log(guest_id);
       shopping_cart.update_cart({
         item_code,
         qty,
         additional_notes,
         with_items: 1,
+        guest_id,
         btn: this,
         callback: function(r) {
           if (!r.exc) {
@@ -354,9 +374,6 @@
             $(".cart-tax-items").html(r.message.total);
             $(".payment-summary").html(r.message.taxes_and_totals);
             shopping_cart.set_cart_count();
-            if (cart_dropdown != true) {
-              $(".cart-icon").hide();
-            }
           }
         }
       });
@@ -385,13 +402,13 @@
         const item_code = $btn.data("item-code");
         const region = getCookie2("country");
         if (frappe.session.user === "Guest") {
-          const sid = getCookie2("sid");
-          console.log(sid);
+          const guest_id = getCookie2("guest_id");
+          console.log(guest_id);
           aetesis.e_commerce.shopping_cart.update_cart({
             item_code,
             region,
             qty: 1,
-            sid
+            guest_id
           });
         } else {
           aetesis.e_commerce.shopping_cart.update_cart({
@@ -1536,4 +1553,4 @@
     }
   };
 })();
-//# sourceMappingURL=aetesis-web.bundle.GSZ7MFEZ.js.map
+//# sourceMappingURL=aetesis-web.bundle.DP2HR4MX.js.map

@@ -99,6 +99,67 @@
 	</div>
 </div>
 {% else %}
+<div class="cart-container hidden">
+	<div class="row m-0">
+		<!-- Left section -->
+		<div class="col-md-8">
+			<div class="frappe-card p-5 mb-4">
+				<div id="cart-error" class="alert alert-danger" style="display: none;"></div>
+				<div class="cart-items-header">
+					{{ _('Items') }}
+				</div>
+				<table class="table mt-3 cart-table">
+					<thead>
+						<tr>
+							<th class="item-column">{{ _('Item') }}</th>
+							<th width="20%">{{ _('Quantity') }}</th>
+							{% if cart_settings.enable_checkout or cart_settings.show_price_in_quotation %}
+								<th width="20" class="text-right column-sm-view">{{ _('Subtotal') }}</th>
+							{% endif %}
+							<th width="10%" class="column-sm-view"></th>
+						</tr>
+					</thead>
+					<tbody class="cart-items">
+						{% include "templates/includes/cart/cart_items.html" %}
+					</tbody>
+
+					{% if cart_settings.enable_checkout or cart_settings.show_price_in_quotation %}
+						<tfoot class="cart-tax-items">
+							{% include "templates/includes/cart/cart_items_total.html" %} 
+						</tfoot>
+					{% endif %}
+				</table>
+
+				<div class="row mt-2">
+					<div class="col-3">
+						<a class="btn btn-primary-light mr-2 font-md" href="/all-products">
+							{{ _('Continue Shopping') }}
+						</a>
+					</div>
+					<div class="col-9">
+						{% if doc.items %}
+						<div class="place-order-container">
+							<button class="btn btn-primary btn-place-order font-md w-50" type="button">
+								{{ _('Place Order') }}
+							</button>
+						</div>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+
+			<!-- Terms and Conditions -->
+				{% if doc.terms %}
+					<div class="t-and-c-container mt-4 frappe-card">
+						<h5>{{ _("Terms and Conditions") }}</h5>
+						<div class="t-and-c-terms mt-2">
+							{{ doc.terms }}
+						</div>
+					</div>
+				{% endif %}
+		</div>
+	</div>
+</div>
 <div class="cart-empty frappe-card">
 	<div class="cart-empty-state">
 		<img class="no-round" src="/assets/erpnext/images/ui-states/cart-empty-state.png" alt="Empty State">

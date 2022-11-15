@@ -87,13 +87,12 @@
 					const additional_notes = $btn.data('csas') || undefined;
 					const region = getCookie('country');
 					if (frappe.session.user==="Guest") {
-						const sid = getCookie('sid');
-						console.log(sid)
+						const guest_id = frappe.get_cookie('guest_id');
 						aetesis.e_commerce.shopping_cart.update_cart({
 							item_code,
 							region,
 							qty: 1,
-							sid: sid,
+							guest_id: guest_id,
 							callback(r) {
 							$btn.prop('disabled', false);
 							if (r.message) {

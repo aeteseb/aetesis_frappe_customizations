@@ -1,4 +1,15 @@
 import frappe
+
+@frappe.whitelist(allow_guest=True)
+def set_guest_id(guest_id):
+	if hasattr(frappe.local, "cookie_manager"):
+		# set it in cookies for using in product page
+		print('great success')
+		frappe.local.cookie_manager.set_cookie("guest_id", guest_id)
+		print(frappe.local.cookie_manager)
+
+
+
 @frappe.whitelist(allow_guest=True)
 def sign_up(email, full_name, redirect_to):
 	print('TEST')

@@ -25,6 +25,9 @@ frappe.ready(function() {
 		$('.navbar li[data-label="User"] a')
 			.html('<i class="fa fa-fixed-width fa fa-user"></i> ' + full_name);
 	}
+	
+
+
 	// set coupon code and sales partner code
 
 	var url_args = getParams(window.location.href);
@@ -58,6 +61,8 @@ frappe.ready(function() {
 	shopping_cart.show_cart_navbar();
 });
 
+
+
 $.extend(shopping_cart, {
 	show_shoppingcart_dropdown: function() {
 		$(".shopping-cart").on('shown.bs.dropdown', function() {
@@ -84,7 +89,7 @@ $.extend(shopping_cart, {
 					item_code: opts.item_code,
 					region: opts.region,
 					qty: opts.qty,
-					sid: opts.sid,
+					guest_id: opts.guest_id,
 					additional_notes: opts.additional_notes !== undefined ? opts.additional_notes : undefined,
 					with_items: opts.with_items || 0
 				},
@@ -92,6 +97,7 @@ $.extend(shopping_cart, {
 				callback: function(r) {
 					shopping_cart.unfreeze();
 					shopping_cart.set_cart_count(true);
+					$('.cart-container').removeClass('hidden');
 					if(opts.callback)
 						opts.callback(r);
 				}
@@ -112,6 +118,7 @@ $.extend(shopping_cart, {
 				callback: function(r) {
 					shopping_cart.unfreeze();
 					shopping_cart.set_cart_count(true);
+					$('.cart-container').removeClass('hidden');
 					if(opts.callback)
 						opts.callback(r);
 				}
@@ -169,13 +176,16 @@ $.extend(shopping_cart, {
 			$badge.remove();
 		}
 	},
-
+	
 	shopping_cart_update: function({item_code, qty, cart_dropdown, additional_notes}) {
+		var guest_id = frappe.get_cookie('guest_id') || undefined;
+		console.log(guest_id)
 		shopping_cart.update_cart({
 			item_code,
 			qty,
 			additional_notes,
 			with_items: 1,
+			guest_id: guest_id,
 			btn: this,
 			callback: function(r) {
 				if(!r.exc) {
@@ -184,9 +194,6 @@ $.extend(shopping_cart, {
 					$(".payment-summary").html(r.message.taxes_and_totals);
 					shopping_cart.set_cart_count();
 
-					if (cart_dropdown != true) {
-						$(".cart-icon").hide();
-					}
 				}
 			},
 		});
@@ -220,13 +227,13 @@ $.extend(shopping_cart, {
 			const item_code = $btn.data('item-code');
 			const region = getCookie('country');
 			if (frappe.session.user==="Guest") {
-				const sid = getCookie('sid');
-				console.log(sid)
+				const guest_id = getCookie('guest_id');
+				console.log(guest_id)
 				aetesis.e_commerce.shopping_cart.update_cart({
 					item_code,
 					region,
 					qty: 1,
-					sid: sid
+					guest_id: guest_id
 				});
 			} else {
 				aetesis.e_commerce.shopping_cart.update_cart({
@@ -278,4 +285,4 @@ function getCookie(cname) {
 	  }
 	}
 	return "";
-  }
+}

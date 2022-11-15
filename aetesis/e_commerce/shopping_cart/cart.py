@@ -32,11 +32,11 @@ def set_cart_count(quotation=None):
 
 
 @frappe.whitelist()
-def get_cart_quotation(doc=None):
-	party = get_party()
+def get_cart_quotation(doc=None, guest_id=None):
+	party = get_party(guest_id=guest_id)
 
 	if not doc:
-		quotation = _get_cart_quotation(party)
+		quotation = _get_cart_quotation(party, guest_id=guest_id)
 		doc = quotation
 		set_cart_count(quotation)
 
@@ -138,8 +138,8 @@ def request_for_quotation():
 
 
 @frappe.whitelist(allow_guest=True)
-def update_cart(item_code, qty, additional_notes=None, with_items=False, region=None, sid=None):
-	quotation = _get_cart_quotation(region=region, sid=sid)
+def update_cart(item_code=None, qty=None, additional_notes=None, with_items=False, region=None, guest_id=None):
+	quotation = _get_cart_quotation(region=region, guest_id=guest_id)
 
 	empty_card = False
 	qty = flt(qty)
@@ -166,7 +166,7 @@ def update_cart(item_code, qty, additional_notes=None, with_items=False, region=
 			quotation_items[0].qty = qty
 			quotation_items[0].additional_notes = additional_notes
 
-	apply_cart_settings(quotation=quotation, region=region)
+	apply_cart_settings(quotation=quotation, region=region, guest_id=guest_id)
 
 	quotation.flags.ignore_permissions = True
 	quotation.payment_schedule = []
@@ -179,7 +179,7 @@ def update_cart(item_code, qty, additional_notes=None, with_items=False, region=
 	set_cart_count(quotation)
 
 	if cint(with_items):
-		context = get_cart_quotation(quotation)
+		context = get_cart_quotation(quotation, guest_id=guest_id)
 		return {
 			"items": frappe.render_template("templates/includes/cart/cart_items.html", context),
 			"total": frappe.render_template("templates/includes/cart/cart_items_total.html", context),
@@ -322,17 +322,17 @@ def decorate_quotation_doc(doc):
 	return doc
 
 
-def _get_cart_quotation(party=None, region=None, sid=None):
+def _get_cart_quotation(party=None, region=None, guest_id=None):
 	"""Return the open Quotation of type "Shopping Cart" or make a new one"""
 	if not party:
-		party = get_party(sid=sid)
+		party = get_party(guest_id=guest_id)
 
-	if sid:
+	if guest_id:
 		quotation = frappe.get_all(
 		"Quotation",
 		fields=["name"],
 		filters={
-			"party_name": sid,
+			"party_name": guest_id,
 			"order_type": "Shopping Cart",
 			"docstatus": 0,
 		},
@@ -367,11 +367,11 @@ def _get_cart_quotation(party=None, region=None, sid=None):
 				"status": "Draft",
 				"docstatus": 0,
 				"__islocal": 1,
-				"party_name": sid or party.name,
+				"party_name": guest_id or party.name,
 			}
 		)
 
-		if not sid:
+		if not guest_id:
 			qdoc.contact_person = frappe.db.get_value("Contact", {"email_id": frappe.session.user})
 			qdoc.contact_email = frappe.session.user
 
@@ -410,9 +410,9 @@ def update_party(fullname, company_name=None, mobile_no=None, phone=None):
 		qdoc.save()
 
 
-def apply_cart_settings(party=None, quotation=None, region=None):
+def apply_cart_settings(party=None, quotation=None, region=None, guest_id=None):
 	if not party:
-		party = get_party()
+		party = get_party(guest_id=guest_id)
 	if not quotation:
 		quotation = _get_cart_quotation(party)
 
@@ -496,25 +496,30 @@ def set_taxes(quotation, cart_settings, region=None):
 	quotation.append_taxes_from_master()
 
 
-def get_party(user=None, sid=None):
-	print('getting_party', sid)
+def get_party(user=None, guest_id=None):
+	print('getting_party', guest_id)
+	print(frappe.local.cookie_manager)
 
-	if sid:
-		customer = frappe.new_doc("Customer")
-		fullname = sid
-		customer.update(
-			{
-				"customer_name": fullname,
-				"customer_type": "Individual",
-				"customer_group": get_shopping_cart_settings().default_customer_group,
-				"territory": get_root_of("Territory"),
-			}
-		)
-
-		customer.flags.ignore_mandatory = True
-		customer.insert(ignore_permissions=True)
-		print(customer)
-		return customer
+	if guest_id:
+		try:
+			customer = frappe.get_doc("Customer", guest_id)
+			return customer
+		except:
+			customer = frappe.new_doc("Customer")
+			fullname = guest_id
+			customer.update(
+				{
+					"customer_name": fullname,
+					"customer_type": "Individual",
+					"customer_group": get_shopping_cart_settings().default_customer_group,
+					"territory": get_root_of("Territory"),
+				}
+			)
+			customer.flags.ignore_mandatory = True
+			customer.insert(ignore_permissions=True)
+			return customer
+	elif frappe.session.user == "Guest":
+		print(frappe.local.cookie_manager.cookies)
 	
 	if not user:
 		user = frappe.session.user

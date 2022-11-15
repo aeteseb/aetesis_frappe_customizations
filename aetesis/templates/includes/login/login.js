@@ -20,21 +20,15 @@ login.bind_events = function () {
 		args.usr = frappe.utils.xss_sanitise(($("#login_email").val() || "").trim());
 		args.pwd = $("#login_password").val();
 		args.device = "desktop";
-		var cart_count = frappe.get_cookie('cart_count') || 0;
+		args.guest_id = frappe.get_cookie('guest_id') || undefined;
+		args.cart_count = frappe.get_cookie('cart_count') || 0;
 		if (!args.usr || !args.pwd) {
 			frappe.msgprint('{{ _("Both login and password required") }}');
 			return false;
 		}
 		
-		if (cart_count) {
-			login.call(args, function() {
-				console.log(frappe.session.user)
-//				frappe.call("aetesis.whitelisted.shopping_cart.transfer_cart_from_guest", {});
-			});
-			
-		} else {
-			login.call(args);
-		}
+		login.call(args);
+		
 		return false;
 	});
 
@@ -43,6 +37,13 @@ login.bind_events = function () {
 		var args = {};
 		args.cmd = "frappe.core.doctype.user.user.sign_up";
 		args.email = ($("#signup_email").val() || "").trim();
+		args.new_password= $("#signup_pwd").val();
+		const confirm_password = $('#signup_confirm_pwd').val();
+		console.log(args.new_password, confirm_password, args.new_password !== confirm_password)
+		if (args.new_password !== confirm_password) {
+			frappe.throw( __('Passwords do not match') )
+			return false;
+		}
 		args.redirect_to = frappe.utils.sanitise_redirect(frappe.utils.get_url_arg("redirect-to"));
 		args.full_name = frappe.utils.xss_sanitise(($("#signup_fullname").val() || "").trim());
 		if (!args.full_name) {

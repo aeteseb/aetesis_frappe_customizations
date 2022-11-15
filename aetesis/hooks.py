@@ -8,6 +8,8 @@ app_email = "sebastian@aetesis.ch"
 app_license = "MIT"
 app_logo_url= "/assests/aetesis/images/app_logo.svg"
 
+
+signup_form_template = "aetesis/templates/signup.html"
 template_apps = ['aetesis', 'erpnext', 'payments', 'frappe']
 update_website_context = [
 	"aetesis.e_commerce.shopping_cart.utils.update_website_context",
