@@ -7,7 +7,7 @@ app_description = "Aetesis Customisations"
 app_email = "sebastian@aetesis.ch"
 app_license = "MIT"
 app_logo_url= "/assests/aetesis/images/app_logo.svg"
-required_apps = ["ecommerce_integrations", "phamos_eu/swiss_accounting_integration", "chat"]
+required_apps = ["ecommerce_integrations", "phamos-eu/Swiss-Accounting-Integration", "chat"]
 
 signup_form_template = "aetesis/templates/signup.html"
 template_apps = ['aetesis', 'erpnext', 'payments', 'frappe']
