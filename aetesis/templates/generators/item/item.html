@@ -24,9 +24,9 @@
 </div>
 
 <!-- Additional Info/Reviews, Recommendations -->
-<div class="d-flex">
+<div class="row">
 	{% set show_recommended_items = recommended_items and shopping_cart.cart_settings.enable_recommendations %}
-	{% set info_col = 'col-9' if show_recommended_items else 'col-12' %}
+	{% set info_col = 'col-xl-9 col-md-6' if show_recommended_items else 'col-12' %}
 
 	{% set padding_top = 'pt-0' if (show_tabs and tabs) else '' %}
 
@@ -63,7 +63,7 @@
 
 	<!-- Recommended Items -->
 	{% if show_recommended_items %}
-		<div class="mt-4 col-3 recommended-item-section">
+		<div class="mt-4 col-xl-3 col-md-6 recommended-item-section">
 			<div class="product-container mt-2 recommendation-container">
 				<span class="recommendation-header">Recommended</span>
 				{% for item in recommended_items %}

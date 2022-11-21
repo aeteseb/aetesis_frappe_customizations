@@ -5,7 +5,7 @@
 		{% set item_code = v.item_code %}
 		<div class="buying {{item_code.replace(' ', '_')}} my-hidden">
 			<div class="item-cart row mt-2" data-variant-item-code="{{ item_code }}">
-				<div class="col-md-12">
+				<div class="col-md-12 text-center">
 					<!-- Price and Availability -->					
 					{% if cart_settings.show_price and product_info.price %}
 						
@@ -50,8 +50,8 @@
 					{% endif %}
 				</div>
 			</div>
-			<div class="mt-6 mb-5">
-				<div class="mb-4 d-flex">
+			<div>
+				<div class="d-flex">
 					<!-- Add to Cart -->
 					{% if product_info.price and (cart_settings.allow_items_not_in_stock or product_info.in_stock) %}
 						<a href="/cart" class="btn btn-light btn-in-cart hidden mr-2 font-md"
@@ -60,12 +60,12 @@
 						</a>
 						<button
 							data-item-code="{{item_code}}"
-							class="btn btn-primary btn-add-to-cart mr-2 w-30-40"
+							class="btn btn-primary btn-add-to-cart mx-auto mr-2 w-30-40"
 						>
 							<span class="mr-2">
 								<img class="btn-icon" src="/files/Ajouter au panier.svg">
 							</span>
-							{{ _("Add to Cart") if cart_settings.enable_checkout else  _("Add to Quote") }}
+							<span class="button-text">{{ _("Add to Cart") if cart_settings.enable_checkout else  _("Add to Quote") }}</span>
 						</button>
 					{% endif %}
 

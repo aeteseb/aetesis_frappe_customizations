@@ -541,7 +541,7 @@
       }
       let success_action = function() {
         console.log("Success?");
-        erpnext.e_commerce.wishlist.set_wishlist_count(true);
+        aetesis.e_commerce.wishlist.set_wishlist_count(true);
       };
       let args = { item_code: btn.data("item-code") };
       if (btn.data("parent")) {
@@ -1553,4 +1553,4 @@
     }
   };
 })();
-//# sourceMappingURL=aetesis-web.bundle.DP2HR4MX.js.map
+//# sourceMappingURL=aetesis-web.bundle.AUTSF5LB.js.map

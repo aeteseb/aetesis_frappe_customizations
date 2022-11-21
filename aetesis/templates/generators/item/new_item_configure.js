@@ -25,7 +25,8 @@ class ItemConfigure {
 			if ( a.attribute === "Size" ) {				
 				$div.append(
             				$('<label>').prop({
-                			for: 'Size'
+                			for: 'Size',
+							class: 'mr-5'
             				}).html('<h3>Size</h3>')
 				).append( $('<select>').prop({
                 			id: 'Size',
@@ -44,9 +45,9 @@ class ItemConfigure {
 						id: a.attribute
 						})
 						.append($('<div>').prop({ class: 'row variant-label' }).append(`<h3>${a.attribute}</h3>`))
-						.append($('<div>').prop({ class: 'row attribute-values align-items-end'})
+						.append($('<div>').prop({ class: 'row attribute-values justify-content-around align-items-end'})
 							.append( a.values.map(v => {
-								return $('<div>').prop({class:'col attribute-value'})
+								return $('<div>').prop({class:'attribute-value'})
 									.append($('<input>').prop({
 									type: 'radio',
 									class: 'radio_item',

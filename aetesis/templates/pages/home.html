@@ -23,10 +23,10 @@
 	</section>
 	{% elif homepage.hero_section_based_on == 'Slideshow' and slideshow %}
 	<section class="hero-section">
-		<h1 id="home-title">ÆTESIS</h1>
 		{% include "templates/includes/slideshow.html" %}
-		<a class="btn btn-primary btn-over-image" role="button" href="/all-products">
-			<img class="btn-icon" src="files/Produits.svg" alt="products-icon"> {{ _('Découvrez nos Bijoux!') }}
+		<a class="btn btn-primary btn-over-image mx-auto" role="button" href="/all-products">
+			<img class="btn-icon" src="files/Produits.svg" alt="products-icon"> 
+			<span class="button-text">{{ _('Découvrez nos Bijoux!') }}</span>
 		</a>
 	</section>
 	{% elif homepage.hero_section_based_on == 'Homepage Section' %}

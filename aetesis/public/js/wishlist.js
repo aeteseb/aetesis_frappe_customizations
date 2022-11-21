@@ -101,7 +101,7 @@ $.extend(wishlist, {
 
 		let success_action = function() {
 			console.log('Success?');
-			erpnext.e_commerce.wishlist.set_wishlist_count(true);
+			aetesis.e_commerce.wishlist.set_wishlist_count(true);
 		};
 		
 		let args = { item_code: btn.data('item-code') };

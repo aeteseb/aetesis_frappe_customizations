@@ -18,7 +18,7 @@ $(() => {
 
 		bind_card_actions() {
 			aetesis.e_commerce.shopping_cart.bind_add_to_cart_action();
-			erpnext.e_commerce.wishlist.bind_wishlist_action();
+			aetesis.e_commerce.wishlist.bind_wishlist_action();
 		}
 	}
 

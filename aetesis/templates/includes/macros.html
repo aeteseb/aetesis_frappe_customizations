@@ -404,7 +404,7 @@
 {%- macro item_images(variants)-%}
 	{% for v in variants %}
 		{% set column_size = 5 if v.slides else 4 %}
-		<div class="col-md-{{ column_size }} h-100 d-flex flex-column align-items-center mb-4 slideshow-container {{ v.item_code.replace(' ', '_') }} my-hidden" >
+		<div class="col-lg-{{ column_size }} h-100 d-flex flex-column align-items-center mb-4 slideshow-container {{ v.item_code.replace(' ', '_') }} my-hidden" >
 		{% if v.slides %}
 			{{ product_image(v.slides[0].image, 'product-image', item_code = v.item_code) }}
 			<div class="item-slideshow d-flex mt-3">
