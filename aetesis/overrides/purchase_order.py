@@ -10,7 +10,7 @@ class CustomPurchaseOrder(PurchaseOrder) :
 			if d.material_request_item:
 				material_request_map.setdefault(d.material_request, []).append(d.material_request_item)
 			"""elif d.references:
-				print(type(d.references))
+				
 				mrs = re.finditer('mr:[^,]+,(i:[^,]+,so:[^,]+,)+', d.references)
 				for mr in mrs :
 					mr_name = mr.group()[3:20]
@@ -64,7 +64,7 @@ def make_print_purchase_order(po_name="", *args, **kwargs) :
 	ppo.transaction_date = po.transaction_date
 	ppo.schedule_date = po.schedule_date
 	items = get_items_for_ppo(po.items, po.supplier)
-	print(items)
+	
 	
 	for item in items :
 		row = ppo.append(
@@ -81,7 +81,7 @@ def make_print_purchase_order(po_name="", *args, **kwargs) :
 def get_supplier_part_number(item, supplier) :
 	doc = frappe.get_doc('Item', item)
 	suppliers = doc.supplier_items
-	print('here')
+	
 	
 	for sup in suppliers :
 		if sup.supplier == supplier:

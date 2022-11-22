@@ -111,7 +111,7 @@ class CustomWebsiteItem(WebsiteItem):
 		)
 		items = query.run(as_dict=True)
 		
-		print('Items', items)
+		
 		
 		materials = []
 		
@@ -125,12 +125,12 @@ class CustomWebsiteItem(WebsiteItem):
 			try:
 				i['material'] = mat[0].attribute_value
 			except:
-				print('Item has no material')
+				
 			
-			print(i)
+			
 			materials.append(i)
 		
-		print(materials)
+		
 		return materials
 """	
 	def get_variant_attributes_and_values(self):

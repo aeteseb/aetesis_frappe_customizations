@@ -203,7 +203,7 @@ var $link = $('#region-picker');
 const d = getPickerDialog();
 $link.on('click', function() {
   frappe.call('aetesis.utilities.regions.get_countries_and_languages').then( r => {
-    console.log(r.message);
+    
     const countries = r.message['countries'];
     const languages = r.message['languages'];
     document.languages = languages;

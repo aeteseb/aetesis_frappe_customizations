@@ -100,7 +100,7 @@ $.extend(wishlist, {
 		}
 
 		let success_action = function() {
-			console.log('Success?');
+			
 			aetesis.e_commerce.wishlist.set_wishlist_count(true);
 		};
 		

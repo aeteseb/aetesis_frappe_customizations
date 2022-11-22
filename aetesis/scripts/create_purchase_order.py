@@ -54,7 +54,7 @@ def get_items_for_po(pending_requests):
  
 	for request in pending_requests :
 		doc = frappe.get_doc('Material Request', request)
-#		print("items:", items)
+#		
 
 		for i in doc.items :
 			item = [i.item_code, 
@@ -68,7 +68,7 @@ def get_items_for_po(pending_requests):
 					request,
 					i.name)]"""
 				]
-#			print("This item:", item)
+#			
 			"""result =  first_appearance(item, items)
 			first = result[0]
 			n = result[1]

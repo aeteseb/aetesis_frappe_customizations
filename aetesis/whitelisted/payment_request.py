@@ -11,7 +11,7 @@ def make_payment_request(**args):
 
 	ref_doc = frappe.get_doc(args.dt, args.dn)
 	gateway_account = get_gateway_details(args) or frappe._dict()
-	print(gateway_account, 'gate acc')
+	
 	grand_total = get_amount(ref_doc, gateway_account.get("payment_account"))
 	if args.loyalty_points and args.dt == "Sales Order":
 		from erpnext.accounts.doctype.loyalty_program.loyalty_program import validate_loyalty_points
@@ -37,7 +37,7 @@ def make_payment_request(**args):
 			"Payment Request",
 			{"reference_doctype": args.dt, "reference_name": args.dn, "docstatus": ("!=", 2)},
 		)
-		print(existing_payment_request)
+		
 
 	if existing_payment_request:
 		frappe.db.set_value(
@@ -52,7 +52,7 @@ def make_payment_request(**args):
 				grand_total -= existing_payment_request_amount
 
 		pr = frappe.new_doc("Payment Request")
-		print('1:', pr.payment_gateway_account, gateway_account.get("name"))
+		
 		pr.update(
 			{
 				"payment_gateway_account": gateway_account.get("name"),
@@ -73,14 +73,14 @@ def make_payment_request(**args):
 				"bank_account": bank_account,
 			}
 		)
-		print('1:', pr.payment_gateway_account, gateway_account.get("name"))
+		
 		if args.order_type == "Shopping Cart" or args.mute_email:
 			pr.flags.mute_email = True
 
 		pr.insert(ignore_permissions=True)
 		if args.submit_doc:
 			pr.submit()
-	print(pr)
+	
 	if args.order_type == "Shopping Cart":
 		frappe.db.commit()
 		frappe.local.response["type"] = "redirect"

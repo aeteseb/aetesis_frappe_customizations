@@ -85,7 +85,7 @@ def get_prices(item_codes, region):
 	items = json.loads(item_codes)
 	for item in items:
 		price = frappe_price(item, price_list, cart_settings.default_customer_group, cart_settings.company)
-		print(item, price_list, price)
+		
 		prices.append({"item_code": item, "price": price})
 	return prices
 

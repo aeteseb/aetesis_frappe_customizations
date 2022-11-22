@@ -34,7 +34,7 @@ def add_to_wishlist(item_code, parent=None):
 			"route": parent_doc.get("route") + '?' + variant.item_code.replace(' ', '_'),
 		}
 		
-		print(web_item_data)
+		
 	else:
 		web_item_data = frappe.db.get_value(
 			"Website Item",

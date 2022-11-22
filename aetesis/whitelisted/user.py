@@ -4,23 +4,23 @@ import frappe
 def set_guest_id(guest_id):
 	if hasattr(frappe.local, "cookie_manager"):
 		# set it in cookies for using in product page
-		print('great success')
+		
 		frappe.local.cookie_manager.set_cookie("guest_id", guest_id)
-		print(frappe.local.cookie_manager)
+		
 
 
 
 @frappe.whitelist(allow_guest=True)
 def sign_up(email, full_name, redirect_to):
-	print('TEST')
+	
 	if is_signup_disabled():
 		frappe.throw(_("Sign Up is disabled"), title=_("Not Allowed"))
 
 	user = frappe.db.get("User", {"email": email})
 	if user:
-		print(user)
+		
 		if user.enabled:
-			print(user.last_login)
+			
 			if not user.last_login is None:
 				user.send_welcome_mail_to_user()
 				return 0, _("New registration link sent")
@@ -28,7 +28,7 @@ def sign_up(email, full_name, redirect_to):
 		else:
 			return 0, _("Registered but disabled")
 	else:
-		print('else')
+		
 		if frappe.db.get_creation_count("User", 60) > 300:
 			frappe.respond_as_web_page(
 				_("Temporarily Disabled"),

@@ -75,7 +75,7 @@ function update_visibility(selected){
 	
 	$product_image.find('a').prop('href', link);
 	$(`.${selected.split(' ')[0]}`).each( function() {$(this).addClass('my-hidden');
-console.log($(this))});
+
 	$(`.${selected.split(' ').slice(-1)[0]}`).each( function() {$(this).removeClass('my-hidden');});
 }
 	
@@ -92,13 +92,13 @@ function update_variant_selector(checked) {
 	
 	$('.attribute:not(:first):visible').each(function() {
 		var parent_name = $(this).data("parent");
-		console.log('will it work?', checked[0], parent_name);
+		
 		const id = `#${checked[0]}/${parent_name}`;
-		console.log(id);
+		
 		/*$test = $(id).slice(0);
-		console.log($test);
+		
 		if ($test && $test.is(':visible')) {
-			console.log('it works!', checked[0], parent_name);
+			
 		}*/
 	})
 	

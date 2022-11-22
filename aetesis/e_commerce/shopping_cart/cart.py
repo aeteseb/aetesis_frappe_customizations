@@ -497,8 +497,8 @@ def set_taxes(quotation, cart_settings, region=None):
 
 
 def get_party(user=None, guest_id=None):
-	print('getting_party', guest_id)
-	print(frappe.local.cookie_manager)
+	
+	
 
 	if guest_id:
 		try:
@@ -519,7 +519,7 @@ def get_party(user=None, guest_id=None):
 			customer.insert(ignore_permissions=True)
 			return customer
 	elif frappe.session.user == "Guest":
-		print(frappe.local.cookie_manager.cookies)
+		
 	
 	if not user:
 		user = frappe.session.user

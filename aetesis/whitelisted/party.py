@@ -33,7 +33,7 @@ def set_taxes(
 				party, party_type, {"billing_address": billing_address, "shipping_address": shipping_address}
 			)
 		)
-		print(args)
+		
 	else:
 		args.update(get_party_details(party, party_type))
 
