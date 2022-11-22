@@ -2,15 +2,18 @@
   // ../aetesis/aetesis/public/js/website_utils.js
   if (!window.aetesis)
     window.aetesis = {};
+  if (/windows/i.test(navigator.userAgent)) {
+    document.body.classList.add("win");
+  }
   frappe.ready(function() {
     var guest_id = frappe.get_cookie("guest_id");
-    
+    console.log(!guest_id, frappe.session.user);
     if (!guest_id && frappe.session.user === "Guest") {
       guest_id = Math.floor(1e5 + Math.random() * 9e5);
       var d2 = new Date();
       d2.setTime(d2.getTime() + 6048e5);
       var expires = "; expires=" + d2.toUTCString();
-      
+      console.log(expires);
       document.cookie = "guest_id=" + guest_id + expires + "; samesite=Lax; path=/";
       frappe.boot["guest_id"] = guest_id;
     } else if (guest_id) {
@@ -99,9 +102,9 @@
     var html = `<div class="col mb-3" data-section="countries"><div class="row no-gutters" >`;
     countries.forEach((c) => {
       var subhtml = `<div class="mr-3 mb-3 w-100" data-country-name="${c.country}" data-region-type="country"`;
-      
+      console.log(c, country2);
       c.country === country2 ? subhtml += "data-active>" : subhtml += ">";
-      
+      console.log(subhtml, get_Card(c, "counrty"));
       subhtml += get_Card(c, "country");
       subhtml += "</div>";
       html += subhtml;
@@ -134,17 +137,17 @@
   }
   function show_recommended(country2) {
     const all_langs = document.languages;
-    
+    console.log(all_langs);
     $(".language-card").each(function() {
       var lang = $(this).parent().data("language-name");
-      
+      console.log("card:", lang);
       me = this;
       var show = false;
       all_langs.some((l) => {
-        
+        console.log("card:", lang, "lang:", l.language);
         if (lang === l.language) {
           l.countries.some((c) => {
-            
+            console.log("card:", lang, "lang:", l.language, "country:", c.country, country2);
             if (country2 === c.country) {
               show = true;
               return true;
@@ -173,7 +176,7 @@
       document.show_recommended = false;
     } else {
       var country2 = $('[data-section="countries"').find("[data-active]").data("country-name");
-      
+      console.log(country2);
       show_recommended(country2);
       $("#less-or-more-text").html("Show More");
       document.show_recommended = true;
@@ -196,7 +199,6 @@
   var d = getPickerDialog();
   $link.on("click", function() {
     frappe.call("aetesis.utilities.regions.get_countries_and_languages").then((r) => {
-      
       const countries = r.message["countries"];
       const languages = r.message["languages"];
       document.languages = languages;
@@ -206,7 +208,7 @@
       d.show();
     }).then(function() {
       var country2 = $('[data-section="countries"').find("[data-active]");
-      
+      console.log(country2);
       show_recommended(country2);
     });
   });
@@ -360,7 +362,7 @@
     },
     shopping_cart_update: function({ item_code, qty, cart_dropdown, additional_notes }) {
       var guest_id = frappe.get_cookie("guest_id") || void 0;
-      
+      console.log(guest_id);
       shopping_cart.update_cart({
         item_code,
         qty,
@@ -403,7 +405,7 @@
         const region = getCookie2("country");
         if (frappe.session.user === "Guest") {
           const guest_id = getCookie2("guest_id");
-          
+          console.log(guest_id);
           aetesis.e_commerce.shopping_cart.update_cart({
             item_code,
             region,
@@ -540,7 +542,6 @@
         return;
       }
       let success_action = function() {
-        
         aetesis.e_commerce.wishlist.set_wishlist_count(true);
       };
       let args = { item_code: btn.data("item-code") };
@@ -1553,4 +1554,4 @@
     }
   };
 })();
-//# sourceMappingURL=aetesis-web.bundle.AUTSF5LB.js.map
+//# sourceMappingURL=aetesis-web.bundle.DKINV42Q.js.map

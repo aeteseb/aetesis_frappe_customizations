@@ -330,7 +330,6 @@ $.extend(shopping_cart, {
 });
 
 frappe.ready(function() {
-
 	shopping_cart.parent = $(".cart-container");
 	shopping_cart.bind_events();
 	//If Guest try fetching guest cart
@@ -340,10 +339,13 @@ frappe.ready(function() {
 		frappe.call('aetesis.whitelisted.cart.get_quote', {guest_id:guest_id}).then( r => {
 			
 			const doc = r.message.doc;
+
 			console.log(doc)
 			if (doc.items.length > 0) {
 				buildTable(doc)
 				shopping_cart.shopping_cart_update({guest_id:guest_id})				
+			} else {
+				$('.cart-empty').show();
 			}
 			
 		});

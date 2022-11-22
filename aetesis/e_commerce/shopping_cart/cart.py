@@ -326,7 +326,7 @@ def _get_cart_quotation(party=None, region=None, guest_id=None):
 	"""Return the open Quotation of type "Shopping Cart" or make a new one"""
 	if not party:
 		party = get_party(guest_id=guest_id)
-
+		
 	if guest_id:
 		quotation = frappe.get_all(
 		"Quotation",
@@ -501,10 +501,12 @@ def get_party(user=None, guest_id=None):
 	
 
 	if guest_id:
-		try:
+		exists = frappe.db.exists('Customer', guest_id)
+		
+		if exists:
 			customer = frappe.get_doc("Customer", guest_id)
 			return customer
-		except:
+		else:
 			customer = frappe.new_doc("Customer")
 			fullname = guest_id
 			customer.update(
@@ -517,8 +519,9 @@ def get_party(user=None, guest_id=None):
 			)
 			customer.flags.ignore_mandatory = True
 			customer.insert(ignore_permissions=True)
+			print(customer)
 			return customer
-	elif frappe.session.user == "Guest":
+
 		
 	
 	if not user:

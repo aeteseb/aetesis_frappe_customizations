@@ -125,7 +125,7 @@ class CustomWebsiteItem(WebsiteItem):
 			try:
 				i['material'] = mat[0].attribute_value
 			except:
-				
+				pass
 			
 			
 			materials.append(i)

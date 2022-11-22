@@ -1,5 +1,9 @@
 if(!window.aetesis) window.aetesis = {};
 
+if (/windows/i.test(navigator.userAgent)) {
+    document.body.classList.add('win')
+  }
+
 frappe.ready(function() {
     var guest_id = frappe.get_cookie('guest_id');
     console.log((!guest_id) , frappe.session.user)
