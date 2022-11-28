@@ -23,10 +23,21 @@
 
   // ../aetesis/aetesis/public/js/regions.js
   if (!getCookie("country")) {
-    $.getJSON("http://www.geoplugin.net/json.gp?jsoncallback=?", function(data) {
-      document.cookie = "country=" + data.geoplugin_countryName + "; samesite=Lax; path=/";
+    fetch("https://extreme-ip-lookup.com/json/?key=PfYx8a1ShNWrcemMU1bY").then((res) => {
+      return res.json();
+    }).then((response) => {
+      document.cookie = "country=" + response.country + "; samesite=Lax; path=/";
+    }).catch((data) => {
+      console.log("Request failed");
     });
   }
+  if (!getCookie("language")) {
+    lang = navigator.language.split("-")[0];
+    languageNames = new Intl.DisplayNames([lang], { type: "language" });
+    document.cookie = "preferred_language_name=" + languageNames.of(lang) + "; samesite=Lax; path=/";
+  }
+  var lang;
+  var languageNames;
   function getCookie(cname) {
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
@@ -87,8 +98,8 @@
     });
     return d2;
   }
-  function get_Card(thing, type) {
-    return `<div class="card address-card ${type}-card h-100">
+  function get_Card({ params, thing, type, country: country2 = void 0, language = void 0 }) {
+    return `<div class="card address-card ${type}-card h-100 ${thing.country && thing.country === country2 ? "active" : thing.language && thing.language === language ? "active" : ""} ">
 	<div class="check" style="position: absolute; right: 15px; top: 15px;">
 		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
 	</div>
@@ -102,10 +113,8 @@
     var html = `<div class="col mb-3" data-section="countries"><div class="row no-gutters" >`;
     countries.forEach((c) => {
       var subhtml = `<div class="mr-3 mb-3 w-100" data-country-name="${c.country}" data-region-type="country"`;
-      console.log(c, country2);
       c.country === country2 ? subhtml += "data-active>" : subhtml += ">";
-      console.log(subhtml, get_Card(c, "counrty"));
-      subhtml += get_Card(c, "country");
+      subhtml += get_Card({ thing: c, type: "country", country: country2 });
       subhtml += "</div>";
       html += subhtml;
     });
@@ -113,12 +122,12 @@
     return html;
   }
   function get_language_html(languages) {
-    let language = getCookie("preferred_language_name") || "English";
+    let language = getCookie("preferred_language_name");
     var html = `<div class="col mb-3" data-section="languages"><div class="row no-gutters" >`;
     languages.forEach((lang) => {
       var subhtml = `<div class="mr-3 mb-3 w-100" data-language-name="${lang.language}" data-language-code="${lang.code}" data-region-type="country"`;
       lang.language === language ? subhtml += "data-active>" : subhtml += ">";
-      subhtml += get_Card(lang, "language");
+      subhtml += get_Card({ thing: lang, type: "language", language });
       subhtml += "</div>";
       html += subhtml;
     });
@@ -137,17 +146,14 @@
   }
   function show_recommended(country2) {
     const all_langs = document.languages;
-    console.log(all_langs);
+    console.log($(".language-card"));
     $(".language-card").each(function() {
       var lang = $(this).parent().data("language-name");
-      console.log("card:", lang);
       me = this;
       var show = false;
       all_langs.some((l) => {
-        console.log("card:", lang, "lang:", l.language);
         if (lang === l.language) {
           l.countries.some((c) => {
-            console.log("card:", lang, "lang:", l.language, "country:", c.country, country2);
             if (country2 === c.country) {
               show = true;
               return true;
@@ -171,12 +177,13 @@
   }
   function less_or_more() {
     if (document.show_recommended) {
+      console.log("show all");
       show_all();
       $("#less-or-more-text").html("Show Less");
       document.show_recommended = false;
     } else {
-      var country2 = $('[data-section="countries"').find("[data-active]").data("country-name");
-      console.log(country2);
+      var country2 = $(".country-card.active").closest("[data-country-name]").data("country-name") || getCookie("country");
+      console.log("show recommended");
       show_recommended(country2);
       $("#less-or-more-text").html("Show More");
       document.show_recommended = true;
@@ -198,20 +205,32 @@
   var $link = $("#region-picker");
   var d = getPickerDialog();
   $link.on("click", function() {
-    frappe.call("aetesis.utilities.regions.get_countries_and_languages").then((r) => {
+    frappe.call("aetesis.utilities.regions.get_countries_and_languages").then(async function(r) {
       const countries = r.message["countries"];
       const languages = r.message["languages"];
       document.languages = languages;
-      document.show_recommended = true;
+      document.show_recommended = false;
       const html = '<div class="row">' + get_country_html(countries) + get_language_html(languages) + "</div>";
       $(d.get_field("region-picker").wrapper).html(html);
-      d.show();
-    }).then(function() {
-      var country2 = $('[data-section="countries"').find("[data-active]");
-      console.log(country2);
-      show_recommended(country2);
+      await d.show();
+      waitForElementToDisplay(".more-or-less", less_or_more, 500, 9e3);
     });
   });
+  function waitForElementToDisplay(selector, callback, checkFrequencyInMs, timeoutInMs) {
+    var startTimeInMs = Date.now();
+    (function loopSearch() {
+      if (document.querySelector(selector) != null) {
+        callback();
+        return;
+      } else {
+        setTimeout(function() {
+          if (timeoutInMs && Date.now() - startTimeInMs > timeoutInMs)
+            return;
+          loopSearch();
+        }, checkFrequencyInMs);
+      }
+    })();
+  }
 
   // ../aetesis/aetesis/public/js/shopping_cart.js
   frappe.provide("aetesis.e_commerce.shopping_cart");
@@ -327,7 +346,7 @@
       }
       var $cart = $(".cart-icon");
       var $badge = $cart.find("#cart-count");
-      if (parseInt(cart_count) === 0 || cart_count === void 0 || guest != void 0) {
+      if (parseInt(cart_count) === 0 || cart_count === void 0 || guest) {
         $(".cart-tax-items").hide();
         $(".btn-place-order").hide();
         $(".cart-payment-addresses").hide();
@@ -1554,4 +1573,4 @@
     }
   };
 })();
-//# sourceMappingURL=aetesis-web.bundle.DKINV42Q.js.map
+//# sourceMappingURL=aetesis-web.bundle.K7P3ZFEU.js.map

@@ -94,7 +94,7 @@ def place_order(region=None):
 		frappe.defaults.set_user_default("company", quotation.company)
 
 	if not (quotation.shipping_address_name or quotation.customer_address):
-		frappe.throw(_("Set Shipping Address or Billing Address"))
+		throw(_("Set Shipping Address or Billing Address"))
 
 	from erpnext.selling.doctype.quotation.quotation import _make_sales_order
 

@@ -25,6 +25,8 @@
   --text-secondary: #202021;
   --text-highlight: #ffd519;
   --text-darklight: #daa520;
+  
+  --checkbox-gradient: linear-gradient(180deg, var(--bg-ultra-light) -124.51%, var(--primary) 100%);
 
   /* Font/text values */
 --font-h1: Via Appia;
@@ -47,6 +49,18 @@
 --line-spacing-77: 77px;
 --line-spacing-162: 162px;
 }
+.braintree-card, .braintree-toggle, .braintree-option, .braintree-sheet, .braintree-sheet__container, .braintree-upper-container::before{
+  background: var(--bg-dark);
+  border: solid 1px var(--bg-dark);
+  border-radius: 1rem;
+}
+.braintree-sheet__content--button {
+  background: var(--bg-light);
+  border-radius: 1rem;
+}
+#logoPayPal path {
+  stroke: var(--bg-dark);
+}
 
 body {
   background-image: url('/files/Fond@2x.png') 0% 0% repeat padding-box;
@@ -54,9 +68,14 @@ body {
   background-color: var(--bg-dark) !important;
 }
 
+h6 {
+  color: var(--text-primary)
+}
+
 footer {
   background: var(--bg-light);
   border-radius: 3rem 3rem 0 0;
+  margin-top: 5rem;
 }
 
 footer h2 {
@@ -74,13 +93,28 @@ footer a {
 }
 
 .nav-top {
-  background: var(--bg-ultra-light)
+  background: var(--bg-ultra-light);
 }
 .nav-bottom {
   padding-top: .25rem !important;
-  background: var(--bg-light)
+  background: var(--bg-light);
+}
+.website-list {
+  background: var(--bg-dark);
 }
 
+.control-value {
+  background: var(--bg-light);
+}
+.control-label {
+  color: var(--text-primary) !important;
+}
+.btn-default {
+  color: var(--text-primary) !important;
+}
+.address-card .card-body {
+  border: none !important;
+}
 
 .nav-b-icon {
   height: 2rem;
@@ -94,6 +128,23 @@ footer a {
 .modal-title {
   color: unset;
 }
+
+h4 {
+  color: var(--text-primary);
+}
+
+.my-account-header {
+  color: var(--text-primary);
+}
+.sidebar-item a {
+  color: var(--text-primary);
+}
+.sidebar-item a.active {
+  color: var(--text-secondary);
+  background: var(--primary);
+}
+
+
 
 h5.card-title {
   color: unset;
@@ -609,14 +660,19 @@ a.nav-link.active {
 
 .form-control, input.form-control, textarea {
   color: var(--text-primary) !important;
-  background: var(--bg-dark) !important;
+  background: var(--bg-light) !important;
   border-bottom: 1px solid var(--secondary) !important;
 }
 
 input.form-control:focus{
   border-bottom: 1px solid var(--text-primary) !important;
 }
+input[type="checkbox"]:checked {
+  background-color: var(--secondary) !important;
+  background-image: url("data:image/svg+xml, <svg viewBox='0 0 8 7' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M1 4.00001L2.66667 5.80001L7 1.20001' stroke='white' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>"), var(--checkbox-gradient) !important;
 
+}
+ 
 textarea:focus {
   background: var(--bg-dark) !important;
   color: var(--text-primary) !important;
@@ -647,7 +703,7 @@ p, div, div span, .msgprint, .dropdown-item, .section-head, .mb-4:not(a), .cart-
   color: var(--text-primary) !important;
 }
 
-.product-category, .product-code, .control-label, .rating-summary-numbers .mb-2, .rating-bar-title, .spec-label, .chat-query-heading, .message-time, p.forgot-password-message a, .my-account-item-desc, .file-size, .col-sm-1 
+.product-category, .product-code, .rating-summary-numbers .mb-2, .rating-bar-title, .spec-label, .chat-query-heading, .message-time, p.forgot-password-message a, .my-account-item-desc, .file-size, .col-sm-1 
 {
   color: var(--text-secondary) !important;
 }

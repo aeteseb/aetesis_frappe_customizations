@@ -69,6 +69,7 @@ frappe.ready(() => {
 	});
 
 	$('.btn-new-address').click((e) => {
+		var country = frappe.get_cookie('country')
 		var type = $(e.target).data('type')
 		const d = new frappe.ui.Dialog({
 			title: __('New Address'),
@@ -116,10 +117,10 @@ frappe.ready(() => {
 				{
 					label: __('Country'),
 					fieldname: 'country',
-					fieldtype: 'Data',
+					fieldtype: 'Link',
 					options: 'Country',
-					only_select: true,
-					reqd: 1
+					default: __(country),
+					read_only: 1
 				},
 				{
 					fieldname: "phone",

@@ -16,6 +16,10 @@ def set_taxes(
 ):
 	from erpnext.accounts.doctype.tax_rule.tax_rule import get_party_details, get_tax_template
 
+	if region:
+		tax_template = frappe.db.get_value("Website Region", region, "tax")
+		return tax_template
+
 	args = {party_type.lower(): party, "company": company}
 
 	if tax_category:

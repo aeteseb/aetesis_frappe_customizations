@@ -139,7 +139,7 @@ $.extend(shopping_cart, {
 		var $cart = $('.cart-icon');
 		var $badge = $cart.find("#cart-count");
 
-		if(parseInt(cart_count) === 0 || cart_count === undefined || guest!=undefined) {
+		if(parseInt(cart_count) === 0 || cart_count === undefined || guest) {
 			$(".cart-tax-items").hide();
 			$(".btn-place-order").hide();
 			$(".cart-payment-addresses").hide();
