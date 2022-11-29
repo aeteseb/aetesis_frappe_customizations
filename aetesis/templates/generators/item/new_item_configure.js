@@ -18,7 +18,7 @@ class ItemConfigure {
 		this.attribute_data.map(a => {
 			this.$container.append(
 			$('<div>').prop({
-				class: 'row attribute d-flex align-items-baseline',
+				class: 'row attribute d-flex align-items-center',
 				id: `Attr-${a.attribute}`
 				}))
 			var $div = $(`#Attr-${a.attribute}`)
@@ -28,6 +28,11 @@ class ItemConfigure {
                 			for: 'Size',
 							class: 'mr-5'
             				}).html('<h3>Size</h3>')
+				).append( $('<a>').prop({
+					class: 'instructions-link',
+					href: '/files/instructions.pdf',
+					target: '_blank'
+					}).html('<img class="no-round instructions-img" src="/files/question.svg">')
 				).append( $('<select>').prop({
                 			id: 'Size',
                 			name: 'Size'

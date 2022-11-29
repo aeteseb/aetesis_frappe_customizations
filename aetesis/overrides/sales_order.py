@@ -1,12 +1,18 @@
-from erpnext.selling.doctype.sales_order.sales_order import SalesOrder
-from erpnext.selling.doctype.sales_order.sales_order import make_raw_material_request
-from erpnext.selling.doctype.sales_order.sales_order import make_material_request
-from erpnext.selling.doctype.sales_order.sales_order import update_linked_doc
+from erpnext.selling.doctype.sales_order.sales_order import SalesOrder, make_raw_material_request, make_material_request, update_linked_doc, make_sales_invoice
 import frappe
 from datetime import timedelta
 
+
+
 class CustomSalesOrder(SalesOrder):
-		
+	def on_submit(self):
+		super().on_submit()
+		if self.order_type == 'Shopping Cart':
+			inv = make_sales_invoice(self.name, ignore_permissions=True)
+			inv.save()
+			inv.submit()
+
+
 	def sort_items_and_create_requests(self):
 		purchasing_items = []
 		manufacturing_items = []
