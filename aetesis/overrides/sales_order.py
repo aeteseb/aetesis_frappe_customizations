@@ -5,12 +5,7 @@ from datetime import timedelta
 
 
 class CustomSalesOrder(SalesOrder):
-	def on_submit(self):
-		super().on_submit()
-		if self.order_type == 'Shopping Cart':
-			inv = make_sales_invoice(self.name, ignore_permissions=True)
-			inv.save()
-			inv.submit()
+
 
 
 	def sort_items_and_create_requests(self):
