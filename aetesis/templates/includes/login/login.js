@@ -37,7 +37,8 @@ login.bind_events = function () {
 		var args = {};
 		args.cmd = "frappe.core.doctype.user.user.sign_up";
 		args.email = ($("#signup_email").val() || "").trim();
-		args.new_password= $("#signup_pwd").val();
+		args.new_password = $("#signup_pwd").val();
+		args.guest_id = frappe.get_cookie('guest_id');
 		const confirm_password = $('#signup_confirm_pwd').val();
 		console.log(args.new_password, confirm_password, args.new_password !== confirm_password)
 		if (args.new_password !== confirm_password) {
