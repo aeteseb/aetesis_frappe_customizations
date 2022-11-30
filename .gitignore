@@ -6,3 +6,4 @@ tags
 aetesis/docs/current
 node_modules/
 .vscode/settings.json
+aetesis/public/dist
