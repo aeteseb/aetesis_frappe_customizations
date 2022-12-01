@@ -224,7 +224,7 @@ class ItemConfigure {
 	
 	get_next_attribute_and_values(selected_attributes) {
 		if(selected_attributes === undefined) {
-			selected_attributes={'Material':'Silver'}	
+			selected_attributes={'Material':'Silver'};	
 		}
 		return this.call('erpnext.e_commerce.variant_selector.utils.get_next_attribute_and_values', {
 			item_code: this.item_code,
