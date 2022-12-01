@@ -224,7 +224,7 @@ class ItemConfigure {
 	
 	get_next_attribute_and_values(selected_attributes) {
 		console.log(selected_attributes);
-		if(selected_attributes === undefined) {
+		if(selected_attributes.material === undefined) {
 			selected_attributes={'Material':'Silver'};	
 		}
 		console.log(selected_attributes);
