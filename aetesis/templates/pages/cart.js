@@ -34,7 +34,6 @@ $.extend(shopping_cart, {
 
 	shopping_cart_update: function({item_code, qty, cart_dropdown, additional_notes, region}) {
 		var guest_id = frappe.get_cookie('guest_id') || undefined;
-		console.log(guest_id)
 		shopping_cart.update_cart({
 			item_code,
 			qty,
@@ -337,13 +336,10 @@ frappe.ready(function() {
 		$('.cart-empty').hide();
 		const guest_id = frappe.get_cookie('guest_id');
 		frappe.call('aetesis.whitelisted.cart.get_quote', {guest_id:guest_id}).then( r => {
-			
+			const country = getCookie('country')
 			const doc = r.message.doc;
-
-			console.log(doc)
 			if (doc.items.length > 0) {
-				buildTable(doc)
-				shopping_cart.shopping_cart_update({guest_id:guest_id})				
+				shopping_cart.shopping_cart_update({guest_id:guest_id, region:country})				
 			} else {
 				$('.cart-empty').show();
 			}
@@ -351,113 +347,6 @@ frappe.ready(function() {
 		});
 	}
 });
-
-function buildTable(doc) {
-	
-	var all_html = '';
-	for (const d of doc.items) {
-		console.log(d)
-		var html = `<tr data-name="${ d.name }">
-		<td style="width: 60%;">
-			<div class="d-flex">
-				<div class="cart-item-image mr-4">`
-		if (d.thumbnail) {
-			html += product_image(d.thumbnail, alt="d.web_item_name", no_border=True)
-		} else {
-			html += `<div class = "no-image-cart-item">"NA"</div>`
-		}
-		html += '</div>'
-		html += `<div class="d-flex w-100" style="flex-direction: column;">
-		<div class="item-title mb-1 mr-3">
-			${ d.item_name }
-		</div>
-		<div class="item-subtitle mr-2">
-			${ d.item_code }
-		</div>`
-		let disabled
-		d.is_free_item? disabled = 'disabled' : disabled = '' ;
-		html += `</div>
-		</div>
-	</td>
-	<td class="text-right" style="width: 25%;">
-			<div class="d-flex">
-				<div class="input-group number-spinner mt-1 mb-4">
-					<span class="input-group-prepend d-sm-inline-block">
-						<button class="btn cart-btn" data-dir="dwn" ${ disabled }>
-							${ d.is_free_item ? '' : '–' }
-						</button>
-					</span>
-
-					<input class="form-control text-center cart-qty" value="${ d.qty }" data-item-code="${ d.item_code }"
-						style="max-width: 70px;" ${ disabled }>
-
-					<span class="input-group-append d-sm-inline-block">
-						<button class="btn cart-btn" data-dir="up" ${ disabled }>
-							${ d.is_free_item ? '' : '+' }
-						</button>
-					</span>
-					</div>
-
-				<div>`
-		if (!d.is_free_item) {
-			html += `<div class="remove-cart-item column-sm-view d-flex" data-item-code="${ d.item_code }">
-			<span>
-				<svg class="icon sm remove-cart-item-logo"
-					width="18" height="18" viewBox="0 0 18 18"
-					xmlns="http://www.w3.org/2000/svg" id="icon-close">
-					<path fill-rule="evenodd" clip-rule="evenodd" d="M4.146 11.217a.5.5 0 1 0 .708.708l3.182-3.182 3.181 3.182a.5.5 0 1 0 .708-.708l-3.182-3.18 3.182-3.182a.5.5 0 1 0-.708-.708l-3.18 3.181-3.183-3.182a.5.5 0 0 0-.708.708l3.182 3.182-3.182 3.181z" stroke-width="0"></path>
-				</svg>
-			</span>
-		</div>`
-		}
-		html += `</div>
-		</div>
-				<div class="text-right sm-item-subtotal">
-					${ item_subtotal(d) }
-				</div>
-		</td>
-
-		<!-- Subtotal column -->
-
-			<td class="text-right item-subtotal column-sm-view w-100">
-				${ item_subtotal(d) }
-			</td>
-	</tr>`
-	all_html+=html;
-	}
-	$('.cart-items').append(all_html);
-}
-
-function item_subtotal(item) {
-	var html = `<div>
-	${ item.amount }
-</div>`
-	if ( item.is_free_item) {
-html += `<div class="text-success mt-4">
-<span class="free-tag">
-	${ __('FREE') }
-</span>
-</div>`
-	} else {
-		html += `<span class="item-rate">
-		${ __('Rate:') } ${ item.rate }
-	</span>`
-	}
-	return html
-}
-
-function product_image(website_image, css_class="product-image", alt="", no_border=False, item_code="") {
-	var html = `<div class="${ no_border ? '' : 'border' } text-center rounded ${ css_class } ${ item_code }" style="overflow: hidden;">`
-	if (website_image) {
-		html += `<img itemprop="image" class="website-image h-100 w-100" alt="${ alt }" src="${ frappe.utils.quoted(website_image) | abs_url }">`
-	} else {
-		html += `<div class="card-img-top no-image-item">
-			"NA"
-			</div>`
-	}
-	html += '</div>'
-	return html
-}
 
 function show_terms() {
 	var html = $(".cart-terms").html();
