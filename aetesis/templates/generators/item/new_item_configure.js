@@ -223,11 +223,9 @@ class ItemConfigure {
 	}
 	
 	get_next_attribute_and_values(selected_attributes) {
-		console.log(selected_attributes);
-		if(selected_attributes.material === undefined) {
-			selected_attributes={'Material':'Silver'};	
+		if(selected_attributes.Material === undefined) {
+			selected_attributes.Material = 'Silver';	
 		}
-		console.log(selected_attributes);
 		return this.call('erpnext.e_commerce.variant_selector.utils.get_next_attribute_and_values', {
 			item_code: this.item_code,
 			selected_attributes
@@ -298,9 +296,7 @@ class ItemConfigure {
 }
 function update_visibility(selected){
 	$('.item-slideshow-image').removeClass('active');
-	console.log(selected)
 	const $img = $(`.${selected}`).find('img');
-	console.log($img)
 	const link = $img.prop('src');
 
 	const $product_image = $('.product-image');
