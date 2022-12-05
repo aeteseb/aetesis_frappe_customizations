@@ -12,7 +12,7 @@
 }
 
 .win {
-  font-family: "Twemoji Country Flags", var(--user-defined-font), sans-serif;
+  font-family: "Twemoji Country Flags", sans-serif;
 }
 :root {
   /* Colors: */
