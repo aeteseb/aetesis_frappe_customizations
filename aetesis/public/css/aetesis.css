@@ -11,6 +11,10 @@
   src: url('https://cdn.jsdelivr.net/npm/country-flag-emoji-polyfill@0.1/dist/TwemojiCountryFlags.woff2') format('woff2');
 }
 
+.row.section{
+  margin-right: 0 !important;
+}
+
 .win {
   font-family: "Twemoji Country Flags", sans-serif;
 }
