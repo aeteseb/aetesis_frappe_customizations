@@ -63,7 +63,7 @@
 }
 
 .category-pill {
-  background: var(--bg-dark);
+  background: var(--bg-dark) !important;
 }
 
 body {
