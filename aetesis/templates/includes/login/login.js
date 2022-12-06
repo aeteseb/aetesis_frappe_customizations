@@ -55,7 +55,9 @@ login.bind_events = function () {
 			login.set_status('{{ _("Valid email required") }}', 'red');
 			return false;
 		}
+		console.log('Signing up');
 		login.call(args).then( r => {
+			console.log('Logging In');
 			var args = {};
 			args.cmd = "login";
 			args.usr = frappe.utils.xss_sanitise(($("#signup_email").val() || "").trim());
@@ -63,6 +65,7 @@ login.bind_events = function () {
 			args.device = "desktop";
 			args.guest_id = frappe.get_cookie('guest_id') || undefined;
 			args.cart_count = frappe.get_cookie('cart_count') || 0;
+			console.log(args.guest_id);
 			if (!args.usr || !args.pwd) {
 				frappe.msgprint('{{ _("Both login and password required") }}');
 				return false;

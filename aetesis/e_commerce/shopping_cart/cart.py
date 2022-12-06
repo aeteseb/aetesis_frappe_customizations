@@ -33,8 +33,9 @@ def set_cart_count(quotation=None):
 
 @frappe.whitelist()
 def get_cart_quotation(doc=None, guest_id=None):
+	print('get_cart_quotation getting party')
 	party = get_party(guest_id=guest_id)
-
+	
 	if not doc:
 		quotation = _get_cart_quotation(party, guest_id=guest_id)
 		doc = quotation
@@ -57,6 +58,7 @@ def get_cart_quotation(doc=None, guest_id=None):
 @frappe.whitelist()
 def get_shipping_addresses(party=None):
 	if not party:
+		print('get_shipping_address getting party')
 		party = get_party()
 	addresses = get_address_docs(party=party)
 	return [
@@ -69,6 +71,7 @@ def get_shipping_addresses(party=None):
 @frappe.whitelist()
 def get_billing_addresses(party=None):
 	if not party:
+		print('get_billing_address getting party')
 		party = get_party()
 	addresses = get_address_docs(party=party)
 	return [
@@ -325,6 +328,7 @@ def decorate_quotation_doc(doc):
 def _get_cart_quotation(party=None, region=None, guest_id=None):
 	"""Return the open Quotation of type "Shopping Cart" or make a new one"""
 	if not party:
+		print('_get_cart_quotation getting party')
 		party = get_party(guest_id=guest_id)
 		
 	if guest_id:
@@ -383,6 +387,7 @@ def _get_cart_quotation(party=None, region=None, guest_id=None):
 
 
 def update_party(fullname, company_name=None, mobile_no=None, phone=None):
+	print('update_party getting party')
 	party = get_party()
 
 	party.customer_name = company_name or fullname
@@ -412,6 +417,7 @@ def update_party(fullname, company_name=None, mobile_no=None, phone=None):
 
 def apply_cart_settings(party=None, quotation=None, region=None, guest_id=None):
 	if not party:
+		print('apply_cart_settings getting party')
 		party = get_party(guest_id=guest_id)
 	if not quotation:
 		quotation = _get_cart_quotation(party)
@@ -450,7 +456,8 @@ def set_price_list_and_rate(quotation, cart_settings, region=None):
 def _set_price_list(cart_settings, quotation=None, region=None):
 	"""Set price list based on customer or shopping cart default"""
 	from erpnext.accounts.party import get_default_price_list
-
+	if not quotation:
+		print('_set_price_list getting party')
 	party_name = quotation.get("party_name") if quotation else get_party().get("name")
 	selling_price_list = None
 	if region:
@@ -498,13 +505,14 @@ def set_taxes(quotation, cart_settings, region=None):
 
 def get_party(user=None, guest_id=None):
 	
-	
+	print('getting party user:', user, 'guest:', guest_id)
 
 	if guest_id:
 		exists = frappe.db.exists('Customer', guest_id)
 		
 		if exists:
 			customer = frappe.get_doc("Customer", guest_id)
+			print('Old Guest Customer:', customer)
 			return customer
 		else:
 			customer = frappe.new_doc("Customer")
@@ -519,19 +527,20 @@ def get_party(user=None, guest_id=None):
 			)
 			customer.flags.ignore_mandatory = True
 			customer.insert(ignore_permissions=True)
-			print(customer)
+			print('New Guest Customer:', customer)
 			return customer
 
 		
 	
 	if not user:
 		user = frappe.session.user
-
+	print('User:', user)
 	contact_name = get_contact_name(user)
 	party = None
 
 	if contact_name:
 		contact = frappe.get_doc("Contact", contact_name)
+		print('Contact:', contact)
 		if contact.links:
 			party_doctype = contact.links[0].link_doctype
 			party = contact.links[0].link_name
@@ -542,8 +551,9 @@ def get_party(user=None, guest_id=None):
 
 	if cart_settings.enable_checkout:
 		debtors_account = get_debtors_account(cart_settings)
-
+	print('Party:', party)
 	if party:
+		print('returning', party)
 		return frappe.get_doc(party_doctype, party)
 
 	else:
@@ -566,13 +576,13 @@ def get_party(user=None, guest_id=None):
 
 		customer.flags.ignore_mandatory = True
 		customer.insert(ignore_permissions=True)
-
+		print('Created Customer:', customer)
 		contact = frappe.new_doc("Contact")
 		contact.update({"first_name": fullname, "email_ids": [{"email_id": user, "is_primary": 1}]})
 		contact.append("links", dict(link_doctype="Customer", link_name=customer.name))
 		contact.flags.ignore_mandatory = True
 		contact.insert(ignore_permissions=True)
-
+		print('Created Contact:', contact, 'and returning')
 		return customer
 
 
