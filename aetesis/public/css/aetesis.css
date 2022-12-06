@@ -573,6 +573,7 @@ h3 {
 }
 h3.card-title {
   margin-top: 1rem;
+  font-size: x-large;
 }
 
 p, body {
@@ -933,14 +934,14 @@ symbol#icon-list path{
 
 .btn-primary {
   background-color: var(--primary) !important;
-  border-image-source: url(/files/frame-gold-on-dark.png) !important;
+  border-image-source: url(/files/frame-gold-on-dark.svg) !important;
   border-image-slice: 92 57 92 64 !important;
   border-image-width: 1em .5em 1em .5em !important;
   border-image-outset: .5rem !important;
   border-image-repeat: stretch stretch !important;
 }
 .btn-secondary {
-  border-image-source: url(/files/frame-gold-on-dark.png) !important;
+  border-image-source: url(/files/frame-gold-on-dark.svg) !important;
   border-image-slice: 92 57 92 64 !important;
   border-image-width: 1em .5em 1em .5em !important;
   border-image-outset: .5rem !important;
