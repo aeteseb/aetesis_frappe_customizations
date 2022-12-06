@@ -445,6 +445,19 @@ img:not(.no-round) {
 .nav-label{
   white-space: nowrap;
 }
+#the-carousel {
+  margin-bottom: 1rem;
+}
+h2 {
+  font-family: var(--font-h2);
+  font-style: var(--font-normal);
+  font-weight: var(--font-weight-300);
+  font-size: 3rem !important;
+  letter-spacing: var(--character-spacing-0);
+  color: var(--text-primary);
+  text-shadow: 1px 2px 15px var(--bg-dark);
+}
+
 @media only screen and (max-width: 990px) {
   #navbar-image {
     margin-top: 0;
@@ -473,12 +486,41 @@ img:not(.no-round) {
     width: 3rem !important;
     height: 3rem !important;
   }
-  .btn-over-frame {
+  .btn-over-image {
     position: absolute;
+    top: 90%;
     left: 50%;
-    top: 100%;
     transform: translate(-50%, -50%);
     z-index: 1;
+  }
+  .button-text {
+    font-size: 1rem;
+  }
+  p {
+    font-size: .75rem !important;
+  }
+  h2 {
+    font-size: 1.5rem !important;
+  }
+  img.btn-icon {
+    height: 1.5rem;
+    width: auto;
+  }
+  .frame-light, .frame-dark {
+    padding-bottom: 1.5rem;
+    margin-left: 1.5rem;
+    margin-right: 1rem;
+  }
+  .frame-left {
+    margin-bottom: 2rem;
+  }
+  .frame-right {
+    margin-top: 2rem;
+  }
+  .img-left, .img-right, .img-under-frame {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
@@ -518,10 +560,10 @@ img:not(.no-round) {
     transform: translate(20%, 40%);
   }
 
-  .btn-over-image {
+  .btn-over-frame {
     position: absolute;
-    top: 90%;
     left: 50%;
+    top: 100%;
     transform: translate(-50%, -50%);
     z-index: 1;
   }
@@ -551,15 +593,7 @@ img:not(.no-round) {
   z-index: 1;
 }
 
-h2 {
-  font-family: var(--font-h2);
-  font-style: var(--font-normal);
-  font-weight: var(--font-weight-300);
-  font-size: 3rem !important;
-  letter-spacing: var(--character-spacing-0);
-  color: var(--text-primary);
-  text-shadow: 1px 2px 15px var(--bg-dark);
-}
+
 h2.in-fluid {
   margin-left: 18rem;
 }
