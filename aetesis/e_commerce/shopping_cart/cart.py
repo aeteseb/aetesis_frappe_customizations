@@ -252,7 +252,7 @@ def get_terms_and_conditions(terms_name):
 
 
 @frappe.whitelist()
-def update_cart_address(address_type, address_name):
+def update_cart_address(address_type, address_name, region):
 	quotation = _get_cart_quotation()
 	address_doc = frappe.get_doc("Address", address_name).as_dict()
 	address_display = get_address_display(address_doc)
@@ -269,7 +269,7 @@ def update_cart_address(address_type, address_name):
 		address_doc = next(
 			(doc for doc in get_shipping_addresses() if doc["name"] == address_name), None
 		)
-	apply_cart_settings(quotation=quotation)
+	apply_cart_settings(quotation=quotation, region=region)
 
 	quotation.flags.ignore_permissions = True
 	quotation.save()
