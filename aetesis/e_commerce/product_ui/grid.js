@@ -73,7 +73,7 @@ aetesis.ProductGrid = class {
 		}
 
 		body_html += `</div>`;
-		body_html += `<div class="product-category">${ item.item_group || '' }</div>`;
+		//body_html += `<div class="product-category">${ item.item_group || '' }</div>`;
 
 		if (item.formatted_price) {
 			body_html += this.get_price_html(item);

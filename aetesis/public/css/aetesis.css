@@ -11,8 +11,12 @@
   src: url('https://cdn.jsdelivr.net/npm/country-flag-emoji-polyfill@0.1/dist/TwemojiCountryFlags.woff2') format('woff2');
 }
 
+.row.section{
+  margin-right: 0 !important;
+}
+
 .win {
-  font-family: "Twemoji Country Flags", var(--user-defined-font), sans-serif;
+  font-family: "Twemoji Country Flags", sans-serif;
 }
 :root {
   /* Colors: */
@@ -60,6 +64,10 @@
 }
 #logoPayPal path {
   stroke: var(--bg-dark);
+}
+
+.category-pill {
+  background: var(--bg-dark) !important;
 }
 
 body {
