@@ -47,7 +47,7 @@
 	<a class="d-flex flex-column align-items-center nav-link" {% if url != '' %} href="{{ url }}" {% endif %}
 		{% if item.open_in_new_tab %} target="_blank" {% endif %} style="cursor:pointer">
 		{% if item.icon %}
-		<img id="nav-icon-{{ dropdown_id }}" class="nav-icon no-round" src="{{ item.icon }}" style="width:2rem; height: 2rem"></img> <span class="nav-label">{{ item.label }}</span>
+		<img id="nav-icon-{{ dropdown_id }}" class="nav-icon no-round" src="{{ item.icon }}" style="width:2rem; height: 2rem"></img> <span class="nav-label">{{ _(item.label) }}</span>
 		{% else %}
 		{{ _(item.label) }}
 		{% endif %}
