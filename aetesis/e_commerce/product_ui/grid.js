@@ -88,7 +88,7 @@ aetesis.ProductGrid = class {
 	get_title(item, title) {
 		let title_html = `
 				<h3 class="card-title">
-					{{_(${ title || '' })}}
+					${ __(title) || '' }
 				</h3>
 		`;
 		return title_html;
