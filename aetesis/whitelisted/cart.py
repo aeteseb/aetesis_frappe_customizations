@@ -8,7 +8,7 @@ def get_quote(guest_id):
 
 @frappe.whitelist()
 def transfer_cart_from_guest(guest_id, user):
-    
+    print('transferring cart from', guest_id, 'to', user)
     try:
         quotation = frappe.get_all(
 		"Quotation",
@@ -21,13 +21,13 @@ def transfer_cart_from_guest(guest_id, user):
 		order_by="modified desc",
 		limit_page_length=1,
 	    )
-        print(quotation)
+        print('got quotation:', quotation)
         if  quotation:
             doc = frappe.get_doc("Quotation", quotation[0].get("name"))
-            print(get_party().name)
+            print('party on quotation:', get_party().name)
             customer = get_party().name
             doc.party_name = customer
             doc.title = customer
             doc.save()
     except:
-        pass
+        print('no quotation found')
