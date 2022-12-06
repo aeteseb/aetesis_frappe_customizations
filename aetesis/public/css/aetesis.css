@@ -753,12 +753,12 @@ p, div, div span, .msgprint, .dropdown-item, .section-head, .mb-4:not(a), .cart-
   color: var(--text-primary) !important;
 }
 
-.breadcrumb-item.active, #dropdownMenuSearch, #search-results-container a, .product-tile, .chat-profile-name, .chat-profile-status, .spec-content, .reviews-header, .rating-summary-numbers, .text-muted, r-item-info a, h5 span, .sign-up-message, .my-account-name, .my-account-item, .file-name, .product-title, .rating-summary-numbers .mt-2, .list-row .col-10.text-left a, .mt-2, h6.text-muted
+.breadcrumb-item.active, #dropdownMenuSearch, #search-results-container a, .spec-label, .product-tile, .chat-profile-name, .chat-profile-status, .spec-content, .reviews-header, .rating-summary-numbers, .text-muted, r-item-info a, h5 span, .sign-up-message, .my-account-name, .my-account-item, .file-name, .product-title, .rating-summary-numbers .mt-2, .list-row .col-10.text-left a, .mt-2, h6.text-muted
 {  
   color: var(--text-primary) !important;
 }
 
-.product-category, .product-code, .rating-summary-numbers .mb-2, .rating-bar-title, .spec-label, .chat-query-heading, .message-time, p.forgot-password-message a, .my-account-item-desc, .file-size, .col-sm-1 
+.product-category, .product-code, .rating-summary-numbers .mb-2, .rating-bar-title, .chat-query-heading, .message-time, p.forgot-password-message a, .my-account-item-desc, .file-size, .col-sm-1 
 {
   color: var(--text-secondary) !important;
 }
