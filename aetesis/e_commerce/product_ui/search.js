@@ -164,7 +164,8 @@ aetesis.ProductSearch = class {
 		let recents = this.getRecentSearches();
 
 		if (!recents.length) {
-			this.recents_container.html(`<span class=""text-muted">No searches yet.</span>`);
+			let subtext = __("No searches yet.");
+			this.recents_container.html(__(`<span class=""text-muted">${subtext}</span>`));
 			return;
 		}
 
