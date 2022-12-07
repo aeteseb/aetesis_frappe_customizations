@@ -4,7 +4,7 @@
 	{% if frappe.session.user != 'Guest' %}
 	<li class="nav-item dropdown logged-in" id="website-post-login" data-label="website-post-login" style="display: none">
 		<a href="#" class="nav-link nav-avatar" data-toggle="dropdown">
-			<img class="no-round nav-icon" src="/files/Compte Blanc.svg"><span>{{ _("Account") }}</span>
+			<span class="user-image-wrapper"></span>
 		</a>
 		<ul class="dropdown-menu dropdown-menu-right" role="menu">
 			{%- for child in post_login -%}
@@ -21,7 +21,7 @@
 
 	{% if not hide_login %}
 	<li class="nav-item">
-		<a class="nav-link d-flex flex-column align-items-center btn-login-area" href="/login"><img class="no-round nav-icon" src="/files/Compte Blanc.svg"><span>{{ _("Login") }}</span></a>
+		<a class="nav-link btn-login-area" href="/login">{{ _("Login") }}</a>
 	</li>
 	{% endif %}
 {% endif %}
