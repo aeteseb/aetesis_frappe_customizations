@@ -989,7 +989,9 @@ symbol#icon-list path{
   border-image-outset: .7em .2em .3em .2em !important;
   border-image-repeat: stretch repeat !important;
 }
-
+.category-card {
+  background: var(--bg-dark) !important;
+}
 .btn-file-upload svg {
   stroke: var(--secondary) !important;
 }
