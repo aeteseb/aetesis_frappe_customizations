@@ -10,10 +10,36 @@
   unicode-range: U+1F1E6-1F1FF, U+1F3F4, U+E0062-E0063, U+E0065, U+E0067, U+E006C, U+E006E, U+E0073-E0074, U+E0077, U+E007F;
   src: url('https://cdn.jsdelivr.net/npm/country-flag-emoji-polyfill@0.1/dist/TwemojiCountryFlags.woff2') format('woff2');
 }
-
+.group{
+  background: var(--bg-dark) !important;
+}
+input {
+  color: var(--text-highlight) !important
+}
+#card-element {
+  background: white
+}
+#submit {
+  background: var(--primary);
+  color: var(--text-secondary)
+}
 .row.section{
   margin-right: 0 !important;
 }
+.btn-primary:hover{
+  border-radius: 1.5rem;
+  border: solid 6px;
+  transition: transform .2s;
+  }
+  
+  .btn-secondary:hover{
+  background: color #ffd519; ;
+  color:#202021;
+  }
+  
+  .btn-secondary:hover .btn-icon{
+  fill: #202021;
+  }
 
 .emoji {
   font-family: "Twemoji Country Flags", sans-serif;
