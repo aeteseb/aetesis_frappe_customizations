@@ -375,7 +375,7 @@
 	</div>
 	<div class="r-item-info card-body text-center" >
 		<h3>
-			{% set title = item.website_item_name %}
+			{% set title = _(item.website_item_name) %}
 			{{ title[:70] + "..." if title|len > 70 else title }}
 		</h3>
 
