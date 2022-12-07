@@ -76,15 +76,18 @@ class CustomWebsiteItem(WebsiteItem):
 		for item in items:
 			
 			attrs = self.get_ordered_attributes(item)
-			
 			row = self.append(
 				"variant_details",
 					{
 					"item_code": item.item_code,
 					"attributes": attrs,
 					"website_variant_name": item.item_name,
+					"website_image:": self.website_image,
+					"slideshow": self.slideshow,
+					"published": 1,
 					}
-			)		
+			)
+			self.save()	
 	
 	def get_ordered_attributes(self, item):
 		attrs = frappe.get_doc("Item", item.item_code).attributes
