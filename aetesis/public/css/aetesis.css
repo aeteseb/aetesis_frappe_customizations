@@ -300,7 +300,8 @@ a {
 #item-name {
   font-size: 3.5rem !important;
   margin-bottom: 0;
-  padding-top: 1rem
+  padding-top: 1rem;
+  white-space: nowrap;
 }
 
 #contact-title {
@@ -493,6 +494,29 @@ h2 {
     transform: translate(-50%, -50%);
     z-index: 1;
   }
+
+}
+
+@media only screen and (max-width: 600px) {
+   #navbar-image {
+    margin-top: 0;
+    height: 3rem;
+  }
+  img.nav-icon {
+    width: 2rem;
+    height: 2rem;
+  }
+  .button-text {
+    padding-right: 3rem !important;
+  }
+  .btn-primary {
+    width: 80%;
+    display: block;
+  }
+  .variant-selector {
+  width: 4rem;
+  height: 4rem;
+  }
   .button-text {
     font-size: 1rem;
   }
@@ -521,28 +545,6 @@ h2 {
     width: 80%;
     margin-left: auto;
     margin-right: auto;
-  }
-}
-
-@media only screen and (max-width: 600px) {
-   #navbar-image {
-    margin-top: 0;
-    height: 3rem;
-  }
-  img.nav-icon {
-    width: 2rem;
-    height: 2rem;
-  }
-  .button-text {
-    padding-right: 3rem !important;
-  }
-  .btn-primary {
-    width: 80%;
-    display: block;
-  }
-  .variant-selector {
-  width: 4rem;
-  height: 4rem;
   }
 }
 
