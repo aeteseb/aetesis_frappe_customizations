@@ -24,7 +24,7 @@ aetesis.ProductGrid = class {
 			let title = item.web_item_name || item.item_name || item.item_code || "";
 			title =  title.length > 90 ? title.substr(0, 90) + "..." : title;
 
-			html += `<div class="col-sm-2 item-card"><div class="card text-left" style="cursor: pointer;" onclick="window.location='/${ item.route || "#" }'">`;
+			html += `<div class="col-6 col-sm-4 col-lg-3 item-card"><div class="card text-left" style="cursor: pointer;" onclick="window.location='/${ item.route || "#" }'">`;
 			html += me.get_image_html(item, title);
 			html += me.get_card_body_html(item, title, me.settings);
 			html += `</div></div>`;
