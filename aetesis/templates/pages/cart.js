@@ -118,9 +118,18 @@ $.extend(shopping_cart, {
 	},
 
 	bind_place_order: function() {
-		$(".btn-place-order").on("click", function() {
-			shopping_cart.place_order(this);
-		});
+		
+		
+			$(".btn-place-order").on("click", function() {
+				const checked = document.querySelector('#terms:checked') !== null;
+				if (checked){
+					shopping_cart.place_order(this);
+				} else {
+					frappe.show_alert('Veuillez accepter les Conditions Générales de vente');
+				}
+			});
+		
+		
 	},
 
 	bind_request_quotation: function() {
