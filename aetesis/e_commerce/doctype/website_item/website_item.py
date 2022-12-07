@@ -31,7 +31,7 @@ class CustomWebsiteItem(WebsiteItem):
 			vd = self.variant_details			
 	
 			for v in vd:
-				v.attributes = json.loads(v.attributes)
+#				v.attributes = json.loads(v.attributes)
 				if v.slideshow:
 					doc = frappe.get_doc("Website Slideshow", v.slideshow)
 					v.slides = doc.slideshow_items
