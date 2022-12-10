@@ -16,6 +16,9 @@
 input {
   color: var(--text-highlight) !important
 }
+#contact-img {
+  max-height: 30rem;
+}
 #card-element {
   background: white
 }
@@ -343,21 +346,15 @@ a {
 .img-on-frame {
   margin-right: 2rem;
 }
+.address a {
+  color:var(--text-primary);
+}
 
 .address h2 {
-  font-size: 44px;
+  font-size: 2.5rem !important;
 }
 .address h3 {
   font-size: 32px;
-}
-
-.contact-form {
-  position: relative;
-  transform: translateY(25%)
-}
-.btn-send {
-  position: relative;
-  left: 75%
 }
 
 .btn-prev {

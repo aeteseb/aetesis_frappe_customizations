@@ -1,7 +1,7 @@
 {% extends "templates/web.html" %}
 
 {% set title = heading or "Contact Us" %}
-{% block header %}<img src="/files/Volute Bague-01.jpg"><h1 id="contact-title">{{ heading or "Contact Us" }}</h1>{% endblock %}
+{% block header %}<img id="contact-img" src="/files/Volute Bague-01.jpg"><h1 id="contact-title">{{ heading or _("Contact Us") }}</h1>{% endblock %}
 
 {% block breadcrumbs %}
 {% endblock %}
@@ -19,7 +19,7 @@
 	</div>
 	{% endif %}
 	<div class="row">
-		<form class="col-md-7 frame-light contact-form">
+		<form class="col-12 col-md-7 frame-light contact-form pt-5">
 			<p id="contact-alert" class="alert alert-warning"
 				style="display: none;">&nbsp;</p>
 				<div class="form-group">
@@ -39,9 +39,9 @@
 		</form>
 
 		{% if address_title %}
-		<div class="col-md-5 frame-light text-center address"
+		<div class="col-md-5 frame-light text-center address pb-5"
 				itemscope itemtype="http://schema.org/PostalAddress">
-			<h2>Nos Coordonnées</h2>
+			<h2 class="mt-1">Nos Coordonnées</h2>
 			<h3 style="margin-top: 0px;"><i class="fa fa-map-marker"></i> {{ address_title }}</h3>
 			{% if address_line1 %}
 				<span itemprop="streetAddress">{{ address_line1 }}</span><br>
