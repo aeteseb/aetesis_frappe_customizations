@@ -41,7 +41,7 @@ class ItemConfigure {
 						return $('<option>').prop({
 							label: v,
 							value: v
-						});
+						}).html(v);
 					}),
         			);
 			} else {
