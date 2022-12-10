@@ -39,18 +39,22 @@
 
 		<div class="row">
 			{% for item in homepage.products %}
-			<div class="col-md-3 mb-3">
+			<div class="col-6 col-md-3 mb-3">
 				<div class="card h-100 justify-content-between">
 					<a href="{{ item.route }}">
 						<img class="card-img-top" src="{{ item.image }}" loading="lazy" alt="{{ item.item_name }}"></img>
 						<div class="card-body flex-grow-0 text-center">
-							<h3 class="card-title">{{ item.item_name }}</h3>
+							<h3 class="card-title">{{ _(item.item_name) }}</h3>
 						</div>
 					</a>
 				</div>
 			</div>
 			{% endfor %}
 		</div>
+		<a class="btn btn-primary btn-over-image mx-auto" role="button" href="/all-products">
+			<img class="btn-icon" src="files/Produits.svg" alt="products-icon"> 
+			<span class="button-text">{{ _('Discover our Jewelry!') }}</span>
+		</a>
 	</section>
 	{% endif %}
 
