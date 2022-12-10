@@ -360,13 +360,11 @@ a {
 .btn-prev {
   color: var(--text-primary) !important;
   position: relative;
-  left: 10%;
 }
 
 .btn-next {
   color: var(--text-primary) !important;
   position: relative;
-  right: 30%;
 }
 
 .clear-filters {
