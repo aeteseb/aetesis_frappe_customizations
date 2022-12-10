@@ -383,10 +383,8 @@ a {
 
 
 .frame-light {
-  height: 50%;
   background: transparent url('/files/Fond Clair@2x.png') 0% 0% no-repeat padding-box;
   border-radius: 3rem;
-  margin-left: 0;
   color: var(--text-secondary) !important;
 }
 
@@ -585,23 +583,7 @@ h2 {
   cursor: pointer;
   line-height: 1.5rem;
 }
-@media only screen and (min-width: 1200px) {
-    .frame-right {
-    transform: translate(-20%, 40%);
-    width: 70%;
-  }
-  .frame-left {
-    transform: translate(20%, 40%);
-  }
 
-  .btn-over-frame {
-    position: absolute;
-    left: 50%;
-    top: 100%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
-  }
-}
 
 .btn-icon {
   border-radius: 0 !important;
