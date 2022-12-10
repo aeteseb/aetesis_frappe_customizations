@@ -488,11 +488,11 @@ h2 {
     height: 3.5rem;
   }
 }
-
-@media only screen and (max-width: 768px) {
-  .product-container .product-details {
+.product-container .product-details {
   max-width: 100% !important;
   }
+@media only screen and (max-width: 768px) {
+
   .nav-b-label {
     display: none;
   }
