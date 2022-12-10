@@ -16,6 +16,13 @@
 input {
   color: var(--text-highlight) !important
 }
+
+.card:hover .card-img {
+  -ms-transform: scale(1.5); /* IE 9 */
+  -webkit-transform: scale(1.5); /* Safari 3-8 */
+  transform: scale(1.1);
+}
+
 #contact-img {
   max-height: 30rem;
 }
@@ -658,11 +665,14 @@ p, body {
   position: relative !important;
   aspect-ratio : 1 / 1 !important;
   padding-bottom: 100% !important;
+  overflow: hidden;
+  border-radius: 3rem;
 }
 
 .card-img {
   max-height: unset !important;
   margin: unset !important;
+  transition: transform .2s;
 }
 
 .card-body {
