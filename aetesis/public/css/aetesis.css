@@ -585,23 +585,7 @@ h2 {
   cursor: pointer;
   line-height: 1.5rem;
 }
-@media only screen and (min-width: 1200px) {
-    .frame-right {
-    transform: translate(-20%, 40%);
-    width: 70%;
-  }
-  .frame-left {
-    transform: translate(20%, 40%);
-  }
 
-  .btn-over-frame {
-    position: absolute;
-    left: 50%;
-    top: 100%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
-  }
-}
 
 .btn-icon {
   border-radius: 0 !important;
