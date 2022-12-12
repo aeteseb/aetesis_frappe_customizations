@@ -54,7 +54,7 @@
 				<div class="d-flex">
 					<!-- Add to Cart -->
 					{% if product_info.price and (cart_settings.allow_items_not_in_stock or product_info.in_stock) %}
-						<a href="/cart" class="btn btn-light btn-in-cart hidden mr-2 font-md"
+						<a href="/cart" class="btn btn-secondary btn-light btn-in-cart hidden mr-2 font-md"
 							role="button">
 							{{  _("Added to Cart") if cart_settings.enable_checkout else _("Added to Quote") }}
 						</a>
@@ -97,7 +97,6 @@
 							$btn.prop('disabled', false);
 							if (r.message) {
 								$('.btn-add-to-cart, .btn-in-cart').toggleClass('hidden');
-								setTimeout(function() {$('.btn-add-to-cart, .btn-in-cart').toggleClass('hidden');}, 5000);
 							}
 						}
 						});

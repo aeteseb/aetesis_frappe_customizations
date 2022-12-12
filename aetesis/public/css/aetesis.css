@@ -681,6 +681,9 @@ p, body {
   padding-left: 0 !important;
 
 }
+.btn-in-cart {
+  color: var(--text-primary) !important;
+}
 
 .web-sidebar {
   padding-top: 164px;
