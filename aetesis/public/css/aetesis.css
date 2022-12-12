@@ -669,6 +669,10 @@ p, body {
   width: 3rem;
 }
 
+.frame-right, .frame-left {
+      height: min-content;
+}
+
 .user-image-wrapper {
   position: absolute;
 }
