@@ -108,7 +108,7 @@ input {
 }
 
 body {
-  background-image: url('/files/Fond@2x.png') 0% 0% repeat padding-box;
+  background-image: url('/files/Fond_2x.webp') 0% 0% repeat padding-box;
   background-position: center !important;
   background-color: var(--bg-dark) !important;
 }
@@ -387,14 +387,14 @@ a {
 }
 
 .frame-dark {
-  background: transparent url('/files/Fond Sombre@2x.png') 0% 0% no-repeat padding-box;
+  background: transparent url('/files/Fond-Sombre_2x.web') 0% 0% no-repeat padding-box;
   border-radius: 3rem;
 }
 
 
 
 .frame-light {
-  background: transparent url('/files/Fond Clair@2x.png') 0% 0% no-repeat padding-box;
+  background: transparent url('/files/Fond-Clair_2x.webp') 0% 0% no-repeat padding-box;
   border-radius: 3rem;
   color: var(--text-secondary) !important;
 }
