@@ -30,6 +30,9 @@ input {
   -webkit-transform: scale(1.5); /* Safari 3-8 */
   transform: scale(1.1);
 }
+.btn-over-frame {
+  width: fit-content;
+}
 
 #contact-img {
   max-height: 30rem;
@@ -387,7 +390,7 @@ a {
 }
 
 .frame-dark {
-  background: transparent url('/files/Fond-Sombre_2x.web') 0% 0% no-repeat padding-box;
+  background: transparent url('/files/Fond-Sombre_2x.webp') 0% 0% no-repeat padding-box;
   border-radius: 3rem;
 }
 
