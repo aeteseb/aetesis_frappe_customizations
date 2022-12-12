@@ -16,6 +16,14 @@
 input {
   color: var(--text-highlight) !important
 }
+.card:hover .card-title {
+  text-decoration: underline;
+  text-decoration-thickness: 1.2px;
+}
+.nav-b-item:hover , .nav-item:hover a {
+  text-decoration: underline;
+  text-decoration-color: white;
+}
 
 .card:hover .card-img {
   -ms-transform: scale(1.5); /* IE 9 */
@@ -31,25 +39,19 @@ input {
 }
 #submit {
   background: var(--primary);
-  color: var(--text-secondary)
+  color: var(--text-secondary);
 }
 .row.section{
   margin-right: 0 !important;
 }
-.btn-primary:hover{
-  border-radius: 1.5rem;
-  border: solid 6px;
-  transition: transform .2s;
-  }
-  
-  .btn-secondary:hover{
-  background: color #ffd519; ;
-  color:#202021;
-  }
-  
-  .btn-secondary:hover .btn-icon{
-  fill: #202021;
-  }
+
+.btn-primary svg {
+  fill: var(--text-secondary);
+}
+.btn-secondary svg {
+  fill: var(--primary);
+} 
+
 
 .emoji {
   font-family: "Twemoji Country Flags", sans-serif;
@@ -65,7 +67,6 @@ input {
   --text-secondary: #202021;
   --text-highlight: #ffd519;
   --text-darklight: #daa520;
-  
   --checkbox-gradient: linear-gradient(180deg, var(--bg-ultra-light) -124.51%, var(--primary) 100%);
 
   /* Font/text values */
@@ -131,6 +132,9 @@ footer p, footer {
   font-size: 1rem;
   line-height: 1.5rem;
 }
+.btn-modal-primary {
+  color: var(--text-primary) !important;
+}
 
 .instructions-link {
   padding-right: 2rem;
@@ -181,7 +185,7 @@ footer a {
 }
 
 h4 {
-  color: var(--text-primary);
+  color: var(--text-primary) !important;
 }
 
 .my-account-header {
@@ -416,17 +420,19 @@ a {
   color: var--(primary) !important;
 }
 
-
+svg.icon-sm {
+  stroke: var(--text-primary) !important;
+}
 /* Character Styles */
 .btn {
   font-family: var(--font-h2);
   font-size: 1.25rem;
   /*! text-overflow: clip !important; */
 }
-.btn-primary {
+.btn-primary:not(.btn-modal-primary) {
   color: var(--text-secondary) !important;
 }
-.btn-secondary {
+.btn-secondary .button-text {
   color: var(--text-highlight) !important;
   white-space: nowrap;
 }
@@ -521,6 +527,16 @@ h2 {
   }
 
 }
+.btn-icon {
+  border-radius: 0 !important;
+  width: 3rem;
+  padding-right: 1rem;
+  padding-left: 0; 
+}
+.btn-modal-primary {
+  width: fit-content !important;
+  font-size: 3.5vw;
+}
 
 @media only screen and (max-width: 576px) {
    #navbar-image {
@@ -545,6 +561,8 @@ h2 {
   .button-text {
     font-size: 3.5vw;
   }
+  
+  
   p {
     font-size: .75rem !important;
   }
@@ -554,8 +572,8 @@ h2 {
   h3 {
     font-size: 1.5rem !important;
     }
-  img.btn-icon {
-    height: 1.5rem;
+  .btn svg:not(.icon) {
+    height: 1.5rem !important;
     width: auto;
   }
   .frame-light, .frame-dark:not(.center-frame) {
@@ -592,9 +610,9 @@ h2 {
 }
 
 
-.btn-icon {
+.btn svg:not(.icon) {
   border-radius: 0 !important;
-  width: 3rem;
+  height: 3rem;
   padding-right: 1rem;
   padding-left: 0; 
 }
@@ -997,12 +1015,12 @@ symbol#icon-list path{
   box-shadow: 0 0 0  currentColor, 0 2px 15px 0px rgba(21, 21, 21, 0.51) !important;
 }
 
-.btn-primary:not(.btn-modal-primary) {
+.btn-primary:not(.btn-modal-primary, .btn-send) {
   background-color: var(--primary) !important;
   border-image-source: url(/files/frame_gold_on_dark.svg) !important;
   border-image-slice: 21 10 21 10 !important;
-  border-image-width: 1.5em .75em 1.5em .75em !important;
-  border-image-outset: .7em .2em .3em .2em !important;
+  border-image-width: 1.5rem .75rem 1.5rem .75rem !important;
+  border-image-outset: .7em .2em .3em .3em !important;
   border-image-repeat: stretch repeat !important;
 }
 .btn-secondary {
@@ -1010,7 +1028,10 @@ symbol#icon-list path{
   border-image-slice: 21 10 21 10 !important;
   border-image-width: 1.5em .75em 1.5em .75em !important;
   border-image-outset: .7em .2em .3em .2em !important;
-  border-image-repeat: stretch repeat !important;
+  border-image-repeat: stretch stretch !important;
+}
+.btn-send {
+  background-color: var(--primary) !important;
 }
 .category-card {
   background: var(--bg-dark) !important;
@@ -1095,4 +1116,16 @@ symbol#icon-list path{
 
 .my-hidden {
   display: none !important;
+}
+.btn-primary:hover, .btn-primary:hover .button-text , .btn-primary:hover svg{
+  background-color: var(--bg-dark) !important;
+  color: var(--text-highlight) !important;
+  fill: var(--text-highlight) !important;
+  transition: transform .1s;
+}
+.btn-secondary:hover, .btn-secondary:hover .button-text, .btn-secondary:hover svg{
+  background-color: var(--primary) !important;
+  color: var(--bg-dark) !important;
+  fill: var(--bg-dark) !important;
+  transition: transform .1s;
 }
