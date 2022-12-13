@@ -538,7 +538,7 @@ h2 {
 }
 .btn-modal-primary {
   width: fit-content !important;
-  font-size: 3.5vw;
+  font-size: min(3.5vw, 20px);
 }
 
 @media only screen and (max-width: 576px) {
