@@ -86,7 +86,8 @@
 <!-- js should be loaded in body! -->
 <script>
 		
-	frappe.boot = {{ boot }}
+	frappe.boot = {{ boot }};
+	frappe._messages = {{translated_messages}};
 	
 	// for backward compatibility of some libs
 	frappe.sys_defaults = frappe.boot.sysdefaults;

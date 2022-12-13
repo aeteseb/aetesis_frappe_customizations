@@ -44,6 +44,11 @@ class CustomWebsiteItem(WebsiteItem):
 #				csa.options = json.loads(csa.options)
 #			new_context.custom_attributes = csas
 			
+		translated_messages = frappe.translate.get_dict("doctype", "Website Item")
+		# Sr is not added by default, had to be added manually
+		translated_messages["Sr"] = _("Sr")
+		context.translated_messages = frappe.as_json(translated_messages)
+
 		return new_context
 	
 

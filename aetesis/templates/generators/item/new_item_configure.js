@@ -27,7 +27,7 @@ class ItemConfigure {
             				$('<label>').prop({
                 			for: 'Size',
 							class: 'mr-5'
-            				}).html('<h3>Size</h3>')
+            				}).html(`<h3>${__("Size")}</h3>`)
 				).append( $('<a>').prop({
 					class: 'instructions-link',
 					href: '/files/instructions.pdf',
@@ -39,17 +39,18 @@ class ItemConfigure {
             			}).on('change', (e) => this.on_attribute_selection(e)))
             			$('#Size').html( a.values.map(v => {
 						return $('<option>').prop({
-							label: v,
+							label: __(v),
 							value: v
-						}).html(v);
+						}).html(__(v));
 					}),
         			);
 			} else {
+				
 				$div.append(
 					$('<form>').prop({class: 'col',
 						id: a.attribute
 						})
-						.append($('<div>').prop({ class: 'row variant-label' }).append(`<h3>${a.attribute}</h3>`))
+						.append($('<div>').prop({ class: 'row variant-label' }).append(`<h3>${__(a.attribute)}</h3>`))
 						.append($('<div>').prop({ class: 'row attribute-values justify-content-around align-items-end'})
 							.append( a.values.map(v => {
 								return $('<div>').prop({class:'attribute-value'})
@@ -69,7 +70,7 @@ class ItemConfigure {
 										class:'variant-selector d-flex align-items-center justify-content-center'
 										}).append($('<div>').prop({
 											class: 'variant-selector-text'
-										})).append(v)))
+										})).append(__(v))))
 							}))
 						)
 				)
@@ -78,7 +79,7 @@ class ItemConfigure {
 	}		
 	
 	on_attribute_selection(e) {
-		const me = this
+		const me = this;
 		if (e) {
 			const changed_fieldname = $(e.target).attr('id');
 			this.show_range_input_if_applicable(changed_fieldname);
@@ -126,7 +127,7 @@ class ItemConfigure {
 					}
 					index++;
 				}
-				
+				console.log(this.selected)
 				if (this.first && this.selected) {
 					var selected = this.selected;
 					this.update_checked(selected);
@@ -135,12 +136,14 @@ class ItemConfigure {
 					this.first = false;
 				} else {
 					var selected_values = this.get_values(true);
+					console.log('sel:', selected_values)
 					this.get_next_attribute_and_values(selected_values)
 					.then(data => {
 						const {
 							filtered_items,
 						} = data;
 						var selected = filtered_items[0];
+						console.log(filtered_items)
 						this.update_checked(selected);
 						update_visibility(selected);
 						me.update_heart(selected);
