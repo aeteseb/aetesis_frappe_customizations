@@ -455,7 +455,6 @@
 frappe.ready(() => {
 		$('.csa-select').change(function() {
 			var selectedOption = $(this).children("option:selected").val();
-			console.log('the value changed to:', selectedOption);
 			$('.btn-add-to-cart').each(function() {
 			
 			$(this).data('csas', selectedOption);

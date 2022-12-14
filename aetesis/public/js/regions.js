@@ -144,7 +144,6 @@ function hide_all() {
 
 function show_recommended(country){
   const all_langs = document.languages;
-  console.log($('.language-card'))
   $('.language-card').each(function() {
     var lang = $(this).parent().data('language-name');
     me = this;
@@ -176,13 +175,11 @@ function show_all(){
 
 function less_or_more() {
   if (document.show_recommended) {
-    console.log('show all')
     show_all();
     $('#less-or-more-text').html('Show Less');
     document.show_recommended = false;
   } else {
     var country = $('.country-card.active').closest('[data-country-name]').data('country-name') || getCookie('country');
-    console.log('show recommended')
     show_recommended(country);
     $('#less-or-more-text').html('Show More');
     document.show_recommended = true;

@@ -127,7 +127,6 @@ class ItemConfigure {
 					}
 					index++;
 				}
-				console.log(this.selected)
 				if (this.first && this.selected) {
 					var selected = this.selected;
 					this.update_checked(selected);
@@ -136,14 +135,12 @@ class ItemConfigure {
 					this.first = false;
 				} else {
 					var selected_values = this.get_values(true);
-					console.log('sel:', selected_values)
 					this.get_next_attribute_and_values(selected_values)
 					.then(data => {
 						const {
 							filtered_items,
 						} = data;
 						var selected = filtered_items[0];
-						console.log(filtered_items)
 						this.update_checked(selected);
 						update_visibility(selected);
 						me.update_heart(selected);
@@ -299,7 +296,7 @@ class ItemConfigure {
 }
 function update_visibility(selected){
 	$('.item-slideshow-image').removeClass('active');
-	const $img = $(`.${selected}`).find('img');
+	const $img = $(`.slideshow-container.${selected.replace(' ', '_')}`).find('.item-slideshow-image');
 	const link = $img.prop('src');
 
 	const $product_image = $('.product-image');

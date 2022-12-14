@@ -107,9 +107,7 @@ function update_variant_selector(checked) {
 
 function get_parent($div_attr, first_checked) {
 	var parent_name = $div_attr.data("parent")
-	console.log('will it work?', first_checked, $div_attr)
 	if ($(`${first_checked}/${parent_name}`).is(':visible')) {
-		console.log('it works!', first_checked, parent_name)
 	}
 }
 

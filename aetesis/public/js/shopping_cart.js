@@ -179,7 +179,6 @@ $.extend(shopping_cart, {
 	
 	shopping_cart_update: function({item_code, qty, cart_dropdown, additional_notes}) {
 		var guest_id = frappe.get_cookie('guest_id') || undefined;
-		console.log(guest_id)
 		shopping_cart.update_cart({
 			item_code,
 			qty,
@@ -228,7 +227,6 @@ $.extend(shopping_cart, {
 			const region = getCookie('country');
 			if (frappe.session.user==="Guest") {
 				const guest_id = getCookie('guest_id');
-				console.log(guest_id)
 				aetesis.e_commerce.shopping_cart.update_cart({
 					item_code,
 					region,
