@@ -90,6 +90,7 @@ class ItemConfigure {
 		const values = this.get_values();
 		this.get_next_attribute_and_values(values)
 			.then(data => {
+				console.log(data);
 				const {
 					valid_options_for_attributes,
 				} = data;
@@ -137,6 +138,7 @@ class ItemConfigure {
 					var selected_values = this.get_values(true);
 					this.get_next_attribute_and_values(selected_values)
 					.then(data => {
+						console.log(data);
 						const {
 							filtered_items,
 						} = data;
