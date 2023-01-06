@@ -90,7 +90,6 @@ class ItemConfigure {
 		const values = this.get_values();
 		this.get_next_attribute_and_values(values)
 			.then(data => {
-				console.log(data);
 				const {
 					valid_options_for_attributes,
 				} = data;
@@ -103,14 +102,14 @@ class ItemConfigure {
 					const valid_options = valid_options_for_attributes[attribute];
 					const options = this.get_options(attribute);
 					const new_options = options.map(o => {
-						if (index < 2)  o.disabled = false;
+						if (index < 1)  o.disabled = false;
 						else {o.disabled = !valid_options.includes(o.value)
 							
 						}
 						return o;
 					});
 					
-					if (index > 1) {
+					if (index > 0) {
 						var $attr = $(`#${attribute}`)
 						$attr.find('.radio_item').each(function() {
 							for (let i = 0; i < new_options.length; i++) {
@@ -138,7 +137,6 @@ class ItemConfigure {
 					var selected_values = this.get_values(true);
 					this.get_next_attribute_and_values(selected_values)
 					.then(data => {
-						console.log(data);
 						const {
 							filtered_items,
 						} = data;
