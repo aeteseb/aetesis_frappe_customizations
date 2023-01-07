@@ -1025,7 +1025,7 @@ symbol#icon-list path{
   box-shadow: 0 0 0  currentColor, 0 2px 15px 0px rgba(21, 21, 21, 0.51) !important;
 }
 
-.btn-primary:not(.btn-modal-primary, .btn-send) {
+.btn-primary:not(.btn-modal-primary, .btn-send, .btn-add-to-cart) {
   background-color: var(--primary) !important;
   border-image-source: url(/files/frame_gold_on_dark.svg) !important;
   border-image-slice: 21 10 21 10 !important;
@@ -1033,14 +1033,15 @@ symbol#icon-list path{
   border-image-outset: .7em .2em .3em .3em !important;
   border-image-repeat: stretch repeat !important;
 }
-.btn-secondary {
+.btn-secondary:not(.btn-in-cart) {
   border-image-source: url(/files/frame_gold_on_dark.svg) !important;
   border-image-slice: 21 10 21 10 !important;
   border-image-width: 1.5em .75em 1.5em .75em !important;
   border-image-outset: .7em .2em .3em .2em !important;
   border-image-repeat: stretch stretch !important;
 }
-.btn-send {
+
+.btn-send, .btn-add-to-cart {
   background-color: var(--primary) !important;
 }
 .category-card {
