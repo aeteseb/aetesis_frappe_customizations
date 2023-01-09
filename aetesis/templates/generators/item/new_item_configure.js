@@ -217,7 +217,7 @@ class ItemConfigure {
 				var val = $(this).find('.radio_item:checked').val();
 			}
 			if (for_item) res[attr_name] = val;
-			else if (attr_name != 'Finish') res[attr_name] = val;
+			else if (attr_name == 'Material') res[attr_name] = val;
 		})
 		return res
 	}
