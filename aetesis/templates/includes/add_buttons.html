@@ -3,7 +3,7 @@
 	{% for v in variants %}
 		{% set product_info = v.product_info.product_info %}
 		{% set item_code = v.item_code %}
-		<div class="buying {{item_code.replace(' ', '_')}} my-hidden">
+		<div class="buying {{item_code.replace(' ', '_')}} my-hidden d-flex flex-column justify-content-around h-50">
 			<div class="item-cart row mt-2" data-variant-item-code="{{ item_code }}">
 				<div class="col-md-12 text-center">
 					<!-- Price and Availability -->					

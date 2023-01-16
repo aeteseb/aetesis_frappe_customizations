@@ -29,15 +29,16 @@ class ItemConfigure {
                 			for: 'Size',
 							class: 'mr-5'
             				}).html(`<h3>${__("Size")}</h3>`)
+				).append( $('<select>').prop({
+                			id: 'Size',
+                			name: 'Size'
+            			}).on('change', (e) => this.on_attribute_selection(e))
 				).append( $('<a>').prop({
 					class: 'instructions-link',
 					href: `/files/instructions_${language}.pdf`,
 					target: '_blank'
-					}).html('<img class="no-round instructions-img" src="/files/question.svg">')
-				).append( $('<select>').prop({
-                			id: 'Size',
-                			name: 'Size'
-            			}).on('change', (e) => this.on_attribute_selection(e)))
+					}).html(`<img class="no-round instructions-img" src="/files/question.svg"> ${__('Determine my ring size')}`)
+				);
             			$('#Size').html( a.values.map(v => {
 						return $('<option>').prop({
 							label: __(v),

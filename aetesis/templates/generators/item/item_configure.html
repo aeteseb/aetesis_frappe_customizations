@@ -2,21 +2,45 @@
 {% set cart_settings = shopping_cart.cart_settings %}
 {% from "aetesis/templates/includes/add_buttons.html" import add_buttons %}
 
-
-{% if shopping_cart and shopping_cart.cart_settings.enabled %}
+<div class="w-100 row">
+	<div class="col-12 col-md-4 pt-5  d-flex flex-column justify-content-around">
+		<div class="d-flex justify-content-between text-center align-items-center w-100">
+			<!-- title -->
+			<div class="product-title col-11" itemprop="name">
+				<h1 id="item-name">{{ _(doc.web_item_name) }}</h1>
+			</div>
+	
+			<!-- Wishlist -->
+			{% if cart_settings.enable_wishlist %}
+				{% if has_variants %}
+					<div class="like-action-item-fp like-action {{ 'like-action-wished' if wished else ''}} ml-2"
+						data-item-code="{{ variant_details[0].item_code }}" data-parent="{{ doc.item_code }}">
+					
+				{% else %}
+					<div class="like-action-item-fp like-action {{ 'like-action-wished' if wished else ''}} ml-2"
+						data-item-code="{{ doc.item_code }}">
+				{% endif %}
+						<svg class="icon sm">
+							<use class="{{ 'wished' if wished else 'not-wished' }} wish-icon" href="#icon-heart"></use>
+						</svg>
+					</div>
+			{% endif %}
+		</div>
+	{% if shopping_cart and shopping_cart.cart_settings.enabled %}
 	{{ add_buttons(variant_details, shopping_cart) }}
-{% endif %}
-
-<div class="w-100">
-	{% if cart_settings.enable_variants | int %}
-	<div class="col variant-container" data-name="{{ doc.name }}" data-item-code="{{ doc.item_code }}">
+	{% endif %}
 	</div>
-	{% endif %}
-	{% if cart_settings.show_contact_us_button %}
-		{% include "templates/generators/item/item_inquiry.html" %}
-	{% endif %}
-</div>
 
+	<div class="col-12 col-md-8">
+		{% if cart_settings.enable_variants | int %}
+		<div class="col variant-container" data-name="{{ doc.name }}" data-item-code="{{ doc.item_code }}">
+		</div>
+		{% endif %}
+		{% if cart_settings.show_contact_us_button %}
+			{% include "templates/generators/item/item_inquiry.html" %}
+		{% endif %}
+	</div>
+</div>
 {% endif %}
 
 {% block script%}
