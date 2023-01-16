@@ -22,7 +22,8 @@ class ItemConfigure {
 				id: `Attr-${a.attribute}`
 				}))
 			var $div = $(`#Attr-${a.attribute}`)
-			if ( a.attribute === "Size" ) {				
+			if ( a.attribute === "Size" ) {
+				var language = frappe.get_cookie("preferred_language_code");
 				$div.append(
             				$('<label>').prop({
                 			for: 'Size',
@@ -30,7 +31,7 @@ class ItemConfigure {
             				}).html(`<h3>${__("Size")}</h3>`)
 				).append( $('<a>').prop({
 					class: 'instructions-link',
-					href: '/files/instructions.pdf',
+					href: `/files/instructions_${language}.pdf`,
 					target: '_blank'
 					}).html('<img class="no-round instructions-img" src="/files/question.svg">')
 				).append( $('<select>').prop({

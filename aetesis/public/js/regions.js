@@ -8,10 +8,11 @@ if (!getCookie('country')) {
   } )
 }	
 
-if (!getCookie('language')) {
+if (!getCookie('preferred_language_code')) {
   var lang = navigator.language.split('-')[0];
   var languageNames = new Intl.DisplayNames([lang], {type: 'language'});
-  document.cookie= "preferred_language_name=" + languageNames.of(lang) + "; samesite=Lax; path=/"
+  document.cookie= "preferred_language_name=" + languageNames.of(lang) + "; samesite=Lax; path=/";
+  document.cookie = "preferred_language_code=" + lang + "; samesite=Lax; path=/";
 }	
 
 function getCookie(cname) {
@@ -49,6 +50,7 @@ function getPickerDialog() {
       if (language_code && country_name) {
         document.cookie = "country=" + country_name + "; samesite=Lax; path=/";
         document.cookie = "preferred_language_name=" + language_name + "; samesite=Lax; path=/";
+        document.cookie = "preferred_language_code=" + language_code + "; samesite=Lax; path=/";
         frappe.call("aetesis.utilities.regions.set_language", {
         preferred_language: language_code,
         })
@@ -62,6 +64,7 @@ function getPickerDialog() {
         window.location.reload();
       } else if (language_code && !country_name) {
         document.cookie = "preferred_language_name=" + language_name + "; samesite=Lax; path=/";
+        document.cookie = "preferred_language_code=" + language_code + "; samesite=Lax; path=/";
         frappe.call("aetesis.utilities.regions.set_language", {
         preferred_language: language_code,
         })
