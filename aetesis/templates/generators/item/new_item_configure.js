@@ -334,7 +334,15 @@ frappe.ready(() => {
 function set_price($span, prices) {
 	prices.forEach( item => {
 		if (item.item_code == $span.data('item-code') && item.price) {
-			$span.html( item.price.formatted_price)
+			var price_info = item.price;
+			console.log(price_info);
+			var html = `${price_info.formatted_price_sales_uom}`;
+			if (price_info.formatted_mrp) {
+				html += `<small class="ml-1 formatted-price in-green">
+				-${ price_info.formatted_discount_percent || price_info.formatted_discount_rate}
+			</small>`
+			}
+			$span.html( html);
 		}
 	});
 }

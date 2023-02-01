@@ -18,10 +18,7 @@
 							<!-- Striked Price and Discount  -->
 							{% if price_info.formatted_mrp %}
 								<small class="formatted-price" data-item-code="{{ item_code }}">
-									<s>MRP {{ price_info.formatted_mrp }}</s>
-								</small>
-								<small class="ml-1 formatted-price in-green" data-item-code="{{ item_code }}">
-									-{{ price_info.get("formatted_discount_percent") or price_info.get("formatted_discount_rate")}}
+									<s> {{ price_info.formatted_mrp }}</s>
 								</small>
 							{% endif %}
 
