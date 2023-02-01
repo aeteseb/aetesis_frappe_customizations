@@ -24,6 +24,9 @@ input {
   text-decoration: underline;
   text-decoration-color: white;
 }
+.placeholder-div {
+  background: var(--bg--dark);
+}
 
 .card:hover .card-img {
   -ms-transform: scale(1.5); /* IE 9 */
@@ -1120,7 +1123,7 @@ symbol#icon-list path{
   visibility: visible !important;
 }
 
-.chat-footer, small.formatted-price {
+.chat-footer {
   visibility: hidden !important;
 }
 
