@@ -58,6 +58,9 @@ input {
   fill: var(--primary);
 } 
 
+.shipping-info {
+  font-size: 12px;
+}
 
 .emoji {
   font-family: "Twemoji Country Flags", sans-serif;
