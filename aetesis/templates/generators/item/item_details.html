@@ -4,7 +4,7 @@
 {% set price_info = product_info.get('price') or {} %}
 {% from "aetesis/templates/includes/macros.html" import build_csas %}
 
-<div class="col-lg-7 product-details frame-dark center-frame {{ width_class }}">
+<div class="d-flex flex-column justify-content-around col-lg-7 product-details frame-dark center-frame  {{ width_class }}">
 	
 
 	{% if has_variants %}
@@ -37,7 +37,7 @@
 	{% endif %}
 	{% if doc.web_long_description %}
 		{% if frappe.utils.strip_html(doc.web_long_description or '') %}
-			{{ _(doc.web_long_description) | safe }}
+			<div class="row px-5">{{ _(doc.web_long_description) | safe }}</div>
 		{% endif %}
 	{% endif %}
 
