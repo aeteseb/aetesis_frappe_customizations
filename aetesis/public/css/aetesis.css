@@ -15,6 +15,7 @@
 }
 .stripe .group {
   background: transparent !important;
+  box-shadow: none !important;
 }
 input {
   color: var(--text-highlight) !important
@@ -32,13 +33,14 @@ input {
 }
 
 #card-element {
-  background: var(--bg-dark) !important;
+  background: inherit !important;
+  width: inherit;
 }
 .StripeElement {
   box-shadow: None !important;
 }
 .stripe .group label:not(:last-child) {
-  border-bottom: None !important;
+  border-bottom: 1px solid !important;
 }
 .field {
   background: var(--bg-dark) !important;
