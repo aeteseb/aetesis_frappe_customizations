@@ -10,6 +10,31 @@
   unicode-range: U+1F1E6-1F1FF, U+1F3F4, U+E0062-E0063, U+E0065, U+E0067, U+E006C, U+E006E, U+E0073-E0074, U+E0077, U+E007F;
   src: url('https://cdn.jsdelivr.net/npm/country-flag-emoji-polyfill@0.1/dist/TwemojiCountryFlags.woff2') format('woff2');
 }
+
+.indicator-pill {
+  background-color: #ffe176;
+  color: #3b2f00 !important;
+}
+.order-items{
+  color: var(--text-primary);
+  border: none !important;
+}
+.order-taxes {
+  justify-content: space-between !important;
+}
+.no-image-cart-item {
+  background-color: #212121;
+}
+
+.order-frame {
+  background-color: #554500;
+  border-radius: 16px;
+}
+
+.order-frame > div {
+  padding: 1rem;
+}
+
 .group:not(.stripe-group){
   background: var(--bg-dark) !important;
 }
@@ -753,7 +778,7 @@ p, body {
 
 /* BG */
 
-.web-footer, .attached-file, .indicator-pill, .dropdown-item:hover,  .chat-welcome-footer, .dropdown-item:hover, .recent-search:hover {
+.web-footer, .attached-file, .dropdown-item:hover,  .chat-welcome-footer, .dropdown-item:hover, .recent-search:hover {
   background: var(--bg-light) !important;
 }
 .page-card, .remove-wish,.cart-empty, .frappe-card{
@@ -1041,7 +1066,7 @@ symbol#icon-list path{
 .btn{
   background-color: var(--bg-dark) !important;
   box-shadow: 0 0 0  currentColor, 0 2px 15px 1px rgba(21, 21, 21, 0.51);
-  border: solid 3px var(--secondary) !important;;
+  border: solid 1px var(--secondary) !important;;
 }
 
 #toggle-view .btn-primary, .btn-explore-variants {
@@ -1051,19 +1076,19 @@ symbol#icon-list path{
 
 .btn-primary:not(.btn-modal-primary, .btn-send, .btn-add-to-cart) {
   background-color: var(--primary) !important;
-  border-image-source: url(/files/frame_gold_on_dark.svg) !important;
+  /* border-image-source: url(/files/frame_gold_on_dark.svg) !important;
   border-image-slice: 21 10 21 10 !important;
   border-image-width: 1.5rem .75rem 1.5rem .75rem !important;
   border-image-outset: .7em .2em .3em .3em !important;
-  border-image-repeat: stretch repeat !important;
+  border-image-repeat: stretch repeat !important; */
 }
-.btn-secondary:not(.btn-in-cart) {
+/* .btn-secondary:not(.btn-in-cart) {
   border-image-source: url(/files/frame_gold_on_dark.svg) !important;
   border-image-slice: 21 10 21 10 !important;
   border-image-width: 1.5em .75em 1.5em .75em !important;
   border-image-outset: .7em .2em .3em .2em !important;
   border-image-repeat: stretch stretch !important;
-}
+} */
 
 .btn-send, .btn-add-to-cart {
   background-color: var(--primary) !important;
