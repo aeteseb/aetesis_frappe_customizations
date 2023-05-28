@@ -125,7 +125,7 @@ $.extend(shopping_cart, {
 				if (checked){
 					shopping_cart.place_order(this);
 				} else {
-					frappe.show_alert('Veuillez accepter les Conditions Générales de vente');
+					frappe.show_alert(__('Veuillez accepter les Conditions Générales de vente'));
 				}
 			});
 		

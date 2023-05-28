@@ -144,12 +144,7 @@ $.extend(shopping_cart, {
 			$(".btn-place-order").hide();
 			$(".cart-payment-addresses").hide();
 
-			if (guest) {
-				var intermediate_empty_cart_msg = `
-				<div class="text-center w-100 intermediate-empty-cart mt-4 mb-4 text-muted">
-					<a href="/login">Log in to Place Order</a>
-				</div>`;
-			} else {
+			if (!guest) {
 				var intermediate_empty_cart_msg = `
 					<div class="text-center w-100 intermediate-empty-cart mt-4 mb-4 text-muted">
 						${ __("Cart is Empty") }
