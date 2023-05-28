@@ -100,10 +100,7 @@ input {
   text-decoration: underline;
   text-decoration-thickness: 1.2px;
 }
-.nav-b-item:hover , .nav-item:hover a {
-  text-decoration: underline;
-  text-decoration-color: white;
-}
+
 .placeholder-div {
   background: var(--bg--dark);
 }
@@ -568,8 +565,7 @@ img:not(.no-round) {
 #navbar-image {
   height: 3rem;
   border-radius: 0 !important;
-  margin-top: -0.5rem;
-  margin-left: -0.8rem;
+  margin-top: 2px;
   margin-left: 2px;
 }
 .nav-label{
@@ -748,8 +744,9 @@ h3 {
   margin-top: 1rem;
 }
 h3.card-title {
-  margin-top: 1rem;
-  font-size: x-large;
+  margin-top: 0;
+  color: #3C2E15;
+  white-space: normal;
 }
 
 p, body {
@@ -797,7 +794,7 @@ p, body {
 }
 
 .card-body {
-  padding-top: unset;
+  padding: unset;
 }
 
 .item-slideshow-image {
@@ -990,7 +987,7 @@ a:hover, #search-results-container a:hover, a.product-title:hover, .r-item-info 
 }
 
 .card, .list-row {
-  background: var(--bg-dark) !important;
+  background: #DAC4A0 !important;
   box-shadow: 0 0 0  currentColor, 0 2px 15px 1px rgba(21, 21, 21, 0.51);
   border-bottom: solid 1px var(--secondary) !important;
   border-radius: 3rem
