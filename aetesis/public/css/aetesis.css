@@ -249,11 +249,11 @@ footer a {
 }
 
 .nav-top {
-  background: var(--bg-ultra-light);
+  background: var(--secondary);
 }
 .nav-bottom {
   padding-top: .25rem !important;
-  background: var(--bg-light);
+  background: var(--secondary);
 }
 .website-list {
   background: var(--bg-dark);
@@ -566,11 +566,11 @@ img:not(.no-round) {
   position: relative;
 }
 #navbar-image {
-  /* Layout Properties */
-  height: 5rem;
+  height: 3rem;
   border-radius: 0 !important;
-  margin-top: -.5rem;
-  margin-left: -.8rem;
+  margin-top: -0.5rem;
+  margin-left: -0.8rem;
+  margin-left: 2px;
 }
 .nav-label{
   white-space: nowrap;
@@ -620,10 +620,7 @@ h2 {
 }
 @media only screen and (min-width: 576px) {
   
-  .nav-icon {
-    width: 3rem !important;
-    height: 3rem !important;
-  }
+  
   .btn-over-image {
     position: absolute;
     top: 90%;
@@ -764,10 +761,6 @@ p, body {
   color: var(--text-primary);
 }
 
-.nav-icon, .nav-avatar, .avatar-frame{
-  height: 3rem;
-  width: 3rem;
-}
 
 .frame-right, .frame-left {
       height: min-content;
@@ -882,6 +875,7 @@ p, body {
   padding-top: 0;
   padding-bottom: 0.25rem;
   font-size: 1rem;
+  padding: 0;
 }
 
 a.nav-link {
@@ -1104,7 +1098,6 @@ symbol#icon-list path{
   border-top: 1px solid var(--bg-light) !important;
   border-bottom: 1px solid var(--secondary) !important;
   color: var(--bg-light) !important;
-  font-size: 2rem !important;
 }
 
 .item-card-group-section .item-card {
