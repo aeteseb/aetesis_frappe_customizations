@@ -4,8 +4,10 @@
 {% set price_info = product_info.get('price') or {} %}
 {% from "aetesis/templates/includes/macros.html" import build_csas %}
 
-<div class="d-flex flex-column justify-content-around col-lg-7 product-details frame-dark center-frame  {{ width_class }}">
-	
+<div class="d-flex flex-column justify-content-around product-details  {{ width_class }}">
+	<div class="product-title text-center" itemprop="name">
+		<h1 id="item-name">{{ _(doc.web_item_name) }}</h1>
+	</div>
 
 	{% if has_variants %}
 		<!-- configure template -->
@@ -13,9 +15,7 @@
 	{% else %}
 	<div class="d-flex justify-content-center text-center align-items-center w-100">
 		<!-- title -->
-		<div class="product-title col-11" itemprop="name">
-			<h1 id="item-name">{{ _(doc.web_item_name) }}</h1>
-		</div>
+		
 
 		<!-- Wishlist -->
 		{% if cart_settings.enable_wishlist %}
@@ -35,11 +35,7 @@
 	</div>
 		{% include "templates/generators/item/item_add_to_cart.html" %}
 	{% endif %}
-	{% if doc.web_long_description %}
-		{% if frappe.utils.strip_html(doc.web_long_description or '') %}
-			<div class="row px-5">{{ _(doc.web_long_description) | safe }}</div>
-		{% endif %}
-	{% endif %}
+	
 
 
 </div>

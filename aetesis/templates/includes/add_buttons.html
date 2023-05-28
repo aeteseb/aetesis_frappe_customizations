@@ -57,12 +57,9 @@
 						</a>
 						<button
 							data-item-code="{{item_code}}"
-							class="btn btn-primary btn-add-to-cart mx-auto mr-2 w-30-40"
+							class="btn btn-primary btn-add-to-cart text-center mx-auto mr-2 w-30-40"
 						>
-							<span class="mr-2">
-								<img class="btn-icon" src="/files/Ajouter au panier.svg">
-							</span>
-							<span class="button-text">{{ _("Add to Cart") if cart_settings.enable_checkout else  _("Add to Quote") }}</span>
+							{{ _("Add to Cart") if cart_settings.enable_checkout else  _("Add to Quote") }}
 						</button>
 					{% endif %}
 

@@ -11,6 +11,12 @@
   src: url('https://cdn.jsdelivr.net/npm/country-flag-emoji-polyfill@0.1/dist/TwemojiCountryFlags.woff2') format('woff2');
 }
 
+#Size {
+  background-color: #DAC4A0;
+  color: #3C2E15;
+  border-radius: 3px;
+}
+
 .alert {
   background-color: var(--bg-light);
 }
@@ -148,7 +154,7 @@ input {
 } 
 
 .shipping-info {
-  font-size: 12px;
+  font-size: 10px;
 }
 
 .emoji {
@@ -234,11 +240,8 @@ footer p, footer {
   color: var(--text-primary) !important;
 }
 
-.instructions-link {
-  padding-right: 2rem;
-}
 .instructions-img {
-  height: 3rem !important;
+  height: 1rem !important;
 }
 
 footer a {
@@ -276,7 +279,7 @@ footer a {
 .price {
   margin-top: 0;
   color: var(--text-primary) !important;
-  font-size: 2rem;
+  font-size: 1rem;
 }
 .modal-title {
   color: unset;
@@ -375,9 +378,6 @@ a {
   height: 100% !important;
 }
 
-#Size {
-  height: 2.5rem;
-}
 
 #label-Yellow_Gold div {
   background: rgb(255,235,0);
@@ -436,9 +436,8 @@ a {
 }
 
 #item-name {
-  font-size: 3.5rem !important;
+  font-size: 2rem !important;
   margin-bottom: 0;
-  padding-top: 1rem;
 }
 
 #contact-title {
@@ -598,7 +597,19 @@ h2 {
 .product-container .product-details {
   max-width: 100% !important;
   }
+
+@media only screen and (min-width: 769px) {
+  #item-name {
+    font-size: 3rem !important;
+  }
+  
+}
+
 @media only screen and (max-width: 768px) {
+
+  .breadcrumb-container {
+    display: none;
+  }
 
   .nav-b-label {
     display: none;
@@ -608,10 +619,7 @@ h2 {
   }
 }
 @media only screen and (min-width: 576px) {
-  .variant-selector {
-  width: 5rem;
-  height: 5rem;
-  }
+  
   .nav-icon {
     width: 3rem !important;
     height: 3rem !important;
@@ -637,6 +645,10 @@ h2 {
 }
 
 @media only screen and (max-width: 576px) {
+  .product-container .item-slideshow-image {
+    width: 3rem !important;
+  }
+
    #navbar-image {
     margin-top: 0;
     height: 3rem;
@@ -652,10 +664,7 @@ h2 {
     width: 80%;
     display: block;
   }
-  .variant-selector {
-  width: 4rem;
-  height: 4rem;
-  }
+
   .button-text {
     font-size: 3.5vw;
   }
@@ -668,7 +677,7 @@ h2 {
     font-size: 1.5rem !important;
   }
   h3 {
-    font-size: 1.5rem !important;
+    font-size: 1rem !important;
     }
   .btn svg:not(.icon) {
     height: 1.5rem !important;
@@ -691,7 +700,7 @@ h2 {
     margin-right: auto;
   }
   #item-name {
-    font-size: 3.5rem !important;
+    font-size: 2rem !important;
     margin-bottom: 0;
     padding-top: 1rem;
     white-space: normal;
@@ -701,11 +710,7 @@ h2 {
   }
 }
 
-.variant-selector {
-  text-align: center;
-  cursor: pointer;
-  line-height: 1.5rem;
-}
+
 
 
 .btn svg:not(.icon) {
@@ -740,7 +745,7 @@ h3 {
   font-family: var(--font-h3);
   font-style: var(--font-normal);
   font-weight: var(--font-weight-normal);
-  font-size: 2.5rem;
+  font-size: 1rem;
   letter-spacing: var(--character-spacing-0);
   color: var(--text-primary);
   margin-top: 1rem;
@@ -1002,9 +1007,8 @@ a:hover, #search-results-container a:hover, a.product-title:hover, .r-item-info 
 }
 
 .variant, .variant-selector {
-  background-color: var(--bg-light);
-  padding: 1rem !important;
-  border-radius: 3rem;
+  padding: 5px !important;
+  border-radius: 3px;
 }
 
 .web-form-header, .web-form {

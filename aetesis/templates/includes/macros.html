@@ -363,8 +363,8 @@
 
 
 {%- macro recommended_item_row(item)-%}
-<a class="recommended-item mb-6 d-flex flex-row card" href="/{{ item.route or '#'}}" target="_blank">
-	<div class="r-item-image card-img w-50">
+<a class="p-2 recommended-item mb-6 col mr-2 card align-items-center" style="background-color: #DAC4A0 !important; color: #251A04 !important" href="/{{ item.route or '#'}}" target="_blank">
+	<div class="r-item-image card-img row" style="width: 100%;">
 		{% if item.website_item_thumbnail %}
 			{{ product_image(item.website_item_thumbnail, css_class="r-product-image", alt="item.website_item_name", no_border=True) }}
 		{% else %}
@@ -373,11 +373,9 @@
 			</div>
 		{% endif %}
 	</div>
-	<div class="r-item-info card-body text-center" >
-		<h3>
+	<p class=" mt-2 r-item-info card-body text-center row w-100 justify-content-center p-0" style="background-color: #DAC4A0 !important; color: #251A04 !important" >
 			{% set title = _(item.website_item_name) %}
 			{{ title[:70] + "..." if title|len > 70 else title }}
-		</h3>
 
 		{% if item.get('price_info') %}
 			{% set price = item.get('price_info') %}
@@ -397,14 +395,14 @@
 				{% endif %}
 			</div>
 		{% endif %}
-	</div>
+	</p>
 </a>
 {%- endmacro -%}
 
 {%- macro item_images(variants)-%}
 	{% for v in variants %}
 		{% set column_size = 5 if v.slides else 4 %}
-		<div class="col-lg-{{ column_size }} h-100 d-flex flex-column align-items-center mb-4 slideshow-container {{ v.item_code.replace(' ', '_') }} my-hidden" >
+		<div class="h-100 d-flex flex-column align-items-center slideshow-container {{ v.item_code.replace(' ', '_') }} my-hidden" >
 		{% if v.slides %}
 			{{ product_image(v.slides[0].image, 'product-image', item_code = v.item_code) }}
 			<div class="item-slideshow d-flex mt-3">

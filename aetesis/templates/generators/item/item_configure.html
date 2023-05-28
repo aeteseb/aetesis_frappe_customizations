@@ -2,14 +2,10 @@
 {% set cart_settings = shopping_cart.cart_settings %}
 {% from "aetesis/templates/includes/add_buttons.html" import add_buttons %}
 
-<div class="w-100 row">
-	<div class="col-12 col-md-4 pt-5  d-flex flex-column justify-content-around">
+<div class="w-100 p-2" style="background-color: #2D2924; border-radius: 16px;">
+	<div class="col-12 d-flex flex-column justify-content-around">
 		<div class="d-flex justify-content-between text-center align-items-center w-100">
-			<!-- title -->
-			<div class="product-title col-11" itemprop="name">
-				<h1 id="item-name">{{ _(doc.web_item_name) }}</h1>
-			</div>
-	
+			
 			<!-- Wishlist -->
 			{% if cart_settings.enable_wishlist %}
 				{% if has_variants %}
@@ -31,7 +27,7 @@
 	{% endif %}
 	</div>
 
-	<div class="col-12 col-md-8">
+	<div class="col-12">
 		{% if cart_settings.enable_variants | int %}
 		<div class="col variant-container" data-name="{{ doc.name }}" data-item-code="{{ doc.item_code }}">
 		</div>

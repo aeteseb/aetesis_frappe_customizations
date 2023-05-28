@@ -10,14 +10,55 @@
 {% endblock %}
 
 {% block page_content %}
-<div class="product-container item-main frame-dark" style="background: transparent url('/files/Fond Sombre@2x.png') 0% 0% no-repeat padding-box;">
-	{% from "aetesis/templates/includes/macros.html" import product_image %}
+<div class="product-container item-main frame-dark" style="margin: 0;">
 	<div class="item-content">
 		<div class="product-page-content" itemscope itemtype="http://schema.org/Product">
 			<!-- Image, Description, Add to Cart -->
-			<div class="row mb-5">
-				{{ item_images(variant_details) }}
-				{% include "templates/generators/item/item_details.html" %}
+			<div class="row mb-5 pt-5" style="background-color: #231F1A; border-radius: 16px;">
+				<div class="col-12 col-md-6">
+					{{ item_images(variant_details) }}
+				</div>
+				<div class="col-12 col-md-6 d-flex justify-content-center align-items-around">
+					{% include "templates/generators/item/item_details.html" %}
+				</div>
+				{% if doc.web_long_description %}
+				<div class="col-12 col-lg-6">
+					
+					{% if frappe.utils.strip_html(doc.web_long_description or '') %}
+					<div class="px-2 mb-2" style="background-color: #2D2924; border-radius: 16px;">
+						<h3 class="">{{ _("Description") }}</h3>
+						<p class="">{{ _(doc.web_long_description) | safe }}</p>
+					</div>
+			
+					{% endif %}
+				</div>
+				{% endif %}
+				
+				<div class="col-12 col-md-6">
+					{% if website_specifications %}
+						{% include "templates/generators/item/item_specifications.html"%}
+					{% endif %}
+				</div>
+				<div class="col-12 col-md-6">
+					<!-- Recommended Items -->
+					{% set show_recommended_items = recommended_items and shopping_cart.cart_settings.enable_recommendations %}
+					{% if show_recommended_items %}
+					<div class="mt-4 recommended-item-section">
+						<div class="product-container mt-2 recommendation-container">
+							<h3 class="recommendation-header">Recommended</h3>
+							<div class="row">
+								{% for item in recommended_items %}
+								{{ recommended_item_row(item) }}
+							{% endfor %}
+							</div>
+							
+						</div>
+					</div>
+					{% endif %}
+
+				</div>
+				
+				
 			</div>
 		</div>
 	</div>
@@ -25,7 +66,7 @@
 
 <!-- Additional Info/Reviews, Recommendations -->
 <div class="row">
-	{% set show_recommended_items = recommended_items and shopping_cart.cart_settings.enable_recommendations %}
+	
 	{% set info_col = 'col-xl-9 col-md-6' if show_recommended_items else 'col-12' %}
 
 	{% set padding_top = 'pt-0' if (show_tabs and tabs) else '' %}
@@ -42,10 +83,6 @@
 							}}
 					</div>
 				{% elif website_specifications %}
-					
-					{% if website_specifications %}
-						{% include "templates/generators/item/item_specifications.html"%}
-					{% endif %}
 				{% endif %}
 
 				<!-- Advanced Custom Website Content -->
@@ -59,17 +96,7 @@
 		</div>
 	</div>
 
-	<!-- Recommended Items -->
-	{% if show_recommended_items %}
-		<div class="mt-4 col-xl-3 col-md-6 recommended-item-section">
-			<div class="product-container mt-2 recommendation-container">
-				<span class="recommendation-header">Recommended</span>
-				{% for item in recommended_items %}
-					{{ recommended_item_row(item) }}
-				{% endfor %}
-			</div>
-		</div>
-	{% endif %}
+	
 
 </div>
 {% endblock %}

@@ -13,63 +13,67 @@ class ItemConfigure {
 				this.on_attribute_selection();
 			});
 	}
-	
+
 	show_configure_elements() {
 		this.attribute_data.map(a => {
 			this.$container.append(
-			$('<div>').prop({
-				class: 'row attribute d-flex align-items-center',
-				id: `Attr-${a.attribute}`
+				$('<div>').prop({
+					class: 'row attribute d-flex align-items-center',
+					id: `Attr-${a.attribute}`
 				}))
 			var $div = $(`#Attr-${a.attribute}`)
-			if ( a.attribute === "Size" ) {
+			if (a.attribute === "Size") {
 				var language = frappe.get_cookie("preferred_language_code");
 				$div.append(
-            				$('<label>').prop({
-                			for: 'Size',
-							class: 'mr-5'
-            				}).html(`<h3>${__("Size")}</h3>`)
-				).append( $('<select>').prop({
-                			id: 'Size',
-                			name: 'Size'
-            			}).on('change', (e) => this.on_attribute_selection(e))
-				).append( $('<a>').prop({
-					class: 'instructions-link',
-					href: `/files/instructions_${language}.pdf`,
-					target: '_blank'
-					}).html(`<img class="no-round instructions-img" src="/files/question.svg"> ${__('Determine my ring size')}`)
+					$('<form>').prop({
+						class: 'col'
+					})
+						.append($('<div>').prop({ class: 'row variant-label align-items-baseline' }).html(`<h3>${__(a.attribute)}</h3>`).append($('<a>').prop({
+							class: 'instructions-link px-2',
+							href: `/files/instructions_${language}.pdf`,
+							target: '_blank'
+						}).html(`<img class="no-round instructions-img" src="/files/question.svg">`))
+						)
+						.append($('<div>').prop({ class: 'row attribute-values justify-content-start align-items-end' })
+							.append($('<select>').prop({
+								id: 'Size',
+								name: 'Size'
+							}).on('change', (e) => this.on_attribute_selection(e))
+							)
+						)
 				);
-            			$('#Size').html( a.values.map(v => {
-						return $('<option>').prop({
-							label: __(v),
-							value: v
-						}).html(__(v));
-					}),
-        			);
+				$('#Size').html(a.values.map(v => {
+					return $('<option>').prop({
+						label: __(v),
+						value: v
+					}).html(__(v));
+				}),
+				);
 			} else {
-				
+
 				$div.append(
-					$('<form>').prop({class: 'col',
+					$('<form>').prop({
+						class: 'col',
 						id: a.attribute
-						})
+					})
 						.append($('<div>').prop({ class: 'row variant-label' }).append(`<h3>${__(a.attribute)}</h3>`))
-						.append($('<div>').prop({ class: 'row attribute-values justify-content-around align-items-end'})
-							.append( a.values.map(v => {
-								return $('<div>').prop({class:'attribute-value'})
+						.append($('<div>').prop({ class: 'row attribute-values justify-content-start align-items-end' })
+							.append(a.values.map(v => {
+								return $('<div>').prop({ class: 'attribute-value' })
 									.append($('<input>').prop({
-									type: 'radio',
-									class: 'radio_item',
-									name: a.attribute,
-									value: v,
-									id: v.replace(' ', '_')
+										type: 'radio',
+										class: 'radio_item',
+										name: a.attribute,
+										value: v,
+										id: v.replace(' ', '_')
 									}).on('change', (e) => this.on_attribute_selection(e)))
 									.append($('<label>').prop({
 										class: 'label_item',
 										id: `label-${v.replace(' ', '_')}`,
 										for: v.replace(' ', '_')
-										})
-									.append($('<div>').prop({
-										class:'variant-selector d-flex align-items-center justify-content-center'
+									})
+										.append($('<div>').prop({
+											class: 'variant-selector mr-2'
 										}).append($('<div>').prop({
 											class: 'variant-selector-text'
 										})).append(__(v))))
@@ -78,8 +82,8 @@ class ItemConfigure {
 				)
 			}
 		});
-	}		
-	
+	}
+
 	on_attribute_selection(e) {
 		const me = this;
 		if (e) {
@@ -104,24 +108,25 @@ class ItemConfigure {
 					const valid_options = valid_options_for_attributes[attribute];
 					const options = this.get_options(attribute);
 					const new_options = options.map(o => {
-						if (index < 1)  o.disabled = false;
-						else {o.disabled = !valid_options.includes(o.value)
-							
+						if (index < 1) o.disabled = false;
+						else {
+							o.disabled = !valid_options.includes(o.value)
+
 						}
 						return o;
 					});
-					
+
 					if (index > 0) {
 						var $attr = $(`#${attribute}`)
-						$attr.find('.radio_item').each(function() {
+						$attr.find('.radio_item').each(function () {
 							for (let i = 0; i < new_options.length; i++) {
 								var o = new_options[i]
 								if (o.value === $(this).val()) {
 									if (o.disabled) {
-										$(this).next().hide()
+										$(this).parent().hide()
 									}
 									else {
-										$(this).next().show()
+										$(this).parent().show()
 									}
 								}
 							}
@@ -138,37 +143,37 @@ class ItemConfigure {
 				} else {
 					var selected_values = this.get_values(true);
 					this.get_next_attribute_and_values(selected_values)
-					.then(data => {
-						const {
-							filtered_items,
-						} = data;
-						var selected = filtered_items[0];
-						this.update_checked(selected);
-						update_visibility(selected);
-						me.update_heart(selected);
-					})
+						.then(data => {
+							const {
+								filtered_items,
+							} = data;
+							var selected = filtered_items[0];
+							this.update_checked(selected);
+							update_visibility(selected);
+							me.update_heart(selected);
+						})
 				}
-			}) 
+			})
 	}
-	
+
 	update_heart(selected) {
 		$('.like-action-item-fp').data('item-code', selected);
-	
-		frappe.call('aetesis.whitelisted.wishlist.is_wished', {item_code: selected}).then(r => {
-      			var $wish_icon = $('.wish-icon');
-      			if (r.message === true && $wish_icon.hasClass('not-wished')) $wish_icon.toggleClass('not-wished wished')
-      			else if (r.message === false && $wish_icon.hasClass('wished')) $wish_icon.toggleClass('not-wished wished')
-			});
+
+		frappe.call('aetesis.whitelisted.wishlist.is_wished', { item_code: selected }).then(r => {
+			var $wish_icon = $('.wish-icon');
+			if (r.message === true && $wish_icon.hasClass('not-wished')) $wish_icon.toggleClass('not-wished wished')
+			else if (r.message === false && $wish_icon.hasClass('wished')) $wish_icon.toggleClass('not-wished wished')
+		});
 	}
 
 	update_checked(selected) {
-		this.get_item_attrs_and_values(selected).then( r => {
+		this.get_item_attrs_and_values(selected).then(r => {
 			for (let attr in r) {
 				var $attr = $(`#${attr}`)
 				if ($attr.is('select')) {
 					$attr.val(r[attr])
 				} else if ($attr.is('form')) {
-					$attr.find('.radio_item').each(function() {
+					$attr.find('.radio_item').each(function () {
 						if ($(this).val() === r[attr]) {
 							$(this).prop('checked', true);
 						} else {
@@ -183,7 +188,7 @@ class ItemConfigure {
 
 	hide_disabled(attribute, options) {
 		var $attr = $(`#${attribute}`)
-		$attr.find('.radio_item').each(function() {
+		$attr.find('.radio_item').each(function () {
 			for (let o in options) {
 				if (o.value === $(this).val()) {
 					if (o.disabled) $(this).hide()
@@ -192,30 +197,30 @@ class ItemConfigure {
 			}
 		})
 	}
-	
+
 	get_options(attribute) {
 		var $attr = $(`#${attribute}`)
 		var options = []
 		if ($attr.is('select')) {
-			$attr.children().each(function() {
-				options.push({'value':$(this).val()})
+			$attr.children().each(function () {
+				options.push({ 'value': $(this).val() })
 			})
 		} else if ($attr.is('form')) {
-			$attr.find('.radio_item').each(function() {
-				options.push({'value':$(this).val()})
-				})
+			$attr.find('.radio_item').each(function () {
+				options.push({ 'value': $(this).val() })
+			})
 		}
 		return options
 	}
-	
-	get_values(for_item=false) {
+
+	get_values(for_item = false) {
 		var res = {}
-		$('.attribute').each(function() {
+		$('.attribute').each(function () {
 
 			var attr_name = $(this).attr('id').split('-')[1]
-			if ($(this).find('select').length != 0 ) {
+			if ($(this).find('select').length != 0) {
 				var val = $(this).find('select').val()
-			} else if ($(this).find('.radio_item:checked').length != 0 ) {
+			} else if ($(this).find('.radio_item:checked').length != 0) {
 				var val = $(this).find('.radio_item:checked').val();
 			}
 			if (for_item) res[attr_name] = val;
@@ -223,17 +228,17 @@ class ItemConfigure {
 		})
 		return res
 	}
-	
+
 	get_next_attribute_and_values(selected_attributes) {
-		if(selected_attributes.Material === undefined) {
-			selected_attributes.Material = 'Silver';	
+		if (selected_attributes.Material === undefined) {
+			selected_attributes.Material = 'Silver';
 		}
 		return this.call('erpnext.e_commerce.variant_selector.utils.get_next_attribute_and_values', {
 			item_code: this.item_code,
 			selected_attributes
 		});
 	}
-	
+
 	get_attributes_and_values() {
 		return this.call('erpnext.e_commerce.variant_selector.utils.get_attributes_and_values', {
 			item_code: this.item_code
@@ -244,7 +249,7 @@ class ItemConfigure {
 			item_code: item_code
 		});
 	}
-	
+
 	show_range_input_if_applicable(fieldname) {
 		const $changed_field = $(`#${fieldname}`);
 		const changed_value = $changed_field.val();
@@ -286,7 +291,7 @@ class ItemConfigure {
 			}
 		}
 	}
-	
+
 	call(method, args) {
 		// promisified frappe.call
 		return new Promise((resolve, reject) => {
@@ -296,18 +301,18 @@ class ItemConfigure {
 		});
 	}
 }
-function update_visibility(selected){
+function update_visibility(selected) {
 	$('.item-slideshow-image').removeClass('active');
 	const $img = $(`.slideshow-container.${selected.replace(' ', '_')}`).find('.item-slideshow-image');
 	const link = $img.prop('src');
 
 	const $product_image = $('.product-image');
 	$product_image.find('img').prop('src', link);
-	
+
 	$product_image.find('a').prop('href', link);
-	$(`.slideshow-container:not(.${selected})`).each( function() {$(this).addClass('my-hidden');});
-	$(`.buying`).each( function() {$(this).addClass('my-hidden');});
-	$(`.${selected.replace(' ', '_')}`).each( function() {$(this).removeClass('my-hidden');});
+	$(`.slideshow-container:not(.${selected})`).each(function () { $(this).addClass('my-hidden'); });
+	$(`.buying`).each(function () { $(this).addClass('my-hidden'); });
+	$(`.${selected.replace(' ', '_')}`).each(function () { $(this).removeClass('my-hidden'); });
 }
 
 frappe.ready(() => {
@@ -316,33 +321,33 @@ frappe.ready(() => {
 	const queryString = window.location.search;
 	var selected = null;
 	var no_default = null;
-	if ( queryString != "" ) {
-	selected = queryString.replace('?', '').replace('_', ' ');
-	no_default = true
+	if (queryString != "") {
+		selected = queryString.replace('?', '').replace('_', ' ');
+		no_default = true
 	}
 	new ItemConfigure(itemCode, itemName, $container, selected);
 	const region = getCookie('country');
 	var items = [];
 	var prices;
-	$('.price').each(function(){ items.push( $(this).data('item-code'))});
-	frappe.call('aetesis.whitelisted.product_info.get_prices', {item_codes: items, region : region}).then( r => {
-			prices = r.message;
-			$('.price').each(function() {set_price($(this), prices)});
-		});
+	$('.price').each(function () { items.push($(this).data('item-code')) });
+	frappe.call('aetesis.whitelisted.product_info.get_prices', { item_codes: items, region: region }).then(r => {
+		prices = r.message;
+		$('.price').each(function () { set_price($(this), prices) });
+	});
 });
 
 function set_price($span, prices) {
-	prices.forEach( item => {
+	prices.forEach(item => {
 		if (item.item_code == $span.data('item-code') && item.price) {
 			var price_info = item.price;
 			var html = `${price_info.formatted_price_sales_uom}`;
 			if (price_info.formatted_mrp) {
 				html += `<small class="ml-1 formatted-price in-green">
-				-${ price_info.formatted_discount_percent || price_info.formatted_discount_rate}
+				-${price_info.formatted_discount_percent || price_info.formatted_discount_rate}
 			</small>`
 			}
 			html += `<br><small class="shipping-info">${__('Free Shipping')} </small>`
-			$span.html( html);
+			$span.html(html);
 		}
 	});
 }
@@ -351,15 +356,15 @@ function getCookie(cname) {
 	let name = cname + "=";
 	let decodedCookie = decodeURIComponent(document.cookie);
 	let ca = decodedCookie.split(';');
-	for(let i = 0; i <ca.length; i++) {
-	  let c = ca[i];
-	  while (c.charAt(0) == ' ') {
-		c = c.substring(1);
-	  }
-	  if (c.indexOf(name) == 0) {
-		return c.substring(name.length, c.length);
-	  }
+	for (let i = 0; i < ca.length; i++) {
+		let c = ca[i];
+		while (c.charAt(0) == ' ') {
+			c = c.substring(1);
+		}
+		if (c.indexOf(name) == 0) {
+			return c.substring(name.length, c.length);
+		}
 	}
 	return "";
-  }
-  
+}
+
