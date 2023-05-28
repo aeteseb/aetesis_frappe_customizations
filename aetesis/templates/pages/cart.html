@@ -15,29 +15,13 @@
 <div class="cart-container">
 	<div class="row m-0">
 		<!-- Left section -->
-		<div class="col-md-8" style="padding: 0;">
+		<div class="col-lg-8">
 			<div class="frappe-card p-5 mb-4">
 				<div id="cart-error" class="alert alert-danger" style="display: none;"></div>
-				<table class="table mt-3 cart-table">
-					<thead>
-						<tr>
-							<th class="item-column">{{ _('Item') }}</th>
-							<th width="20%">{{ _('Quantity') }}</th>
-							{% if cart_settings.enable_checkout or cart_settings.show_price_in_quotation %}
-								<th width="20" class="text-right column-sm-view">{{ _('Subtotal') }}</th>
-							{% endif %}
-							<th width="10%" class="column-sm-view"></th>
-						</tr>
-					</thead>
-					<tbody class="cart-items">
+					<div class="cart-items cart-table row">
 						{% include "templates/includes/cart/cart_items.html" %}
-					</tbody>
+					</div>
 
-					{% if cart_settings.enable_checkout or cart_settings.show_price_in_quotation %}
-						<tfoot class="cart-tax-items">
-							{% include "templates/includes/cart/cart_items_total.html" %} 
-						</tfoot>
-					{% endif %}
 				</table>
 			<span><input type="checkbox" id="terms" required>{{ _("J'ai lu et j'accepte les <a href=/terms>Conditions Générales de Vente</a>") }}</span>
 				<div class="row mt-2">
